@@ -5,6 +5,9 @@ export const AboutPage = () => {
         <div className="prose max-w-prose">
           <h1>About</h1>
           <p>{CONFIG.aboutText}</p>
+          <p>
+            <a href={CONFIG.repository}>Source code</a>
+          </p>
         </div>
       </div>
     </section>

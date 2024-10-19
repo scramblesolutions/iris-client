@@ -13,6 +13,7 @@ declare const CONFIG: {
   navItems: string[]
   rightColumnFilters: boolean
   aboutText: string
+  repository: string
   features: {
     git: boolean
     cashu: boolean
