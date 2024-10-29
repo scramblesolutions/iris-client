@@ -1,5 +1,5 @@
 import {ChangeEvent, DragEvent, useEffect, useState} from "react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import {NDKEvent, NDKTag} from "@nostr-dev-kit/ndk"
 import {uploadFile} from "@/shared/upload"
 import {useLocalState} from "irisdb-hooks"
 import {ndk} from "irisdb-nostr"
@@ -21,6 +21,31 @@ interface NoteCreatorProps {
   quotedEvent?: NDKEvent
   handleClose: handleCloseFunction
   reset?: boolean
+}
+
+function addPTags(event: NDKEvent, repliedEvent?: NDKEvent, quotedEvent?: NDKEvent) {
+  const uniquePTags = new Set()
+
+  uniquePTags.add(event.pubkey)
+
+  function addPTagsFromEvent(sourceEvent?: NDKEvent) {
+    if (sourceEvent) {
+      sourceEvent.tags.forEach((tag) => {
+        if (tag[0] === "p" && tag[1]) {
+          uniquePTags.add(tag[1])
+        }
+      })
+    }
+  }
+
+  addPTagsFromEvent(repliedEvent)
+  addPTagsFromEvent(quotedEvent)
+
+  event.tags = Array.from(uniquePTags as Set<string>)
+    .filter((pubkey: string) => pubkey)
+    .map<NDKTag>((pubkey: string) => ["p", pubkey])
+
+  return event
 }
 
 function NoteCreator({handleClose, quotedEvent, repliedEvent}: NoteCreatorProps) {
@@ -129,6 +154,7 @@ function NoteCreator({handleClose, quotedEvent, repliedEvent}: NoteCreatorProps)
         ["e", repliedEvent.id, "", "reply", repliedEvent.pubkey],
       ]
     }
+    addPTags(event, repliedEvent, quotedEvent)
     event.sign().then(() => {
       eventsByIdCache.set(event.id, event)
       setNoteContent("")
