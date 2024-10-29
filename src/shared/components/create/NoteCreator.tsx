@@ -24,26 +24,53 @@ interface NoteCreatorProps {
 }
 
 function addPTags(event: NDKEvent, repliedEvent?: NDKEvent, quotedEvent?: NDKEvent) {
-  const uniquePTags = new Set()
+  const uniquePTags = new Set<string>()
+  const uniqueETags = new Set<string>()
+  const otherTags: NDKTag[] = []
 
-  uniquePTags.add(event.pubkey)
+  if (event.pubkey) {
+    uniquePTags.add(event.pubkey)
+  }
 
-  function addPTagsFromEvent(sourceEvent?: NDKEvent) {
-    if (sourceEvent) {
-      sourceEvent.tags.forEach((tag) => {
-        if (tag[0] === "p" && tag[1]) {
-          uniquePTags.add(tag[1])
-        }
-      })
+  // Process existing tags
+  event.tags.forEach((tag) => {
+    if (tag[0] === "p" && tag[1]?.trim()) {
+      uniquePTags.add(tag[1])
+    } else if (tag[0] === "e" && tag[1]?.trim()) {
+      uniqueETags.add(tag[1])
+    } else if (tag[0] !== "p" && tag[0] !== "e") {
+      otherTags.push(tag)
+    }
+  })
+
+  // Add p-tags from events and e-tag the events themselves
+  if (repliedEvent) {
+    if (repliedEvent.pubkey?.trim()) {
+      uniquePTags.add(repliedEvent.pubkey)
+    }
+    if (repliedEvent.id?.trim()) {
+      uniqueETags.add(repliedEvent.id)
     }
   }
 
-  addPTagsFromEvent(repliedEvent)
-  addPTagsFromEvent(quotedEvent)
+  if (quotedEvent) {
+    if (quotedEvent.pubkey?.trim()) {
+      uniquePTags.add(quotedEvent.pubkey)
+    }
+    if (quotedEvent.id?.trim()) {
+      uniqueETags.add(quotedEvent.id)
+    }
+  }
 
-  event.tags = Array.from(uniquePTags as Set<string>)
-    .filter((pubkey: string) => pubkey)
-    .map<NDKTag>((pubkey: string) => ["p", pubkey])
+  // Filter out any empty values and reconstruct tags array
+  const validPTags = Array.from(uniquePTags).filter(Boolean)
+  const validETags = Array.from(uniqueETags).filter(Boolean)
+
+  event.tags = [
+    ...validPTags.map<NDKTag>((pubkey) => ["p", pubkey]),
+    ...validETags.map<NDKTag>((id) => ["e", id]),
+    ...otherTags,
+  ]
 
   return event
 }
@@ -151,6 +178,7 @@ function NoteCreator({handleClose, quotedEvent, repliedEvent}: NoteCreatorProps)
     if (repliedEvent) {
       event.tags = [
         ["q", repliedEvent.id],
+        ["p", repliedEvent.pubkey],
         ["e", repliedEvent.id, "", "reply", repliedEvent.pubkey],
       ]
     }
