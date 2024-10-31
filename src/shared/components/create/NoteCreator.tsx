@@ -51,6 +51,12 @@ function addPTags(event: NDKEvent, repliedEvent?: NDKEvent, quotedEvent?: NDKEve
     if (repliedEvent.id?.trim()) {
       uniqueETags.add(repliedEvent.id)
     }
+    // Add p-tags from replied event
+    repliedEvent.tags.forEach((tag) => {
+      if (tag[0] === "p" && tag[1]?.trim()) {
+        uniquePTags.add(tag[1])
+      }
+    })
   }
 
   if (quotedEvent) {
@@ -60,6 +66,12 @@ function addPTags(event: NDKEvent, repliedEvent?: NDKEvent, quotedEvent?: NDKEve
     if (quotedEvent.id?.trim()) {
       uniqueETags.add(quotedEvent.id)
     }
+    // Add p-tags from quoted event
+    quotedEvent.tags.forEach((tag) => {
+      if (tag[0] === "p" && tag[1]?.trim()) {
+        uniquePTags.add(tag[1])
+      }
+    })
   }
 
   // Filter out any empty values and reconstruct tags array
