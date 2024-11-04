@@ -1,6 +1,7 @@
 import {NDKTag, NDKEvent, NDKUser} from "@nostr-dev-kit/ndk"
 import {getZapAmount, getZappingUser} from "./nostr"
 import {SortedMap} from "./SortedMap/SortedMap"
+import socialGraph from "@/utils/socialGraph"
 import {profileCache} from "@/utils/memcache"
 import {base64} from "@scure/base"
 import SnortApi from "./SnortApi"
@@ -115,16 +116,42 @@ export async function subscribeToNotifications() {
       const reg = await navigator.serviceWorker.ready
       if (reg) {
         const api = new SnortApi()
+        const applicationServerKey = (await api.getPushNotificationInfo())
+          .vapid_public_key
+
+        // Check for existing subscription and unsubscribe if key is different
+        const existingSub = await reg.pushManager.getSubscription()
+        if (existingSub) {
+          const existingKey = new Uint8Array(existingSub.options.applicationServerKey!)
+          const newKey = new Uint8Array(Buffer.from(applicationServerKey, "base64"))
+
+          if (
+            existingKey.length !== newKey.length ||
+            existingKey.some((byte, i) => byte !== newKey[i])
+          ) {
+            await existingSub.unsubscribe()
+          }
+        }
+
         const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: (await api.getPushNotificationInfo()).publicKey,
+          applicationServerKey,
         })
-        await api.registerPushNotifications({
-          endpoint: sub.endpoint,
-          p256dh: base64.encode(new Uint8Array(sub.getKey("p256dh")!)),
-          auth: base64.encode(new Uint8Array(sub.getKey("auth")!)),
-          scope: `${location.protocol}//${location.hostname}`,
-        })
+
+        const myKey = [...socialGraph().getUsersByFollowDistance(0)][0]
+        const filter = {
+          "#p": [myKey],
+          kinds: [1, 6, 7],
+        }
+        await api.registerPushNotifications(
+          {
+            endpoint: sub.endpoint,
+            p256dh: base64.encode(new Uint8Array(sub.getKey("p256dh")!)),
+            auth: base64.encode(new Uint8Array(sub.getKey("auth")!)),
+          },
+          filter,
+          myKey
+        )
       }
     }
   } catch (e) {
