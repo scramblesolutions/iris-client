@@ -25,7 +25,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     showModal()
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (modalRef.current && !contentRef.current?.contains(e.target as Node)) {
+      if (modalRef.current && e.target === modalRef.current) {
         setIsMouseDownOnBackdrop(true)
         e.preventDefault()
       } else {
@@ -49,7 +49,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
       document.removeEventListener("mousedown", handleMouseDown)
       document.removeEventListener("mouseup", handleMouseUp)
     }
-  }, [onClose, isMouseDownOnBackdrop])
+  }, [isMouseDownOnBackdrop])
 
   return (
     <dialog ref={modalRef} className="modal outline-none">

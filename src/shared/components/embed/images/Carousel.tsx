@@ -1,6 +1,6 @@
 import {RiArrowLeftSLine, RiArrowRightSLine} from "@remixicon/react"
 import ProxyImg from "@/shared/components/ProxyImg.tsx"
-import {useEffect, useState, MouseEvent} from "react"
+import {useEffect, useState, MouseEvent, useCallback} from "react"
 import Modal from "@/shared/components/ui/Modal.tsx"
 import Icon from "@/shared/components/Icons/Icon"
 import ImageComponent from "./ImageComponent"
@@ -131,6 +131,10 @@ function Carousel({images, event}: CarouselProps) {
     }
   }, [showModal])
 
+  const onCloseModal = useCallback(() => {
+    setShowModal(false)
+  }, [])
+
   return (
     <div
       {...handlers} // Add swipe handlers here
@@ -150,7 +154,7 @@ function Carousel({images, event}: CarouselProps) {
         </>
       )}
       {showModal && (
-        <Modal hasBackground={false} onClose={() => setShowModal(false)}>
+        <Modal hasBackground={false} onClose={onCloseModal}>
           <button
             className="btn btn-circle btn-ghost absolute right-2 top-2 focus:outline-none"
             onClick={() => setShowModal(false)}
