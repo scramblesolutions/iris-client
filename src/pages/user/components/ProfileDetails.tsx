@@ -90,7 +90,7 @@ function ProfileDetails({
             nip05valid ? (
               displayProfile.nip05.replace("_@", "")
             ) : (
-              <s>{displayProfile.nip05.replace("_@", "")}</s>
+              <s>{String(displayProfile.nip05).replace("_@", "")}</s>
             ),
             "nip05"
           )}

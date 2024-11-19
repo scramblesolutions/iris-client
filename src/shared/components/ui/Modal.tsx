@@ -26,6 +26,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
 
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        // prevent daisyUI default
         e.preventDefault()
         onClose()
         closeModal()
