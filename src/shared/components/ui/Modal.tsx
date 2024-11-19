@@ -24,6 +24,16 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
   useEffect(() => {
     showModal()
 
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault()
+        onClose()
+        closeModal()
+      }
+    }
+
+    document.addEventListener("keydown", handleEscapeKey)
+
     const handleMouseDown = (e: MouseEvent) => {
       if (modalRef.current && e.target === modalRef.current) {
         setIsMouseDownOnBackdrop(true)
@@ -46,6 +56,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
 
     return () => {
       closeModal()
+      document.removeEventListener("keydown", handleEscapeKey)
       document.removeEventListener("mousedown", handleMouseDown)
       document.removeEventListener("mouseup", handleMouseUp)
     }
