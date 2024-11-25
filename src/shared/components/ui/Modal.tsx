@@ -36,6 +36,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     document.addEventListener("keydown", handleEscapeKey)
 
     const handleMouseDown = (e: MouseEvent) => {
+      console.log("mousedown", e.target, modalRef.current)
       if (modalRef.current && e.target === modalRef.current) {
         setIsMouseDownOnBackdrop(true)
         e.preventDefault()
@@ -45,7 +46,10 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     }
 
     const handleMouseUp = (e: MouseEvent) => {
+      console.log("mouseup", e.target, modalRef.current, isMouseDownOnBackdrop)
       if (isMouseDownOnBackdrop && modalRef.current && e.target === modalRef.current) {
+        e.preventDefault()
+        e.stopPropagation()
         onClose()
         closeModal()
       }
@@ -84,9 +88,13 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
         {children}
       </div>
       {hasBackground && (
-        <form method="dialog" className="modal-backdrop">
-          <button type="button">close</button>
-        </form>
+        <div 
+          className="modal-backdrop"
+          onClick={() => {
+            onClose()
+            closeModal()
+          }}
+        />
       )}
     </dialog>
   )
