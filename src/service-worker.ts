@@ -139,195 +139,48 @@ self.addEventListener("install", (event) => {
   self.skipWaiting()
 })
 
-const enum PushType {
-  Mention = 1,
-  Reaction = 2,
-  Zap = 3,
-  Repost = 4,
-  DirectMessage = 5,
-}
-
-interface PushNotification {
-  type: PushType
-  data: object
-}
-
-interface CompactMention {
-  id: string
-  created_at: number
-  content: string
-  author: CompactProfile
-  mentions: Array<CompactProfile>
-}
-
-interface CompactReaction {
-  id: string
-  created_at: number
-  content: string
-  author: CompactProfile
-  event?: string
-  amount?: number
-}
-
-interface CompactProfile {
-  pubkey: string
-  name?: string
-  avatar?: string
+interface PushData {
+  event: {
+    id: string
+    pubkey: string
+    created_at: number
+    kind: number
+    tags: string[][]
+    content: string
+    sig: string
+  }
+  title: string
+  body: string
+  icon: string
+  url: string
 }
 
 self.addEventListener("notificationclick", (event) => {
-  const ev = JSON.parse(event.notification.data) as PushNotification
+  const data = event.notification.data as PushData
 
   event.waitUntil(
     (async () => {
       const windows = await self.clients.matchAll({type: "window"})
-      const url = () => {
-        if (ev.type === PushType.Zap || ev.type === PushType.Reaction) {
-          const mention = ev.data as CompactReaction
-          if (mention.event) {
-            return `/${nip19.noteEncode(mention.event)}`
-          }
-        } else if (ev.type === PushType.DirectMessage) {
-          /*
-          const reaction = ev.data as CompactReaction
-          return `/messages/${encodeTLVEntries(NostrPrefix.Chat17, {
-            type: TLVEntryType.Author,
-            value: reaction.author.pubkey,
-            length: 32,
-          })}`
-          */
-        }
-        return (ev.data as {id?: string}).id
-          ? `/${nip19.npubEncode((ev.data as {id: string}).id)}`
-          : "/notifications"
-      }
+      // Extract pathname from the url
+      const url = new URL(data.url).pathname
+
       for (const client of windows) {
-        if (client.url === url() && "focus" in client) return client.focus()
+        if (client.url === url && "focus" in client) return client.focus()
       }
-      if (self.clients.openWindow) return self.clients.openWindow(url())
+      if (self.clients.openWindow) return self.clients.openWindow(url)
     })()
   )
 })
 
 self.addEventListener("push", async (e) => {
-  console.debug(e)
-  const data = e.data?.json() as PushNotification | undefined
+  const data = e.data?.json() as PushData | undefined
   console.debug(data)
+
   if (data) {
-    switch (data.type) {
-      case PushType.Mention: {
-        const evx = data.data as CompactMention
-        await self.registration.showNotification(
-          `${displayNameOrDefault(evx.author)} replied`,
-          makeNotification(data)
-        )
-        break
-      }
-      case PushType.Reaction: {
-        const evx = data.data as CompactReaction
-        await self.registration.showNotification(
-          `${displayNameOrDefault(evx.author)} reacted`,
-          makeNotification(data)
-        )
-        break
-      }
-      case PushType.Zap: {
-        const evx = data.data as CompactReaction
-        await self.registration.showNotification(
-          `${displayNameOrDefault(evx.author)} zapped${evx.amount ? ` ${formatShort(evx.amount)} sats` : ""}`,
-          makeNotification(data)
-        )
-        break
-      }
-      case PushType.Repost: {
-        const evx = data.data as CompactReaction
-        await self.registration.showNotification(
-          `${displayNameOrDefault(evx.author)} reposted`,
-          makeNotification(data)
-        )
-        break
-      }
-      case PushType.DirectMessage: {
-        const evx = data.data as CompactReaction
-        await self.registration.showNotification(
-          `${displayNameOrDefault(evx.author)} sent you a DM`,
-          makeNotification(data)
-        )
-        break
-      }
-    }
+    await self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      data: data,
+    })
   }
 })
-
-const MentionNostrEntityRegex =
-  /(nostr:n(?:pub|profile|event|ote|addr)1[acdefghjklmnpqrstuvwxyz023456789]+)/g
-
-function replaceMentions(content: string, profiles: Array<CompactProfile>) {
-  return content
-    .split(MentionNostrEntityRegex)
-    .map((link) => {
-      if (MentionNostrEntityRegex.test(link)) {
-        try {
-          const decoded = nip19.decode(link)
-          if (
-            ["npub", "nprofile"].includes(decoded.type) ||
-            ["nevent", "note"].includes(decoded.type)
-          ) {
-            const px = profiles.find((a) => a.pubkey === nip19.decode(link).data)
-            return `@${displayNameOrDefault(px ?? {pubkey: link})}`
-          }
-        } catch (e) {
-          // ignore
-        }
-      }
-      return link
-    })
-    .join("")
-}
-
-function displayNameOrDefault(p: CompactProfile) {
-  if ((p.name?.length ?? 0) > 0) {
-    return p.name
-  }
-  return nip19.npubEncode(p.pubkey).slice(0, 12)
-}
-
-function makeNotification(n: PushNotification) {
-  const evx = n.data as CompactMention | CompactReaction
-
-  const body = () => {
-    if (n.type === PushType.Mention) {
-      return (
-        "mentions" in evx ? replaceMentions(evx.content, evx.mentions) : evx.content
-      ).substring(0, 250)
-    } else if (n.type === PushType.Reaction) {
-      if (evx.content === "+") return "💜"
-      if (evx.content === "-") return "👎"
-      return evx.content
-    } else if (n.type === PushType.DirectMessage) {
-      return ""
-    } else if (n.type === PushType.Repost) {
-      return ""
-    }
-    return evx.content.substring(0, 250)
-  }
-  const ret = {
-    body: body(),
-    icon:
-      evx.author.avatar ??
-      `https://nostr.api.v0l.io/api/v1/avatar/robots/${evx.author.pubkey}.webp`,
-    timestamp: evx.created_at * 1000,
-    tag: evx.id,
-    data: JSON.stringify(n),
-  }
-  console.debug(ret)
-  return ret
-}
-
-function formatShort(n: number) {
-  if (n > 1000) {
-    return (n / 1000).toFixed(1)
-  } else {
-    return n.toFixed(0)
-  }
-}

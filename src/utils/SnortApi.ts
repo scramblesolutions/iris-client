@@ -1,14 +1,13 @@
+import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
 import socialGraph from "@/utils/socialGraph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
 import {ndk} from "irisdb-nostr"
 
-export const ApiHost = "https://api.snort.social"
+export const ApiHost = "https://notifications.iris.to"
 
 export interface PushNotifications {
   endpoint: string
   p256dh: string
   auth: string
-  scope: string
 }
 
 /**
@@ -28,11 +27,15 @@ export default class SnortApi {
   }
 
   getPushNotificationInfo() {
-    return this.#getJson<{publicKey: string}>("api/v1/notifications/info")
+    return this.#getJson<{vapid_public_key: string}>("info")
   }
 
-  registerPushNotifications(sub: PushNotifications) {
-    return this.#getJsonAuthd<void>("api/v1/notifications/register", "POST", sub)
+  registerPushNotifications(sub: PushNotifications, filter: NDKFilter) {
+    return this.#getJsonAuthd<void>(`subscriptions`, "POST", {
+      web_push_subscriptions: [sub],
+      webhooks: [],
+      filter,
+    })
   }
 
   async #getJsonAuthd<T>(
@@ -53,11 +56,13 @@ export default class SnortApi {
     })
     await event.sign()
     const nostrEvent = await event.toNostrEvent()
-    console.log(nostrEvent, JSON.stringify(nostrEvent))
+
+    // Ensure the event is encoded correctly
+    const encodedEvent = btoa(JSON.stringify(nostrEvent))
 
     return this.#getJson<T>(path, method, body, {
       ...headers,
-      authorization: `Nostr ${window.btoa(JSON.stringify(nostrEvent))}`,
+      authorization: `Nostr ${encodedEvent}`,
     })
   }
 
@@ -81,7 +86,7 @@ export default class SnortApi {
       const text = (await rsp.text()) as string | null
       if ((text?.length ?? 0) > 0) {
         const obj = JSON.parse(text!)
-        if ("error" in obj) {
+        if (typeof obj === "object" && "error" in obj) {
           throw new Error(obj.error, obj.code)
         }
         return obj as T

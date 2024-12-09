@@ -36,7 +36,6 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     document.addEventListener("keydown", handleEscapeKey)
 
     const handleMouseDown = (e: MouseEvent) => {
-      console.log("mousedown", e.target, modalRef.current)
       if (modalRef.current && e.target === modalRef.current) {
         setIsMouseDownOnBackdrop(true)
         e.preventDefault()
