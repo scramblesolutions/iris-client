@@ -9,8 +9,8 @@ import {UserContext} from "@/context/UserContext.tsx"
 
 import Reactions from "@/shared/components/event/reactions/Reactions.tsx"
 import Dropdown from "@/shared/components/ui/Dropdown.tsx"
+import Modal from "@/shared/components/ui/Modal.tsx"
 import ReportUser from "../ReportUser.tsx"
-import Popup from "../../ui/Popup.tsx"
 import MuteUser from "../MuteUser.tsx"
 import RawJSON from "../RawJSON.tsx"
 
@@ -107,34 +107,37 @@ function FeedItemDropdown({event, onClose}: FeedItemDropdownProps) {
     <div className="z-40">
       <Dropdown onClose={onClose}>
         {showReactions && (
-          <Popup setOpen={setShowReactions}>
-            <Reactions event={event} />
-          </Popup>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal onClose={() => setShowReactions(false)}>
+              <Reactions event={event} />
+            </Modal>
+          </div>
         )}
         {reporting && (
-          <Popup setOpen={setReporting}>
-            <ReportUser user={event.id} event={event} />
-          </Popup>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal onClose={() => setReporting(false)}>
+              <ReportUser user={event.id} event={event} />
+            </Modal>
+          </div>
         )}
         {muting && (
-          <Popup setOpen={setMuting}>
-            <MuteUser
-              muteState={muted}
-              user={event.pubkey}
-              event={event}
-              setMuting={setMuting}
-              setMutedState={setMuted}
-            />
-          </Popup>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal onClose={() => setMuting(false)}>
+              <MuteUser
+                muteState={muted}
+                user={event.pubkey}
+                event={event}
+                setMuting={setMuting}
+                setMutedState={setMuted}
+              />
+            </Modal>
+          </div>
         )}
         {showRawJSON && (
-          <div
-            className="fixed inset-0 bg-gray-800 bg-opacity-50 z-50 flex items-center justify-center"
-            onClick={handleShowRawJson}
-          >
-            <Popup setOpen={setShowRawJSON}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal onClose={() => setShowRawJSON(false)}>
               <RawJSON event={event} />
-            </Popup>
+            </Modal>
           </div>
         )}
         <ul

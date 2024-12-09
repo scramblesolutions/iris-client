@@ -24,6 +24,17 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
   useEffect(() => {
     showModal()
 
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        // prevent daisyUI default
+        e.preventDefault()
+        onClose()
+        closeModal()
+      }
+    }
+
+    document.addEventListener("keydown", handleEscapeKey)
+
     const handleMouseDown = (e: MouseEvent) => {
       if (modalRef.current && e.target === modalRef.current) {
         setIsMouseDownOnBackdrop(true)
@@ -34,7 +45,10 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     }
 
     const handleMouseUp = (e: MouseEvent) => {
+      console.log("mouseup", e.target, modalRef.current, isMouseDownOnBackdrop)
       if (isMouseDownOnBackdrop && modalRef.current && e.target === modalRef.current) {
+        e.preventDefault()
+        e.stopPropagation()
         onClose()
         closeModal()
       }
@@ -46,6 +60,7 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
 
     return () => {
       closeModal()
+      document.removeEventListener("keydown", handleEscapeKey)
       document.removeEventListener("mousedown", handleMouseDown)
       document.removeEventListener("mouseup", handleMouseUp)
     }
@@ -72,9 +87,13 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
         {children}
       </div>
       {hasBackground && (
-        <form method="dialog" className="modal-backdrop">
-          <button type="button">close</button>
-        </form>
+        <div 
+          className="modal-backdrop"
+          onClick={() => {
+            onClose()
+            closeModal()
+          }}
+        />
       )}
     </dialog>
   )
