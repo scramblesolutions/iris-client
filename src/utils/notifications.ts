@@ -116,26 +116,28 @@ export async function subscribeToNotifications() {
       const reg = await navigator.serviceWorker.ready
       if (reg) {
         const api = new SnortApi()
-        const applicationServerKey = (await api.getPushNotificationInfo())
-          .vapid_public_key
+        const {vapid_public_key: newVapidKey} = await api.getPushNotificationInfo()
 
-        // Check for existing subscription and unsubscribe if key is different
+        // Check for existing subscription
         const existingSub = await reg.pushManager.getSubscription()
         if (existingSub) {
           const existingKey = new Uint8Array(existingSub.options.applicationServerKey!)
-          const newKey = new Uint8Array(Buffer.from(applicationServerKey, "base64"))
+          const newKey = new Uint8Array(Buffer.from(newVapidKey, "base64"))
 
+          // Only subscribe if the keys are different
           if (
-            existingKey.length !== newKey.length ||
-            existingKey.some((byte, i) => byte !== newKey[i])
+            existingKey.length === newKey.length &&
+            existingKey.every((byte, i) => byte === newKey[i])
           ) {
-            await existingSub.unsubscribe()
+            return // Already subscribed with the same key
           }
+
+          await existingSub.unsubscribe()
         }
 
         const sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey,
+          applicationServerKey: newVapidKey,
         })
 
         const myKey = [...socialGraph().getUsersByFollowDistance(0)][0]
@@ -149,8 +151,7 @@ export async function subscribeToNotifications() {
             p256dh: base64.encode(new Uint8Array(sub.getKey("p256dh")!)),
             auth: base64.encode(new Uint8Array(sub.getKey("auth")!)),
           },
-          filter,
-          myKey
+          filter
         )
       }
     }

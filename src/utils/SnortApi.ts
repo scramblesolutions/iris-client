@@ -1,8 +1,8 @@
-import socialGraph from "@/utils/socialGraph"
 import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
+import socialGraph from "@/utils/socialGraph"
 import {ndk} from "irisdb-nostr"
 
-export const ApiHost = "http://localhost:3030"
+export const ApiHost = "https://notifications.iris.to"
 
 export interface PushNotifications {
   endpoint: string
@@ -30,8 +30,8 @@ export default class SnortApi {
     return this.#getJson<{vapid_public_key: string}>("info")
   }
 
-  registerPushNotifications(sub: PushNotifications, filter: NDKFilter, pubkey: string) {
-    return this.#getJsonAuthd<void>(`subscriptions/${pubkey}`, "POST", {
+  registerPushNotifications(sub: PushNotifications, filter: NDKFilter) {
+    return this.#getJsonAuthd<void>(`subscriptions`, "POST", {
       web_push_subscriptions: [sub],
       webhooks: [],
       filter,
@@ -56,11 +56,13 @@ export default class SnortApi {
     })
     await event.sign()
     const nostrEvent = await event.toNostrEvent()
-    console.log(nostrEvent, JSON.stringify(nostrEvent))
+
+    // Ensure the event is encoded correctly
+    const encodedEvent = btoa(JSON.stringify(nostrEvent))
 
     return this.#getJson<T>(path, method, body, {
       ...headers,
-      authorization: `Nostr ${window.btoa(JSON.stringify(nostrEvent))}`,
+      authorization: `Nostr ${encodedEvent}`,
     })
   }
 
