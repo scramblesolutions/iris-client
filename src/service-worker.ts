@@ -6,7 +6,6 @@ import {precacheAndRoute, PrecacheEntry} from "workbox-precaching"
 import {ExpirationPlugin} from "workbox-expiration"
 import {registerRoute} from "workbox-routing"
 import {clientsClaim} from "workbox-core"
-import {nip19} from "nostr-tools"
 
 // eslint-disable-next-line no-undef
 declare const self: ServiceWorkerGlobalScope & {

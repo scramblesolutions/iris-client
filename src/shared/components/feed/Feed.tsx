@@ -253,6 +253,7 @@ function Feed({
           <UnknownUserEvents
             eventsByUnknownUsers={eventsByUnknownUsers}
             showRepliedTo={showRepliedTo}
+            asReply={true}
           />
         )}
       </div>

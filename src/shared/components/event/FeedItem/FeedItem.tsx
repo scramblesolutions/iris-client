@@ -3,9 +3,15 @@ import {eventsByIdCache, addSeenEventId} from "@/utils/memcache.ts"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import classNames from "classnames"
 
+import {
+  getEventReplyingTo,
+  isGem,
+  isRezap,
+  fetchEvent,
+  getEventRoot,
+} from "@/utils/nostr.ts"
 import {getEventIdHex, handleEventContent} from "@/shared/components/event/utils.ts"
 import HiddenPostMessage from "@/shared/components/event/HiddenPostMessage.tsx"
-import {getEventReplyingTo, isGem, isRezap, fetchEvent} from "@/utils/nostr.ts"
 import RepostHeader from "@/shared/components/event/RepostHeader.tsx"
 import FeedItemActions from "../reactions/FeedItemActions.tsx"
 import FeedItemPlaceholder from "./FeedItemPlaceholder.tsx"
@@ -79,6 +85,9 @@ function FeedItem({
     throw new Error("FeedItem requires either an event or an eventId")
 
   const repliedToEventId = useMemo(() => event && getEventReplyingTo(event), [event])
+  const rootId = useMemo(() => event && getEventRoot(event), [event])
+  const showThreadRoot =
+    standalone && rootId && rootId !== eventIdHex && rootId !== repliedToEventId
 
   const feedItemRef = useRef<HTMLDivElement>(null)
 
@@ -149,6 +158,17 @@ function FeedItem({
 
   return (
     <ErrorBoundary>
+      {showThreadRoot && (
+        <div className="px-4 py-2 text-sm text-base-content/70">
+          <a
+            href={`/e/${rootId}`}
+            onClick={(e) => e.stopPropagation()}
+            className="hover:underline"
+          >
+            View thread root →
+          </a>
+        </div>
+      )}
       {event.kind === 1 && showRepliedTo && repliedToEventId && !isRezap(event) && (
         <>
           <FeedItem
@@ -224,7 +244,7 @@ function FeedItem({
         <div className="flex flex-col justify-center">
           <Feed
             showRepliedTo={false}
-            asReply={!standalone}
+            asReply={true}
             filters={{"#e": [eventIdHex], kinds: [1]}}
             displayFilterFn={(e: NDKEvent) => getEventReplyingTo(e) === event.id}
             onEvent={onEvent}

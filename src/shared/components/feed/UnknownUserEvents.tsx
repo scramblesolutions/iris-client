@@ -7,11 +7,13 @@ import {DISPLAY_INCREMENT} from "./utils"
 interface UnknownUserEventsProps {
   eventsByUnknownUsers: NDKEvent[]
   showRepliedTo: boolean
+  asReply: boolean
 }
 
 const UnknownUserEvents = ({
   eventsByUnknownUsers,
   showRepliedTo,
+  asReply,
 }: UnknownUserEventsProps) => {
   const [displayCount, setDisplayCount] = useState(DISPLAY_INCREMENT)
   const firstFeedItemRef = useRef<HTMLDivElement | null>(null)
@@ -31,7 +33,7 @@ const UnknownUserEvents = ({
       {displayedEvents.map((event, index) => (
         <div key={event.id} ref={index === 0 ? firstFeedItemRef : null}>
           <FeedItem
-            asReply={showRepliedTo}
+            asReply={asReply}
             showRepliedTo={showRepliedTo}
             key={event.id}
             event={event}
