@@ -13,8 +13,12 @@ import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
 
 import {INITIAL_DISPLAY_COUNT, DISPLAY_INCREMENT, eventComparator} from "./utils"
+import imageEmbed from "@/shared/components/embed/images/Image"
+import Video from "@/shared/components/embed/video/Video"
 import UnknownUserEvents from "./UnknownUserEvents.tsx"
+import {DisplayAsSelector} from "./DisplayAsSelector"
 import NewEventsButton from "./NewEventsButton.tsx"
+import ImageGridItem from "./ImageGridItem"
 
 interface FeedProps {
   filters: NDKFilter
@@ -29,6 +33,8 @@ interface FeedProps {
   emptyPlaceholder?: ReactNode
   forceUpdate?: number
   showEventsByUnknownUsersButton?: boolean
+  displayAs?: "list" | "grid"
+  onDisplayAsChange?: (display: "list" | "grid") => void
 }
 
 // TODO fix useLocalState so initial state is properly set from memory, so we can use it instead of this
@@ -54,6 +60,8 @@ function Feed({
   emptyPlaceholder = DefaultEmptyPlaceholder,
   forceUpdate,
   showEventsByUnknownUsersButton = true,
+  displayAs: initialDisplayAs = "list",
+  onDisplayAsChange,
 }: FeedProps) {
   const [displayCount, setDisplayCount] = useHistoryState(
     INITIAL_DISPLAY_COUNT,
@@ -74,6 +82,8 @@ function Feed({
   const [showEventsByUnknownUsers, setShowEventsByUnknownUsers] = useState(false)
 
   const [feedFilter] = useLocalState("user/feedFilter", [])
+
+  const [displayAs, setDisplayAs] = useLocalState("user/feedDisplayAs", initialDisplayAs)
 
   const showNewEvents = () => {
     newEvents.forEach((event) => {
@@ -207,8 +217,25 @@ function Feed({
     }
   }, [forceUpdate])
 
+  const mediaEvents = useMemo(() => {
+    return filteredEvents.filter((event) => {
+      const hasImageUrl = imageEmbed.regex.test(event.content)
+      const hasVideoUrl = Video.regex.test(event.content)
+
+      return hasImageUrl || hasVideoUrl
+    })
+  }, [filteredEvents])
+
   return (
     <>
+      <DisplayAsSelector
+        activeSelection={displayAs}
+        onSelect={(display) => {
+          setDisplayAs(display)
+          onDisplayAsChange?.(display)
+        }}
+      />
+
       {newEventsFiltered.length > 0 && (
         <NewEventsButton
           newEventsFiltered={newEventsFiltered}
@@ -217,23 +244,38 @@ function Feed({
           firstFeedItemRef={firstFeedItemRef}
         />
       )}
+
       <div>
-        {filteredEvents.length > 0 && (
-          <InfiniteScroll onLoadMore={loadMoreItems}>
-            {filteredEvents.slice(0, displayCount).map((event, index) => (
-              <div key={event.id} ref={index === 0 ? firstFeedItemRef : null}>
-                <FeedItem
-                  asReply={asReply || showRepliedTo}
-                  showRepliedTo={showRepliedTo}
-                  showReplies={showReplies}
+        {filteredEvents.length > 0 &&
+          (displayAs === "grid" ? (
+            <div className="grid grid-cols-3 gap-px md:gap-1">
+              {mediaEvents.map((event, index) => (
+                <ImageGridItem
+                  key={event.id}
                   event={event}
-                  onEvent={onEvent}
-                  borderTop={borderTopFirst && index === 0}
+                  index={index}
+                  setActiveItemIndex={(index) => {
+                    // Implement modal/lightbox logic here
+                  }}
                 />
-              </div>
-            ))}
-          </InfiniteScroll>
-        )}
+              ))}
+            </div>
+          ) : (
+            <InfiniteScroll onLoadMore={loadMoreItems}>
+              {filteredEvents.slice(0, displayCount).map((event, index) => (
+                <div key={event.id} ref={index === 0 ? firstFeedItemRef : null}>
+                  <FeedItem
+                    asReply={asReply || showRepliedTo}
+                    showRepliedTo={showRepliedTo}
+                    showReplies={showReplies}
+                    event={event}
+                    onEvent={onEvent}
+                    borderTop={borderTopFirst && index === 0}
+                  />
+                </div>
+              ))}
+            </InfiniteScroll>
+          ))}
         {filteredEvents.length === 0 &&
           newEventsFiltered.length === 0 &&
           initialLoadDone.current &&
