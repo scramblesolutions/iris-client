@@ -43,7 +43,7 @@ export const ImageGridItem = ({
           if (window.innerWidth > 640) {
             setActiveItemIndex(index + i)
           } else {
-            navigate(`/${nip19.npubEncode(event.id)}`)
+            navigate(`/${nip19.noteEncode(event.id)}`)
           }
         }}
         ref={i === urls.length - 1 ? lastElementRef : undefined}
