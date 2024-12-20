@@ -23,7 +23,7 @@ import {onClick, TRUNCATE_LENGTH} from "./utils.ts"
 import FeedItemHeader from "./FeedItemHeader.tsx"
 import FeedItemTitle from "./FeedItemTitle.tsx"
 import RezapHeader from "../RezapHeader.tsx"
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {useLocalState} from "irisdb-hooks"
 import GemHeader from "../GemHeader.tsx"
 import { nip19 } from "nostr-tools"
@@ -161,13 +161,13 @@ function FeedItem({
     <ErrorBoundary>
       {showThreadRoot && (
         <div className="px-4 py-2 text-sm text-base-content/70">
-          <a
-            href={`/${nip19.noteEncode(rootId)}`}
+          <Link
+            to={`/${nip19.noteEncode(rootId)}`}
             onClick={(e) => e.stopPropagation()}
             className="hover:underline"
           >
             View thread root →
-          </a>
+          </Link>
         </div>
       )}
       {event.kind === 1 && showRepliedTo && repliedToEventId && !isRezap(event) && (
