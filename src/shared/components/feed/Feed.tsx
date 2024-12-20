@@ -34,6 +34,7 @@ interface FeedProps {
   forceUpdate?: number
   showEventsByUnknownUsersButton?: boolean
   displayAs?: "list" | "grid"
+  showDisplayAsSelector?: boolean
   onDisplayAsChange?: (display: "list" | "grid") => void
 }
 
@@ -61,6 +62,7 @@ function Feed({
   forceUpdate,
   showEventsByUnknownUsersButton = true,
   displayAs: initialDisplayAs = "list",
+  showDisplayAsSelector = true,
   onDisplayAsChange,
 }: FeedProps) {
   const [displayCount, setDisplayCount] = useHistoryState(
@@ -228,13 +230,15 @@ function Feed({
 
   return (
     <>
-      <DisplayAsSelector
-        activeSelection={displayAs}
-        onSelect={(display) => {
-          setDisplayAs(display)
-          onDisplayAsChange?.(display)
-        }}
-      />
+      {showDisplayAsSelector && (
+        <DisplayAsSelector
+          activeSelection={displayAs}
+          onSelect={(display) => {
+            setDisplayAs(display)
+            onDisplayAsChange?.(display)
+          }}
+        />
+      )}
 
       {newEventsFiltered.length > 0 && (
         <NewEventsButton
@@ -254,9 +258,11 @@ function Feed({
                   key={event.id}
                   event={event}
                   index={index}
-                  setActiveItemIndex={(index) => {
-                    // Implement modal/lightbox logic here
-                  }}
+                  setActiveItemIndex={
+                    (/*index*/) => {
+                      // Implement modal/lightbox logic here
+                    }
+                  }
                 />
               ))}
             </div>

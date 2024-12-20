@@ -17,7 +17,7 @@ export const DisplayAsSelector = ({
     const baseClasses = "border-highlight cursor-pointer flex justify-center flex-1 p-3"
     return activeSelection === displayType
       ? `${baseClasses} border-b border-1`
-      : `${baseClasses} hover:bg-nearly-bg-color text-secondary`
+      : `${baseClasses} text-base-content/70 hover:text-base-content border-b border-1 border-transparent`
   }
 
   if (!show) return null

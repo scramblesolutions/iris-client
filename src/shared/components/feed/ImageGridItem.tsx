@@ -25,42 +25,47 @@ export const ImageGridItem = ({
   const imageMatch = event.content.match(imageEmbed.regex)?.[0]
   const videoMatch = event.content.match(Video.regex)?.[0]
 
-  const url = imageMatch || videoMatch
-  if (!url) return null
+  if (!imageMatch && !videoMatch) return null
 
-  const isVideo = videoMatch
-  const proxyUrl = isVideo ? `https://imgproxy.iris.to/thumbnail/638/${url}` : url
+  const urls = imageMatch
+    ? imageMatch.trim().split(/\s+/)
+    : videoMatch!.trim().split(/\s+/)
 
-  return (
-    <div
-      key={`feed${url}${index}`}
-      className="aspect-square cursor-pointer relative bg-neutral-300 hover:opacity-80"
-      onClick={() => {
-        if (window.innerWidth > 640) {
-          setActiveItemIndex(index)
-        } else {
-          navigate(`/${nip19.npubEncode(event.id)}`)
-        }
-      }}
-      ref={lastElementRef}
-    >
-      <ProxyImg
-        square={true}
-        width={319}
-        src={proxyUrl}
-        alt=""
-        className="w-full h-full object-cover"
-      />
-      {isVideo && (
-        <div className="absolute top-0 right-0 m-2 shadow-md shadow-gray-500">
-          <Icon
-            name="play-square-outline"
-            className="text-white opacity-80 drop-shadow-md"
-          />
-        </div>
-      )}
-    </div>
-  )
+  return urls.map((url, i) => {
+    const isVideo = !imageMatch
+    const proxyUrl = isVideo ? `https://imgproxy.iris.to/thumbnail/638/${url}` : url
+
+    return (
+      <div
+        key={`feed${url}${index}-${i}`}
+        className="aspect-square cursor-pointer relative bg-neutral-300 hover:opacity-80"
+        onClick={() => {
+          if (window.innerWidth > 640) {
+            setActiveItemIndex(index + i)
+          } else {
+            navigate(`/${nip19.npubEncode(event.id)}`)
+          }
+        }}
+        ref={i === urls.length - 1 ? lastElementRef : undefined}
+      >
+        <ProxyImg
+          square={true}
+          width={319}
+          src={proxyUrl}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        {isVideo && (
+          <div className="absolute top-0 right-0 m-2 shadow-md shadow-gray-500">
+            <Icon
+              name="play-square-outline"
+              className="text-white opacity-80 drop-shadow-md"
+            />
+          </div>
+        )}
+      </div>
+    )
+  })
 }
 
 export default ImageGridItem
