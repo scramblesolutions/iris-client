@@ -2,9 +2,9 @@ import {useNavigate} from "react-router-dom"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import {nip19} from "nostr-tools"
 
-import ProxyImg from "@/shared/components/ProxyImg"
 import imageEmbed from "@/shared/components/embed/images/Image"
 import Video from "@/shared/components/embed/video/Video"
+import ProxyImg from "@/shared/components/ProxyImg"
 
 type ImageGridItemProps = {
   event: NDKEvent
@@ -21,16 +21,13 @@ export const ImageGridItem = ({
 }: ImageGridItemProps) => {
   const navigate = useNavigate()
 
-  // Extract media from event
-  const imageTag = event.tags.find((t) => t[0] === "image")?.[1]
-  const videoTag = event.tags.find((t) => t[0] === "video")?.[1]
   const imageMatch = event.content.match(imageEmbed.regex)?.[0]
   const videoMatch = event.content.match(Video.regex)?.[0]
 
-  const url = imageTag || videoTag || imageMatch || videoMatch
+  const url = imageMatch || videoMatch
   if (!url) return null
 
-  const isVideo = videoTag || videoMatch
+  const isVideo = videoMatch
   const proxyUrl = isVideo ? `https://imgproxy.iris.to/thumbnail/638/${url}` : url
 
   return (
