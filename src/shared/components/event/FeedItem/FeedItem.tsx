@@ -26,6 +26,7 @@ import RezapHeader from "../RezapHeader.tsx"
 import {useNavigate} from "react-router-dom"
 import {useLocalState} from "irisdb-hooks"
 import GemHeader from "../GemHeader.tsx"
+import { nip19 } from "nostr-tools"
 
 type FeedItemProps = {
   event?: NDKEvent
@@ -161,7 +162,7 @@ function FeedItem({
       {showThreadRoot && (
         <div className="px-4 py-2 text-sm text-base-content/70">
           <a
-            href={`/e/${rootId}`}
+            href={`/${nip19.noteEncode(rootId)}`}
             onClick={(e) => e.stopPropagation()}
             className="hover:underline"
           >
