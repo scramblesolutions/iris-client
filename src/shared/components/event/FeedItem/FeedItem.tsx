@@ -252,6 +252,8 @@ function FeedItem({
             borderTopFirst={false}
             emptyPlaceholder={null}
             showReplies={showReplies}
+            showDisplayAsSelector={false}
+            displayAs="list"
             showEventsByUnknownUsersButton={!!standalone}
           />
           <FeedItemTitle event={event} />
