@@ -5,6 +5,7 @@ import {nip19} from "nostr-tools"
 import imageEmbed from "@/shared/components/embed/images/Image"
 import Video from "@/shared/components/embed/video/Video"
 import ProxyImg from "@/shared/components/ProxyImg"
+import Icon from "../Icons/Icon"
 
 type ImageGridItemProps = {
   event: NDKEvent
@@ -52,7 +53,10 @@ export const ImageGridItem = ({
       />
       {isVideo && (
         <div className="absolute top-0 right-0 m-2 shadow-md shadow-gray-500">
-          {/* Add your video icon here */}vid
+          <Icon
+            name="play-square-outline"
+            className="text-white opacity-80 drop-shadow-md"
+          />
         </div>
       )}
     </div>

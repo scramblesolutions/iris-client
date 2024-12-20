@@ -1,3 +1,5 @@
+import Icon from "../Icons/Icon"
+
 export type DisplayAs = "list" | "grid"
 
 type DisplaySelectorProps = {
@@ -24,13 +26,11 @@ export const DisplayAsSelector = ({
     <div className="flex mb-px md:mb-1">
       <div className={getClasses("list")} onClick={() => onSelect("list")}>
         <span className="rotate-90">
-          {/* Add your list icon here */}
-          list
+          <Icon name="deck-solid" />
         </span>
       </div>
       <div className={getClasses("grid")} onClick={() => onSelect("grid")}>
-        {/* Add your grid icon here */}
-        grid
+        <Icon name="media" />
       </div>
     </div>
   )
