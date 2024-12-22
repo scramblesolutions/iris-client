@@ -1,8 +1,7 @@
 import {RiArrowLeftSLine, RiArrowRightSLine} from "@remixicon/react"
-import ProxyImg from "@/shared/components/ProxyImg.tsx"
+import PreloadImages from "@/shared/components/media/PreloadImages"
 import {useEffect, useState, MouseEvent, useCallback} from "react"
-import Modal from "@/shared/components/ui/Modal.tsx"
-import Icon from "@/shared/components/Icons/Icon"
+import MediaModal from "@/shared/components/media/MediaModal"
 import ImageComponent from "./ImageComponent"
 import {useSwipeable} from "react-swipeable"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
@@ -54,27 +53,6 @@ function Carousel({images, event}: CarouselProps) {
           className={`h-2 w-2 rounded-full ${index === currentIndex ? "bg-primary" : "bg-gray-300"}`}
         />
       ))}
-    </div>
-  )
-
-  const PreloadImages = ({
-    images,
-    currentIndex,
-    size,
-  }: {
-    images: string[]
-    currentIndex: number
-    size: number | null
-  }) => (
-    <div className="hidden">
-      <ProxyImg
-        src={images[(currentIndex + 1) % images.length]}
-        width={size ?? undefined}
-      />
-      <ProxyImg
-        src={images[(currentIndex - 1 + images.length) % images.length]}
-        width={size ?? undefined}
-      />
     </div>
   )
 
@@ -151,36 +129,23 @@ function Carousel({images, event}: CarouselProps) {
           <CarouselButton direction="left" onClick={prevImage} />
           <CarouselButton direction="right" onClick={nextImage} />
           <ImageIndicators images={images} currentIndex={currentIndex} />
+          <PreloadImages images={images} currentIndex={currentIndex} size={600} />
         </>
       )}
       {showModal && (
-        <Modal hasBackground={false} onClose={onCloseModal}>
-          <button
-            className="btn btn-circle btn-ghost absolute right-2 top-2 focus:outline-none"
-            onClick={() => setShowModal(false)}
-          >
-            <Icon name="close" size={12} />
-          </button>
-          <ProxyImg
-            className="max-h-[100vh] max-w-[100vw] cursor-pointer"
-            src={images[currentIndex]}
-            onClick={() => setShowModal(false)}
+        <>
+          <MediaModal
+            onClose={onCloseModal}
+            onPrev={images.length > 1 ? prevImage : undefined}
+            onNext={images.length > 1 ? nextImage : undefined}
+            mediaUrl={images[currentIndex]}
+            mediaType="image"
+            currentIndex={images.length > 1 ? currentIndex : undefined}
+            totalCount={images.length > 1 ? images.length : undefined}
           />
-          {images.length > 1 && (
-            <div className="absolute top-2 left-2 text-white bg-black bg-opacity-50 px-2 py-1 rounded">
-              {currentIndex + 1} / {images.length}
-            </div>
-          )}
-          {images.length > 1 && (
-            <>
-              <CarouselButton direction="left" onClick={prevImage} />
-              <CarouselButton direction="right" onClick={nextImage} />
-              <PreloadImages images={images} currentIndex={currentIndex} size={null} />
-            </>
-          )}
-        </Modal>
+          <PreloadImages images={images} currentIndex={currentIndex} />
+        </>
       )}
-      <PreloadImages images={images} currentIndex={currentIndex} size={600} />
     </div>
   )
 }

@@ -20,13 +20,13 @@ import {UserContext} from "@/context/UserContext.tsx"
 import Feed from "@/shared/components/feed/Feed.tsx"
 import FeedItemContent from "./FeedItemContent.tsx"
 import {onClick, TRUNCATE_LENGTH} from "./utils.ts"
+import {Link, useNavigate} from "react-router-dom"
 import FeedItemHeader from "./FeedItemHeader.tsx"
 import FeedItemTitle from "./FeedItemTitle.tsx"
 import RezapHeader from "../RezapHeader.tsx"
-import {Link, useNavigate} from "react-router-dom"
 import {useLocalState} from "irisdb-hooks"
 import GemHeader from "../GemHeader.tsx"
-import { nip19 } from "nostr-tools"
+import {nip19} from "nostr-tools"
 
 type FeedItemProps = {
   event?: NDKEvent

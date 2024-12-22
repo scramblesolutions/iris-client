@@ -18,6 +18,8 @@ import Video from "@/shared/components/embed/video/Video"
 import UnknownUserEvents from "./UnknownUserEvents.tsx"
 import {DisplayAsSelector} from "./DisplayAsSelector"
 import NewEventsButton from "./NewEventsButton.tsx"
+import PreloadImages from "../media/PreloadImages"
+import MediaModal from "../media/MediaModal"
 import ImageGridItem from "./ImageGridItem"
 
 interface FeedProps {
@@ -47,6 +49,22 @@ const DefaultEmptyPlaceholder = (
     No posts yet
   </div>
 )
+
+function getMainMediaUrl(event: NDKEvent): {type: "image" | "video"; url: string} {
+  const imageMatch = event.content.match(imageEmbed.regex)
+  if (imageMatch) {
+    const url = imageMatch[0].trim().split(/\s+/)[0]
+    return {type: "image", url}
+  }
+
+  const videoMatch = event.content.match(Video.regex)
+  if (videoMatch) {
+    const url = videoMatch[0].trim().split(/\s+/)[0]
+    return {type: "video", url}
+  }
+
+  return {type: "image", url: ""}
+}
 
 function Feed({
   filters,
@@ -86,6 +104,9 @@ function Feed({
   const [feedFilter] = useLocalState("user/feedFilter", [])
 
   const [displayAs, setDisplayAs] = useLocalState("user/feedDisplayAs", initialDisplayAs)
+
+  const [showModal, setShowModal] = useState(false)
+  const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null)
 
   const showNewEvents = () => {
     newEvents.forEach((event) => {
@@ -228,6 +249,34 @@ function Feed({
     })
   }, [filteredEvents])
 
+  const handlePrevItem = () => {
+    if (activeItemIndex === null) return
+    setActiveItemIndex(Math.max(0, activeItemIndex - 1))
+  }
+
+  const handleNextItem = () => {
+    if (activeItemIndex === null) return
+    setActiveItemIndex(Math.min(mediaEvents.length - 1, activeItemIndex + 1))
+  }
+
+  useEffect(() => {
+    if (!showModal) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        handlePrevItem()
+      } else if (e.key === "ArrowRight") {
+        handleNextItem()
+      } else if (e.key === "Escape") {
+        setShowModal(false)
+        setActiveItemIndex(null)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [showModal, activeItemIndex])
+
   return (
     <>
       {showDisplayAsSelector && (
@@ -249,6 +298,29 @@ function Feed({
         />
       )}
 
+      {showModal && activeItemIndex !== null && (
+        <>
+          <MediaModal
+            onClose={() => {
+              setShowModal(false)
+              setActiveItemIndex(null)
+            }}
+            onPrev={handlePrevItem}
+            onNext={handleNextItem}
+            mediaUrl={getMainMediaUrl(mediaEvents[activeItemIndex]).url}
+            mediaType={getMainMediaUrl(mediaEvents[activeItemIndex]).type}
+            showFeedItem={true}
+            event={mediaEvents[activeItemIndex]}
+            currentIndex={activeItemIndex}
+            totalCount={mediaEvents.length}
+          />
+          <PreloadImages
+            images={mediaEvents.map((event) => getMainMediaUrl(event).url)}
+            currentIndex={activeItemIndex}
+          />
+        </>
+      )}
+
       <div>
         {filteredEvents.length > 0 && (
           <InfiniteScroll onLoadMore={loadMoreItems}>
@@ -259,11 +331,10 @@ function Feed({
                     key={event.id}
                     event={event}
                     index={index}
-                    setActiveItemIndex={
-                      (/*index*/) => {
-                        // Implement modal/lightbox logic here
-                      }
-                    }
+                    setActiveItemIndex={(index) => {
+                      setActiveItemIndex(index)
+                      setShowModal(true)
+                    }}
                   />
                 ))}
               </div>
