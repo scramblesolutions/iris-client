@@ -339,6 +339,7 @@ function Feed({
             totalCount={allMedia.length}
           />
           <PreloadImages
+            key={activeItemIndex}
             images={allMedia.map((m) => m.url)}
             currentIndex={activeItemIndex}
           />
