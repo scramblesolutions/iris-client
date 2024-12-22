@@ -41,7 +41,7 @@ export const ImageGridItem = ({
         className="aspect-square cursor-pointer relative bg-neutral-300 hover:opacity-80"
         onClick={() => {
           if (window.innerWidth > 767) {
-            setActiveItemIndex(index + i)
+            setActiveItemIndex(url)
           } else {
             navigate(`/${nip19.noteEncode(event.id)}`)
           }

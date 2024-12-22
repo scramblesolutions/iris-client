@@ -249,6 +249,37 @@ function Feed({
     })
   }, [filteredEvents])
 
+  const allMedia = useMemo(() => {
+    return mediaEvents.flatMap((event) => {
+      const imageMatches = event.content.match(imageEmbed.regex) || []
+      const videoMatches = event.content.match(Video.regex) || []
+
+      const imageUrls = imageMatches.flatMap((match) =>
+        match
+          .trim()
+          .split(/\s+/)
+          .map((url) => ({
+            type: "image" as const,
+            url,
+            event,
+          }))
+      )
+
+      const videoUrls = videoMatches.flatMap((match) =>
+        match
+          .trim()
+          .split(/\s+/)
+          .map((url) => ({
+            type: "video" as const,
+            url,
+            event,
+          }))
+      )
+
+      return [...imageUrls, ...videoUrls]
+    })
+  }, [mediaEvents])
+
   const handlePrevItem = () => {
     if (activeItemIndex === null) return
     setActiveItemIndex(Math.max(0, activeItemIndex - 1))
@@ -256,7 +287,7 @@ function Feed({
 
   const handleNextItem = () => {
     if (activeItemIndex === null) return
-    setActiveItemIndex(Math.min(mediaEvents.length - 1, activeItemIndex + 1))
+    setActiveItemIndex(Math.min(allMedia.length - 1, activeItemIndex + 1))
   }
 
   useEffect(() => {
@@ -307,15 +338,15 @@ function Feed({
             }}
             onPrev={handlePrevItem}
             onNext={handleNextItem}
-            mediaUrl={getMainMediaUrl(mediaEvents[activeItemIndex]).url}
-            mediaType={getMainMediaUrl(mediaEvents[activeItemIndex]).type}
+            mediaUrl={allMedia[activeItemIndex].url}
+            mediaType={allMedia[activeItemIndex].type}
             showFeedItem={true}
-            event={mediaEvents[activeItemIndex]}
+            event={allMedia[activeItemIndex].event}
             currentIndex={activeItemIndex}
-            totalCount={mediaEvents.length}
+            totalCount={allMedia.length}
           />
           <PreloadImages
-            images={mediaEvents.map((event) => getMainMediaUrl(event).url)}
+            images={allMedia.map((m) => m.url)}
             currentIndex={activeItemIndex}
           />
         </>
@@ -326,17 +357,22 @@ function Feed({
           <InfiniteScroll onLoadMore={loadMoreItems}>
             {displayAs === "grid" ? (
               <div className="grid grid-cols-3 gap-px md:gap-1">
-                {mediaEvents.slice(0, displayCount).map((event, index) => (
-                  <ImageGridItem
-                    key={event.id}
-                    event={event}
-                    index={index}
-                    setActiveItemIndex={(index) => {
-                      setActiveItemIndex(index)
-                      setShowModal(true)
-                    }}
-                  />
-                ))}
+                {mediaEvents.slice(0, displayCount).map((event, index) => {
+                  return (
+                    <ImageGridItem
+                      key={event.id}
+                      event={event}
+                      index={index}
+                      setActiveItemIndex={(clickedUrl) => {
+                        const mediaIndex = allMedia.findIndex(
+                          media => media.event.id === event.id && media.url === clickedUrl
+                        );
+                        setActiveItemIndex(mediaIndex);
+                        setShowModal(true);
+                      }}
+                    />
+                  );
+                })}
               </div>
             ) : (
               <>
