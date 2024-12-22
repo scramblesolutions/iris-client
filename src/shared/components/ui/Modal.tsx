@@ -45,7 +45,6 @@ const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
     }
 
     const handleMouseUp = (e: MouseEvent) => {
-      console.log("mouseup", e.target, modalRef.current, isMouseDownOnBackdrop)
       if (isMouseDownOnBackdrop && modalRef.current && e.target === modalRef.current) {
         e.preventDefault()
         e.stopPropagation()

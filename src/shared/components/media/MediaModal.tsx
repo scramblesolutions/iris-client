@@ -31,7 +31,7 @@ function MediaModal({
   return (
     <Modal hasBackground={false} onClose={onClose}>
       <div className="relative flex w-screen h-screen">
-        <div className="flex-1 relative bg-base-200/90">
+        <div className="flex-1 relative bg-base-200/90 select-none">
           <button
             className="btn btn-circle btn-ghost absolute right-2 top-2 focus:outline-none text-white z-10"
             onClick={onClose}
@@ -39,7 +39,15 @@ function MediaModal({
             <Icon name="close" size={12} />
           </button>
 
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            onClick={(e) => {
+              console.log("MediaModal Clicked:", e.target === e.currentTarget)
+              if (e.target === e.currentTarget) {
+                onClose()
+              }
+            }}
+          >
             {mediaType === "video" ? (
               <video
                 loop
