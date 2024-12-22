@@ -50,22 +50,6 @@ const DefaultEmptyPlaceholder = (
   </div>
 )
 
-function getMainMediaUrl(event: NDKEvent): {type: "image" | "video"; url: string} {
-  const imageMatch = event.content.match(imageEmbed.regex)
-  if (imageMatch) {
-    const url = imageMatch[0].trim().split(/\s+/)[0]
-    return {type: "image", url}
-  }
-
-  const videoMatch = event.content.match(Video.regex)
-  if (videoMatch) {
-    const url = videoMatch[0].trim().split(/\s+/)[0]
-    return {type: "video", url}
-  }
-
-  return {type: "image", url: ""}
-}
-
 function Feed({
   filters,
   displayFilterFn,
@@ -363,7 +347,7 @@ function Feed({
                       key={event.id}
                       event={event}
                       index={index}
-                      setActiveItemIndex={(clickedUrl) => {
+                      setActiveItemIndex={(clickedUrl: string) => {
                         const mediaIndex = allMedia.findIndex(
                           media => media.event.id === event.id && media.url === clickedUrl
                         );

@@ -10,7 +10,7 @@ import Icon from "../Icons/Icon"
 type ImageGridItemProps = {
   event: NDKEvent
   index: number
-  setActiveItemIndex: (index: number) => void
+  setActiveItemIndex: (url: string) => void
   lastElementRef?: React.MutableRefObject<HTMLDivElement>
 }
 
