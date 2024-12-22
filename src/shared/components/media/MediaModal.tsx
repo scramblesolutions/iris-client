@@ -61,6 +61,7 @@ function MediaModal({
                 src={mediaUrl}
                 className="max-w-full max-h-full object-contain"
                 onClick={showFeedItem ? undefined : onClose}
+                key={mediaUrl}
               />
             )}
           </div>
@@ -98,6 +99,7 @@ function MediaModal({
         {showFeedItem && event && (
           <div className="w-[400px] bg-base-100 border-l flex-shrink-0 overflow-y-auto">
             <FeedItem
+              key={event.id}
               event={event}
               asReply={false}
               showRepliedTo={true}
