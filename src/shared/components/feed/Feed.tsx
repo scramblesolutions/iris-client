@@ -87,7 +87,16 @@ function Feed({
 
   const [feedFilter] = useLocalState("user/feedFilter", [])
 
-  const [displayAs, setDisplayAs] = useLocalState("user/feedDisplayAs", initialDisplayAs)
+  const [persistedDisplayAs, setPersistedDisplayAs] = useLocalState(
+    "user/feedDisplayAs",
+    initialDisplayAs
+  )
+
+  // Use persisted value only when selector is shown, otherwise use initialDisplayAs
+  const displayAs = showDisplayAsSelector ? persistedDisplayAs : initialDisplayAs
+  const setDisplayAs = (value: "list" | "grid") => {
+    setPersistedDisplayAs(value)
+  }
 
   const [showModal, setShowModal] = useState(false)
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null)
@@ -349,13 +358,14 @@ function Feed({
                       index={index}
                       setActiveItemIndex={(clickedUrl: string) => {
                         const mediaIndex = allMedia.findIndex(
-                          media => media.event.id === event.id && media.url === clickedUrl
-                        );
-                        setActiveItemIndex(mediaIndex);
-                        setShowModal(true);
+                          (media) =>
+                            media.event.id === event.id && media.url === clickedUrl
+                        )
+                        setActiveItemIndex(mediaIndex)
+                        setShowModal(true)
                       }}
                     />
-                  );
+                  )
                 })}
               </div>
             ) : (

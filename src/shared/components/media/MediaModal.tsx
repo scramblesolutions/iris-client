@@ -30,10 +30,15 @@ function MediaModal({
 }: MediaModalProps) {
   return (
     <Modal hasBackground={false} onClose={onClose}>
-      <div
-        className={`relative flex ${showFeedItem ? "w-[90vw] max-w-[1400px] h-[90vh]" : "w-screen h-screen"}`}
-      >
-        <div className="flex-1 relative bg-black">
+      <div className="relative flex w-screen h-screen">
+        <div className="flex-1 relative bg-base-200/90">
+          <button
+            className="btn btn-circle btn-ghost absolute right-2 top-2 focus:outline-none text-white z-10"
+            onClick={onClose}
+          >
+            <Icon name="close" size={12} />
+          </button>
+
           <div className="absolute inset-0 flex items-center justify-center">
             {mediaType === "video" ? (
               <video
@@ -80,15 +85,6 @@ function MediaModal({
               {currentIndex + 1} / {totalCount}
             </div>
           )}
-
-          {!showFeedItem && (
-            <button
-              className="btn btn-circle btn-ghost absolute right-2 top-2 focus:outline-none text-white z-10"
-              onClick={onClose}
-            >
-              <Icon name="close" size={12} />
-            </button>
-          )}
         </div>
 
         {showFeedItem && event && (
@@ -96,8 +92,8 @@ function MediaModal({
             <FeedItem
               event={event}
               asReply={false}
-              showRepliedTo={false}
-              showReplies={0}
+              showRepliedTo={true}
+              showReplies={Infinity}
             />
           </div>
         )}
