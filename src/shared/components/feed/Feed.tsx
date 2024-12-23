@@ -243,7 +243,14 @@ function Feed({
   }, [filteredEvents])
 
   const allMedia = useMemo(() => {
-    return mediaEvents.flatMap((event) => {
+    // We'll store media items in a Map keyed by the combination of (event.id + url)
+    // so we only pick each unique event+URL pair once.
+    const deduplicated = new Map<
+      string,
+      {type: "image" | "video"; url: string; event: NDKEvent}
+    >()
+
+    mediaEvents.forEach((event) => {
       const imageMatches = event.content.match(imageEmbed.regex) || []
       const videoMatches = event.content.match(Video.regex) || []
 
@@ -269,8 +276,17 @@ function Feed({
           }))
       )
 
-      return [...imageUrls, ...videoUrls]
+      for (const item of [...imageUrls, ...videoUrls]) {
+        // event.id + item.url ensures we don't double up across the same event
+        // you could just do item.url if you want to deduplicate across *all* events
+        const uniqueId = `${event.id}_${item.url}`
+        if (!deduplicated.has(uniqueId)) {
+          deduplicated.set(uniqueId, item)
+        }
+      }
     })
+
+    return Array.from(deduplicated.values())
   }, [mediaEvents])
 
   const handlePrevItem = () => {
