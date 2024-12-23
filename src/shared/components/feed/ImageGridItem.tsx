@@ -17,7 +17,6 @@ type ImageGridItemProps = {
 
 let blurNSFW = true
 
-// Initialize blurNSFW from localState outside the component
 localState.get("settings/blurNSFW").once((value) => {
   if (typeof value === "boolean") {
     blurNSFW = value
