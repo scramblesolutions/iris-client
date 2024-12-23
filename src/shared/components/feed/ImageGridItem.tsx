@@ -5,6 +5,7 @@ import {nip19} from "nostr-tools"
 import imageEmbed from "@/shared/components/embed/images/Image"
 import Video from "@/shared/components/embed/video/Video"
 import ProxyImg from "@/shared/components/ProxyImg"
+import {localState} from "irisdb"
 import Icon from "../Icons/Icon"
 
 type ImageGridItemProps = {
@@ -13,6 +14,15 @@ type ImageGridItemProps = {
   setActiveItemIndex: (url: string) => void
   lastElementRef?: React.MutableRefObject<HTMLDivElement>
 }
+
+let blurNSFW = true
+
+// Initialize blurNSFW from localState outside the component
+localState.get("settings/blurNSFW").once((value) => {
+  if (typeof value === "boolean") {
+    blurNSFW = value
+  }
+})
 
 export const ImageGridItem = ({
   event,
@@ -35,10 +45,15 @@ export const ImageGridItem = ({
     const isVideo = !imageMatch
     const proxyUrl = isVideo ? `https://imgproxy.iris.to/thumbnail/638/${url}` : url
 
+    const shouldBlur =
+      blurNSFW &&
+      (!!event.content.toLowerCase().includes("#nsfw") ||
+        event.tags.some((t) => t[0] === "content-warning"))
+
     return (
       <div
         key={`feed${url}${index}-${i}`}
-        className="aspect-square cursor-pointer relative bg-neutral-300 hover:opacity-80"
+        className={`aspect-square cursor-pointer relative bg-neutral-300 hover:opacity-80 ${shouldBlur ? "blur-xl" : ""}`}
         onClick={() => {
           if (window.innerWidth > 767) {
             setActiveItemIndex(url)

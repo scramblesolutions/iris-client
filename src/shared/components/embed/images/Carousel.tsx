@@ -12,14 +12,15 @@ interface CarouselProps {
   event?: NDKEvent
 }
 
-function Carousel({images, event}: CarouselProps) {
-  let blurNSFW = true
-  localState.get("settings/blurNSFW").on((value) => {
-    if (typeof value === "boolean") {
-      blurNSFW = value
-    }
-  })
+let blurNSFW = true
 
+localState.get("settings/blurNSFW").once((value) => {
+  if (typeof value === "boolean") {
+    blurNSFW = value
+  }
+})
+
+function Carousel({images, event}: CarouselProps) {
   const CarouselButton = ({
     direction,
     onClick,

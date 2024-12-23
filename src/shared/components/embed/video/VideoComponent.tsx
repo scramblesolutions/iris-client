@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react"
-import {useLocalState} from "irisdb-hooks"
 import classNames from "classnames"
+import {localState} from "irisdb"
 
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 
@@ -9,9 +9,15 @@ interface VideoComponentProps {
   event: NDKEvent | undefined
 }
 
-function VideoComponent({match, event}: VideoComponentProps) {
-  const [blurNSFW] = useLocalState("settings/blurNSFW", true)
+let blurNSFW = true
 
+localState.get("settings/blurNSFW").once((value) => {
+  if (typeof value === "boolean") {
+    blurNSFW = value
+  }
+})
+
+function VideoComponent({match, event}: VideoComponentProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
   const [blur, setBlur] = useState(
