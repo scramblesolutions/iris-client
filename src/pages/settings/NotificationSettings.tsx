@@ -202,7 +202,7 @@ const NotificationSettings = () => {
         </div>
         <div className="mt-4">
           <b>Debug: /subscriptions Response</b>
-          <pre className="bg-base-200 p-4 rounded overflow-auto">
+          <pre className="bg-base-200 p-4 rounded overflow-auto whitespace-pre-wrap break-all">
             {subscriptionsData || "Loading..."}
           </pre>
         </div>
