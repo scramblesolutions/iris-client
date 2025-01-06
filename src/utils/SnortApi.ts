@@ -36,6 +36,10 @@ export default class SnortApi {
     })
   }
 
+  getSubscriptions() {
+    return this.#getJsonAuthd<any>("subscriptions")
+  }
+
   async #getJsonAuthd<T>(
     path: string,
     method?: "GET" | string,
