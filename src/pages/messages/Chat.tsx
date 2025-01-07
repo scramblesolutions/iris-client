@@ -1,5 +1,5 @@
 import MiddleHeader from "@/shared/components/header/MiddleHeader"
-import {serializeChannelState} from "nostr-double-ratchet"
+import {KeyType, Sender, serializeChannelState} from "nostr-double-ratchet"
 import {useEffect, useMemo, useState, useRef} from "react"
 import {UserRow} from "@/shared/components/user/UserRow"
 import {SortedMap} from "@/utils/SortedMap/SortedMap"
@@ -11,6 +11,7 @@ import MessageForm from "./MessageForm"
 import {PublicKey} from "irisdb-nostr"
 import {getChannel} from "./Channels"
 import {localState} from "irisdb"
+import { subscribeToAuthorDMNotifications } from "@/utils/notifications"
 
 const comparator = (a: [string, MessageType], b: [string, MessageType]) =>
   a[1].time - b[1].time
@@ -132,6 +133,9 @@ const Chat = () => {
       }
       localState.get("channels").get(hexId).get("messages").get(message.id).put(msg)
       saveState()
+      const current = channel.getNostrSenderKeypair(Sender.Them, KeyType.Current)
+      const next = channel.getNostrSenderKeypair(Sender.Them, KeyType.Next)
+      subscribeToAuthorDMNotifications([current.publicKey, next.publicKey])
     })
 
     return () => {

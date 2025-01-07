@@ -96,6 +96,44 @@ export async function maybeShowPushNotification(event: NDKEvent) {
   }
 }
 
+export async function subscribeToAuthorDMNotifications(authors: string[]) {
+  console.log("Subscribing to DM notifications for authors:", authors)
+  const api = new SnortApi()
+  const currentSubscriptions = await api.getSubscriptions()
+  console.log("Current subscriptions:", currentSubscriptions)
+
+  // Find existing DM subscription
+  const dmSubscription = Object.entries(currentSubscriptions).find(
+    ([, sub]) => sub.filter.kinds?.length === 1 && sub.filter.kinds[0] === 4
+  )
+  console.log("Found DM subscription:", dmSubscription)
+
+  if (dmSubscription) {
+    const [id, sub] = dmSubscription
+    const existingAuthors = sub.filter.authors || []
+    console.log("Existing authors:", existingAuthors)
+
+    const newAuthors = authors.filter((author) => !existingAuthors.includes(author))
+    console.log("New authors to add:", newAuthors)
+
+    if (newAuthors.length > 0) {
+      console.log("Updating subscription with new authors")
+      await api.updateSubscription(id, {
+        filter: {
+          ...sub.filter,
+          authors: [...existingAuthors, ...newAuthors],
+        },
+      })
+    }
+  } else {
+    console.log("Creating new DM subscription")
+    await api.createSubscription({
+      kinds: [4],
+      authors,
+    })
+  }
+}
+
 export async function subscribeToNotifications() {
   if (!CONFIG.features.pushNotifications) {
     return

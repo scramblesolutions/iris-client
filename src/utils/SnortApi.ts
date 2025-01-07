@@ -8,6 +8,23 @@ export interface PushNotifications {
   auth: string
 }
 
+export interface Subscription {
+  webhooks: any[]
+  web_push_subscriptions: PushNotifications[]
+  filter: {
+    ids?: string[]
+    authors?: string[]
+    kinds: number[]
+    search?: string
+    "#p"?: string[]
+  }
+  subscriber: string
+}
+
+export interface SubscriptionResponse {
+  [key: string]: Subscription
+}
+
 /**
  * Can be used for web push notifications
  */
@@ -37,7 +54,7 @@ export default class SnortApi {
   }
 
   getSubscriptions() {
-    return this.#getJsonAuthd<any>("subscriptions")
+    return this.#getJsonAuthd<SubscriptionResponse>("subscriptions")
   }
 
   async #getJsonAuthd<T>(
@@ -98,6 +115,18 @@ export default class SnortApi {
     } else {
       throw new Error("Invalid response")
     }
+  }
+
+  updateSubscription(id: string, subscription: Partial<Subscription>) {
+    return this.#getJsonAuthd<void>(`subscriptions/${id}`, "POST", subscription)
+  }
+
+  createSubscription(filter: Subscription["filter"]) {
+    return this.#getJsonAuthd<{id: string; status: string}>("subscriptions", "POST", {
+      webhooks: [],
+      web_push_subscriptions: [],
+      filter,
+    })
   }
 }
 

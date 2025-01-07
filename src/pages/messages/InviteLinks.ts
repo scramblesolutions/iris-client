@@ -1,13 +1,16 @@
 import {
   Channel,
   InviteLink,
+  KeyType,
   NostrFilter,
+  Sender,
   serializeChannelState,
 } from "nostr-double-ratchet"
 import {hexToBytes} from "@noble/hashes/utils"
 import {localState, Unsubscribe} from "irisdb"
 import {VerifiedEvent} from "nostr-tools"
 import {ndk} from "irisdb-nostr"
+import { subscribeToAuthorDMNotifications } from "@/utils/notifications"
 
 const inviteLinks = new Map<string, InviteLink>()
 const subscriptions = new Map<string, Unsubscribe>()
@@ -69,6 +72,9 @@ function listen() {
               .get("channels")
               .get(identity || "asdf")
               .put(serializeChannelState(channel.state))
+            const current = channel.getNostrSenderKeypair(Sender.Them, KeyType.Current)
+            const next = channel.getNostrSenderKeypair(Sender.Them, KeyType.Next)
+            subscribeToAuthorDMNotifications([current.publicKey, next.publicKey])
           }
         )
         subscriptions.set(id, unsubscribe)
