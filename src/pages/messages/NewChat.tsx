@@ -7,9 +7,9 @@ import {hexToBytes} from "@noble/hashes/utils"
 import {useNavigate} from "react-router-dom"
 import {getInviteLinks} from "./InviteLinks"
 import {useLocalState} from "irisdb-hooks"
+import {nip19} from "nostr-tools"
 import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
-import { nip19 } from "nostr-tools"
 
 const NewChat = () => {
   const navigate = useNavigate()
@@ -96,13 +96,23 @@ const NewChat = () => {
       <div className="m-4 p-4 md:p-8 rounded-lg bg-base-100 flex flex-col gap-6">
         <div>
           <h2 className="text-xl font-semibold mb-4">Have someone&apos;s invite link?</h2>
-          <input
-            type="text"
-            className="input input-bordered w-96 max-w-full"
-            placeholder="Paste invite link"
-            value={inviteLinkInput}
-            onChange={handleInviteLinkInput}
-          />
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              className="input input-bordered w-96 max-w-full"
+              placeholder="Paste invite link"
+              value={inviteLinkInput}
+              onChange={handleInviteLinkInput}
+            />
+            <QRCodeButton
+              data=""
+              showQRCode={false}
+              onScanSuccess={(data) =>
+                handleInviteLinkInput({target: {value: data}} as any)
+              }
+              icon="qr"
+            />
+          </div>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-4">Share your invite link</h2>
