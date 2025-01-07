@@ -16,6 +16,11 @@ import {Helmet} from "react-helmet"
 
 const openedAt = Math.floor(Date.now() / 1000)
 
+interface ServiceWorkerMessage {
+  type: "NAVIGATE_REACT_ROUTER"
+  url: string
+}
+
 const Layout = () => {
   const [newPostOpen, setNewPostOpen] = useLocalState("home/newPostOpen", false)
   const [enableAnalytics] = useLocalState("settings/enableAnalytics", true)
@@ -48,6 +53,20 @@ const Layout = () => {
       trackEvent("pageview")
     }
   }, [location])
+
+  useEffect(() => {
+    const handleServiceWorkerMessage = (event: MessageEvent<ServiceWorkerMessage>) => {
+      if (event.data?.type === "NAVIGATE_REACT_ROUTER") {
+        const url = new URL(event.data.url)
+        navigate(url.pathname + url.search + url.hash)
+      }
+    }
+
+    navigator.serviceWorker.addEventListener("message", handleServiceWorkerMessage)
+    return () => {
+      navigator.serviceWorker.removeEventListener("message", handleServiceWorkerMessage)
+    }
+  }, [navigate])
 
   return (
     <div className="relative flex flex-col w-full max-w-screen-xl min-h-screen overscroll-none">

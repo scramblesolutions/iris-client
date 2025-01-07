@@ -6,11 +6,11 @@ import {
   Sender,
   serializeChannelState,
 } from "nostr-double-ratchet"
+import {showNotification, subscribeToAuthorDMNotifications} from "@/utils/notifications"
 import {hexToBytes} from "@noble/hashes/utils"
 import {localState, Unsubscribe} from "irisdb"
 import {VerifiedEvent} from "nostr-tools"
 import {ndk} from "irisdb-nostr"
-import { subscribeToAuthorDMNotifications } from "@/utils/notifications"
 
 const inviteLinks = new Map<string, InviteLink>()
 const subscriptions = new Map<string, Unsubscribe>()
@@ -44,8 +44,9 @@ const nostrSubscribe = (filter: NostrFilter, onEvent: (e: VerifiedEvent) => void
 }
 
 function listen() {
+  let channels = {}
+  localState.get("channels").on((c) => (channels = c))
   if (user?.publicKey && user?.privateKey) {
-    console.log("howdy", user)
     for (const id of inviteLinks.keys()) {
       if (!subscriptions.has(id)) {
         const inviteLink = inviteLinks.get(id)!
@@ -67,14 +68,25 @@ function listen() {
           decrypt,
           nostrSubscribe,
           (channel: Channel, identity?: string) => {
-            console.log("channel", identity, channel)
-            localState
-              .get("channels")
-              .get(identity || "asdf")
-              .put(serializeChannelState(channel.state))
+            const id = identity || "asdf"
             const current = channel.getNostrSenderKeypair(Sender.Them, KeyType.Current)
             const next = channel.getNostrSenderKeypair(Sender.Them, KeyType.Next)
             subscribeToAuthorDMNotifications([current.publicKey, next.publicKey])
+            localState.get("channels").on((c) => console.log("channels", c))
+            setTimeout(() => {
+              if (!channels || !Object.keys(channels).includes(id)) {
+                console.log("new channel", identity)
+                localState
+                  .get("channels")
+                  .get(id)
+                  .put(serializeChannelState(channel.state))
+                showNotification("New chat via invite link", {
+                  data: {
+                    url: `/messages/${identity}`,
+                  },
+                })
+              }
+            }, 1000)
           }
         )
         subscriptions.set(id, unsubscribe)

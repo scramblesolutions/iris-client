@@ -155,18 +155,41 @@ interface PushData {
 }
 
 self.addEventListener("notificationclick", (event) => {
-  const data = event.notification.data as PushData
+  const data = event.notification.data
+  event.notification.close()
 
   event.waitUntil(
-    (async () => {
-      const windows = await self.clients.matchAll({type: "window"})
-      // Extract pathname from the url
-      const url = new URL(data.url).pathname
+    (async function () {
+      if (!data?.url) return
+      const url = data.url.startsWith("/")
+        ? `${self.location.origin}${data.url}`
+        : data.url
 
-      for (const client of windows) {
-        if (client.url === url && "focus" in client) return client.focus()
+      const allClients = await self.clients.matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      })
+
+      for (const client of allClients) {
+        const clientUrl = new URL(client.url)
+
+        // Check if same origin or whatever condition you like
+        if (clientUrl.origin === new URL(url).origin) {
+          await client.focus()
+
+          // Tell the page to navigate internally with React Router
+          client.postMessage({
+            type: "NAVIGATE_REACT_ROUTER",
+            url,
+          })
+          return
+        }
       }
-      if (self.clients.openWindow) return self.clients.openWindow(url)
+
+      // If no open window matches, open a new one
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(url)
+      }
     })()
   )
 })

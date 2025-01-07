@@ -50,12 +50,16 @@ interface NotificationAction {
   icon?: string
 }
 
-export const showNotification = (title: string, options?: NotificationOptions) => {
+export const showNotification = (
+  title: string,
+  options?: NotificationOptions,
+  nag = false
+) => {
   if (window.Notification?.permission === "granted") {
     navigator.serviceWorker.ready.then(async function (serviceWorker) {
       await serviceWorker.showNotification(title, options)
     })
-  } else {
+  } else if (nag) {
     alert("Notifications are not allowed. Please enable them first.")
   }
 }
@@ -92,6 +96,7 @@ export async function maybeShowPushNotification(event: NDKEvent) {
       icon: "/favicon.png",
       image: "/img/zap.png",
       sticky: false,
+      data: {url: "/notifications"},
     })
   }
 }
