@@ -155,40 +155,44 @@ interface PushData {
 }
 
 self.addEventListener("notificationclick", (event) => {
-  const data = event.notification.data
+  const notificationData = event.notification.data
   event.notification.close()
+  console.debug("Notification clicked:", notificationData)
 
   event.waitUntil(
     (async function () {
-      if (!data?.url) return
-      const url = data.url.startsWith("/")
-        ? `${self.location.origin}${data.url}`
-        : data.url
+      // Handle both direct URL and nested event data structure
+      const path = notificationData?.url || notificationData?.event?.url
+      if (!path) {
+        console.debug("No URL in notification data")
+        return
+      }
+
+      // If it's already a full URL, use URL constructor, otherwise just use the path
+      const pathname = path.startsWith("http") ? new URL(path).pathname : path
+      const fullUrl = `${self.location.origin}${pathname}`
+      console.debug("Navigating to:", fullUrl)
 
       const allClients = await self.clients.matchAll({
         type: "window",
         includeUncontrolled: true,
       })
+      console.debug("Found clients:", allClients.length)
 
-      for (const client of allClients) {
-        const clientUrl = new URL(client.url)
-
-        // Check if same origin or whatever condition you like
-        if (clientUrl.origin === new URL(url).origin) {
-          await client.focus()
-
-          // Tell the page to navigate internally with React Router
-          client.postMessage({
-            type: "NAVIGATE_REACT_ROUTER",
-            url,
-          })
-          return
-        }
+      if (allClients.length > 0) {
+        const client = allClients[0]
+        await client.focus()
+        console.debug("Sending navigation message to client")
+        await client.postMessage({
+          type: "NAVIGATE_REACT_ROUTER",
+          url: fullUrl,
+        })
+        return
       }
 
-      // If no open window matches, open a new one
+      console.debug("No clients found, opening new window")
       if (self.clients.openWindow) {
-        return self.clients.openWindow(url)
+        return self.clients.openWindow(fullUrl)
       }
     })()
   )
