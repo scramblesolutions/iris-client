@@ -8,7 +8,7 @@ import {
 } from "nostr-double-ratchet"
 import {showNotification, subscribeToAuthorDMNotifications} from "@/utils/notifications"
 import {hexToBytes} from "@noble/hashes/utils"
-import {localState, Unsubscribe} from "irisdb"
+import {JsonValue, localState, Unsubscribe} from "irisdb"
 import {VerifiedEvent} from "nostr-tools"
 import {ndk} from "irisdb-nostr"
 
@@ -44,7 +44,7 @@ const nostrSubscribe = (filter: NostrFilter, onEvent: (e: VerifiedEvent) => void
 }
 
 function listen() {
-  let channels = {}
+  let channels: JsonValue
   localState.get("channels").on((c) => (channels = c))
   if (user?.publicKey && user?.privateKey) {
     for (const id of inviteLinks.keys()) {
