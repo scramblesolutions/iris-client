@@ -4,12 +4,12 @@ import {NostrEvent} from "nostr-social-graph"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import {ndk, PublicKey} from "irisdb-nostr"
 
-const useMutes = (pubKey: string) => {
+const useMutes = (pubKey?: string) => {
   const pubKeyHex = useMemo(
-    () => (pubKey ? new PublicKey(pubKey).toString() : ""),
+    () => (pubKey ? new PublicKey(pubKey).toString() : socialGraph().getRoot()),
     [pubKey]
   )
-  const [follows, setFollows] = useState<string[]>([
+  const [mutes, setMutes] = useState<string[]>([
     ...socialGraph().getMutedByUser(pubKeyHex),
   ])
 
@@ -36,7 +36,7 @@ const useMutes = (pubKey: string) => {
                   socialGraph().getFollowDistance(a) - socialGraph().getFollowDistance(b)
                 )
               })
-            setFollows(pubkeys)
+            setMutes(pubkeys)
           }
         })
         return () => {
@@ -48,7 +48,7 @@ const useMutes = (pubKey: string) => {
     }
   }, [pubKey])
 
-  return follows
+  return mutes
 }
 
 export default useMutes

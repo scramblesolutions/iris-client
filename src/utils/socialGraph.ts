@@ -213,12 +213,16 @@ export const socialGraphLoaded = new Promise((resolve) => {
     if (publicKey) {
       sub?.stop()
       sub = ndk().subscribe({
-        kinds: [3],
+        kinds: [3, 10000],
         authors: [publicKey],
         limit: 1,
       })
       let latestTime = 0
       sub?.on("event", (ev) => {
+        if (ev.kind === 10000) {
+          handleSocialGraphEvent(ev as NostrEvent)
+          return
+        }
         if (typeof ev.created_at !== "number" || ev.created_at < latestTime) {
           return
         }

@@ -21,6 +21,7 @@ import NewEventsButton from "./NewEventsButton.tsx"
 import PreloadImages from "../media/PreloadImages"
 import MediaModal from "../media/MediaModal"
 import ImageGridItem from "./ImageGridItem"
+import useMutes from "@/shared/hooks/useMutes.ts"
 
 interface FeedProps {
   filters: NDKFilter
@@ -78,6 +79,7 @@ function Feed({
   const eventsRef = useRef(feedCache.get(cacheKey) || new SortedMap([], eventComparator))
   const oldestRef = useRef<number | undefined>()
   const initialLoadDone = useRef<boolean>(eventsRef.current.size > 0)
+  const mutes = useMutes()
 
   const [hideEventsByUnknownUsers] = useLocalState(
     "settings/hideEventsByUnknownUsers",
@@ -188,6 +190,7 @@ function Feed({
     (event: NDKEvent) => {
       if (!event.created_at) return false
       if (displayFilterFn && !displayFilterFn(event)) return false
+      if (mutes.includes(event.pubkey)) return false
       if (
         hideEventsByUnknownUsers &&
         socialGraph().getFollowDistance(event.pubkey) >= 5 &&
@@ -197,7 +200,7 @@ function Feed({
       }
       return true
     },
-    [displayFilterFn, myPubKey, hideEventsByUnknownUsers, filters.authors]
+    [displayFilterFn, myPubKey, hideEventsByUnknownUsers, filters.authors, mutes]
   )
 
   const filteredEvents = useMemo(() => {
