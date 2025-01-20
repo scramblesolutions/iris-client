@@ -1,9 +1,8 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react"
 import {Hexpubkey, NDKEvent} from "@nostr-dev-kit/ndk"
-import {ndk} from "irisdb-nostr"
 
 import LoadingComponent from "@/shared/components/ux/LoadingComponent.tsx"
-import {muteUser, unmuteUser} from "@/shared/services/FeedServices.tsx"
+import {muteUser, unmuteUser} from "@/shared/services/Mute.tsx"
 import {UserRow} from "@/shared/components/user/UserRow.tsx"
 
 import ReportReasonForm from "./ReportReasonForm.tsx"
@@ -20,9 +19,6 @@ function MuteUser({user, event, setMuting, muteState}: MuteUserProps) {
   const [loadingMute, setLoadingMute] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
   const [reported, setReported] = useState<boolean>(false)
-
-  // Placeholder for missing variable
-  const mutedList: string[] = [] // TODO: Define or import the actual mutedList
 
   // Placeholder for missing function
   const setMutedList = (list: string[]) => {
@@ -44,7 +40,7 @@ function MuteUser({user, event, setMuting, muteState}: MuteUserProps) {
 
   const handleMuteUser = async () => {
     setLoadingMute(true)
-    muteUser(ndk(), mutedList, user)
+    muteUser(user)
       .then((newList) => {
         setLoadingMute(false)
         localStorage.setItem("mutedIds", JSON.stringify(newList))
@@ -55,11 +51,11 @@ function MuteUser({user, event, setMuting, muteState}: MuteUserProps) {
   const handleUnmuteUser = async () => {
     try {
       setLoadingMute(true)
-      await unmuteUser(ndk(), mutedList, user)
+      await unmuteUser(user)
 
       setLoadingMute(true)
 
-      await unmuteUser(ndk(), mutedList, user)
+      await unmuteUser(user)
         .then((newList) => {
           setMutedList(newList)
           setMuted(false)

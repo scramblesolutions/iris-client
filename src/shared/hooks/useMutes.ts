@@ -4,19 +4,19 @@ import {NostrEvent} from "nostr-social-graph"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import {ndk, PublicKey} from "irisdb-nostr"
 
-const useFollows = (pubKey: string, includeSelf = false) => {
+const useMutes = (pubKey: string) => {
   const pubKeyHex = useMemo(
     () => (pubKey ? new PublicKey(pubKey).toString() : ""),
     [pubKey]
   )
   const [follows, setFollows] = useState<string[]>([
-    ...socialGraph().getFollowedByUser(pubKeyHex, includeSelf),
+    ...socialGraph().getMutedByUser(pubKeyHex),
   ])
 
   useEffect(() => {
     try {
       if (pubKey) {
-        const filter = {kinds: [3], authors: [pubKeyHex]}
+        const filter = {kinds: [10000], authors: [pubKeyHex]}
 
         const sub = ndk().subscribe(filter)
 
@@ -36,9 +36,6 @@ const useFollows = (pubKey: string, includeSelf = false) => {
                   socialGraph().getFollowDistance(a) - socialGraph().getFollowDistance(b)
                 )
               })
-            if (includeSelf) {
-              pubkeys.unshift(pubKey)
-            }
             setFollows(pubkeys)
           }
         })
@@ -49,9 +46,9 @@ const useFollows = (pubKey: string, includeSelf = false) => {
     } catch (error) {
       console.warn(error)
     }
-  }, [pubKey, includeSelf])
+  }, [pubKey])
 
   return follows
 }
 
-export default useFollows
+export default useMutes

@@ -29,18 +29,21 @@ async function initializeInstance(publicKey?: string) {
         data as SerializedSocialGraph
       )
       console.log("Loaded social graph of size", instance.size())
+      console.log("socialgraph2", data)
     } catch (e) {
       console.error("error deserializing", e)
       await localForage.removeItem("socialGraph")
       const {default: preCrawledGraph} = await import(
         "nostr-social-graph/data/socialGraph.json"
       )
+      console.log("socialgraph1", preCrawledGraph)
       instance = new SocialGraph(
         publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
         preCrawledGraph as unknown as SerializedSocialGraph
       )
     }
   } else {
+    console.log("no social graph found")
     await localForage.removeItem("socialGraph")
     const {default: preCrawledGraph} = await import(
       "nostr-social-graph/data/socialGraph.json"
@@ -49,16 +52,16 @@ async function initializeInstance(publicKey?: string) {
       publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
       preCrawledGraph as unknown as SerializedSocialGraph
     )
+    console.log("socialgraph1", preCrawledGraph)
   }
 }
 
 const MAX_SOCIAL_GRAPH_SERIALIZE_SIZE = 1000000
 const throttledSave = throttle(async () => {
   try {
-    await localForage.setItem(
-      "socialGraph",
-      instance.serialize(MAX_SOCIAL_GRAPH_SERIALIZE_SIZE)
-    )
+    const serialized = instance.serialize(MAX_SOCIAL_GRAPH_SERIALIZE_SIZE)
+    console.log("socialgraph3", serialized)
+    await localForage.setItem("socialGraph", serialized)
     console.log("Saved social graph of size", instance.size())
   } catch (e) {
     console.error("failed to serialize SocialGraph or UniqueIds", e)
@@ -66,7 +69,7 @@ const throttledSave = throttle(async () => {
   }
 }, 10000)
 
-export const handleFollowEvent = (evs: NostrEvent | Array<NostrEvent>) => {
+export const handleSocialGraphEvent = (evs: NostrEvent | Array<NostrEvent>) => {
   instance.handleEvent(evs)
   throttledSave()
 }
@@ -158,7 +161,7 @@ export function getFollowLists(myPubKey: string, missingOnly = true, upToDistanc
       },
       {closeOnEose: true}
     )
-    sub.on("event", (e) => handleFollowEvent(e))
+    sub.on("event", (e) => handleSocialGraphEvent(e))
   }
 
   const processBatch = () => {
@@ -220,7 +223,7 @@ export const socialGraphLoaded = new Promise((resolve) => {
           return
         }
         latestTime = ev.created_at
-        handleFollowEvent(ev as NostrEvent)
+        handleSocialGraphEvent(ev as NostrEvent)
         queueMicrotask(() => getMissingFollowLists(publicKey))
         throttledRecalculate()
       })

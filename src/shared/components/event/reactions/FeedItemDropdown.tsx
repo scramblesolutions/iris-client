@@ -2,9 +2,8 @@ import {useLocalState, usePublicState} from "irisdb-hooks"
 import {useEffect, useMemo, useState} from "react"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import {nip19} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
 
-import {unmuteUser} from "@/shared/services/FeedServices.tsx"
+import {unmuteUser} from "@/shared/services/Mute.tsx"
 
 import Reactions from "@/shared/components/event/reactions/Reactions.tsx"
 import Dropdown from "@/shared/components/ui/Dropdown.tsx"
@@ -52,7 +51,7 @@ function FeedItemDropdown({event, onClose}: FeedItemDropdownProps) {
   }
   const handleMute = async () => {
     if (muted) {
-      await unmuteUser(ndk(), mutedList, event.pubkey)
+      await unmuteUser(event.pubkey)
     } else {
       setMuting(true)
     }

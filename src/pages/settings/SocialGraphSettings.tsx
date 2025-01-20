@@ -9,6 +9,7 @@ import {useState, useEffect} from "react"
 
 function SocialGraphSettings() {
   const [socialGraphSize, setSocialGraphSize] = useState(socialGraph().size())
+  console.log('socialGraphSize', socialGraphSize)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,6 +35,9 @@ function SocialGraphSettings() {
         </div>
         <div>
           <b>Follow relationships</b>: {socialGraphSize.follows}
+        </div>
+        <div>
+          <b>Mutes</b>: {socialGraphSize.mutes}
         </div>
         <div>
           <b>Users by follow distance</b>:
