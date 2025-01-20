@@ -1,11 +1,10 @@
-import {Dispatch, SetStateAction, useContext, useEffect, useState} from "react"
+import {Dispatch, SetStateAction, useEffect, useState} from "react"
 import {Hexpubkey, NDKEvent} from "@nostr-dev-kit/ndk"
 import {ndk} from "irisdb-nostr"
 
 import LoadingComponent from "@/shared/components/ux/LoadingComponent.tsx"
 import {muteUser, unmuteUser} from "@/shared/services/FeedServices.tsx"
 import {UserRow} from "@/shared/components/user/UserRow.tsx"
-import {UserContext} from "@/context/UserContext.tsx"
 
 import ReportReasonForm from "./ReportReasonForm.tsx"
 
@@ -18,14 +17,22 @@ interface MuteUserProps {
 }
 
 function MuteUser({user, event, setMuting, muteState}: MuteUserProps) {
-  let {pubkey} = useContext(UserContext)
-  if (!pubkey) pubkey = localStorage.getItem("pubkey")
-
-  const {mutedList, setMutedList, setPublishingError} = useContext(UserContext)
-
   const [loadingMute, setLoadingMute] = useState<boolean>(false)
   const [muted, setMuted] = useState<boolean>(false)
   const [reported, setReported] = useState<boolean>(false)
+
+  // Placeholder for missing variable
+  const mutedList: string[] = [] // TODO: Define or import the actual mutedList
+
+  // Placeholder for missing function
+  const setMutedList = (list: string[]) => {
+    console.log(list) // TODO: Implement the actual logic
+  }
+
+  // Placeholder for missing function
+  const setPublishingError = (error: boolean) => {
+    console.log(error) // TODO: Implement the actual logic
+  } // TODO: Define or import the actual setPublishingError function
 
   useEffect(() => {
     setMuted(muteState)

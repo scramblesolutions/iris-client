@@ -1,6 +1,4 @@
-import NDK, {Hexpubkey, NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
-
-import {getTags} from "@/utils/nostr.ts"
+import NDK, {Hexpubkey, NDKEvent} from "@nostr-dev-kit/ndk"
 
 export const muteUser = async (
   ndk: NDK,
@@ -68,51 +66,4 @@ export const submitReport = async (
     console.warn("Unable to send report", error)
     return Promise.reject(error)
   }
-}
-
-export const publishReply = async (
-  ndk: NDK,
-  content: string,
-  event: NDKEvent,
-  dhtPubKey: string
-) => {
-  const parentNotes = getTags("p", event.tags)
-  const isRootReply = parentNotes.length === 0 ? true : false
-
-  const replyEvent = new NDKEvent(ndk)
-  replyEvent.kind = 1
-  replyEvent.content = content
-  replyEvent.tags = [
-    ["e", event.id, "", isRootReply ? "root" : "reply"],
-    ["p", event.pubkey],
-    ["dht_key", dhtPubKey],
-  ]
-
-  for (const t of parentNotes) {
-    replyEvent.tags.push(["p", t])
-  }
-
-  try {
-    await replyEvent.publish()
-  } catch (error) {
-    console.warn("Unable to send reply", error)
-    return Promise.reject(error)
-  }
-}
-
-export const fetchReplies = async (ndk: NDK, event: NDKEvent): Promise<Set<NDKEvent>> => {
-  const replyFilter: NDKFilter = {
-    kinds: [1],
-    ["#e"]: [event.id],
-  }
-
-  return await ndk
-    .fetchEvents(replyFilter, {closeOnEose: true})
-    .then((replies) => {
-      return replies
-    })
-    .catch((error) => {
-      console.warn("Error fetching replies", error)
-      return new Set()
-    })
 }

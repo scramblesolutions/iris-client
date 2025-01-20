@@ -1,5 +1,5 @@
-import {useContext, useEffect, useMemo, useState, useRef} from "react"
 import {eventsByIdCache, addSeenEventId} from "@/utils/memcache.ts"
+import {useEffect, useMemo, useState, useRef} from "react"
 import {NDKEvent} from "@nostr-dev-kit/ndk"
 import classNames from "classnames"
 
@@ -16,7 +16,6 @@ import RepostHeader from "@/shared/components/event/RepostHeader.tsx"
 import FeedItemActions from "../reactions/FeedItemActions.tsx"
 import FeedItemPlaceholder from "./FeedItemPlaceholder.tsx"
 import ErrorBoundary from "../../ui/ErrorBoundary.tsx"
-import {UserContext} from "@/context/UserContext.tsx"
 import Feed from "@/shared/components/feed/Feed.tsx"
 import FeedItemContent from "./FeedItemContent.tsx"
 import {onClick, TRUNCATE_LENGTH} from "./utils.ts"
@@ -69,12 +68,11 @@ function FeedItem({
   const [event, setEvent] = useState<NDKEvent | undefined>(
     initialEvent || eventsByIdCache.get(eventIdHex)
   )
-  const {mutedList} = useContext(UserContext)
   const [repostedEvent, setRepostedEvent] = useState<NDKEvent>(
     eventsByIdCache.get(eventIdHex)
   )
   const [isPostHidden, setIsPostHidden] = useState<boolean>(false)
-  const isAuthorMuted = event && mutedList.includes(event.pubkey)
+  const isAuthorMuted = event && false // mutedList.includes(event.pubkey)
 
   const [notesTheme] = useLocalState("user/notesTheme", CONFIG.defaultNotesTheme)
 

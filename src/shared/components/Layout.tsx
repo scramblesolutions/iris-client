@@ -7,7 +7,6 @@ import Header from "@/shared/components/header/Header.tsx"
 import {socialGraphLoaded} from "@/utils/socialGraph"
 import Modal from "@/shared/components/ui/Modal.tsx"
 import Footer from "@/shared/components/Footer.tsx"
-import {UserProvider} from "@/context/UserContext"
 import ErrorBoundary from "./ui/ErrorBoundary"
 import {trackEvent} from "@/utils/SnortApi"
 import {useLocalState} from "irisdb-hooks"
@@ -70,39 +69,37 @@ const Layout = () => {
 
   return (
     <div className="relative flex flex-col w-full max-w-screen-xl min-h-screen overscroll-none">
-      <UserProvider>
-        <Header />
-        <div className="flex relative min-h-screen flex-1 overscroll-none">
-          <NavSideBar />
-          <div className="flex-1 min-h-screen py-16 md:py-0 overscroll-none mb-[env(safe-area-inset-bottom)]">
-            <ErrorBoundary>
-              {isSocialGraphLoaded ? <Outlet /> : <div>Loading...</div>}
-            </ErrorBoundary>
-          </div>
+      <Header />
+      <div className="flex relative min-h-screen flex-1 overscroll-none">
+        <NavSideBar />
+        <div className="flex-1 min-h-screen py-16 md:py-0 overscroll-none mb-[env(safe-area-inset-bottom)]">
+          <ErrorBoundary>
+            {isSocialGraphLoaded ? <Outlet /> : <div>Loading...</div>}
+          </ErrorBoundary>
         </div>
-        <ScrollRestoration
-          getKey={(location) => {
-            const paths = ["/"]
-            return paths.includes(location.pathname) ? location.pathname : location.key
-          }}
-        />
-        {newPostOpen && (
-          <Modal onClose={() => setNewPostOpen(!newPostOpen)} hasBackground={false}>
-            <div
-              className="w-full max-w-prose rounded-2xl bg-base-100"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <NoteCreator handleClose={() => setNewPostOpen(!newPostOpen)} />
-            </div>
-          </Modal>
-        )}
-        {showLoginDialog && (
-          <Modal onClose={() => setShowLoginDialog(false)}>
-            <LoginDialog />
-          </Modal>
-        )}
-        <Footer /> {/* Add Footer component here */}
-      </UserProvider>
+      </div>
+      <ScrollRestoration
+        getKey={(location) => {
+          const paths = ["/"]
+          return paths.includes(location.pathname) ? location.pathname : location.key
+        }}
+      />
+      {newPostOpen && (
+        <Modal onClose={() => setNewPostOpen(!newPostOpen)} hasBackground={false}>
+          <div
+            className="w-full max-w-prose rounded-2xl bg-base-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <NoteCreator handleClose={() => setNewPostOpen(!newPostOpen)} />
+          </div>
+        </Modal>
+      )}
+      {showLoginDialog && (
+        <Modal onClose={() => setShowLoginDialog(false)}>
+          <LoginDialog />
+        </Modal>
+      )}
+      <Footer /> {/* Add Footer component here */}
       <Helmet titleTemplate={`%s / ${CONFIG.appName}`} defaultTitle={CONFIG.appName}>
         <title>{CONFIG.appName}</title>
       </Helmet>

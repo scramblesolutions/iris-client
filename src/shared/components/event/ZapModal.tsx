@@ -2,7 +2,6 @@ import {
   ChangeEvent,
   Dispatch,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
   FormEvent,
@@ -15,7 +14,6 @@ import QRCode from "qrcode"
 import {requestProvider} from "@getalby/bitcoin-connect-react"
 import zapAnimation from "@/assets/zap-animation.gif"
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {UserContext} from "@/context/UserContext"
 import {useLocalState} from "irisdb-hooks"
 import {ndk} from "irisdb-nostr"
 
@@ -38,7 +36,7 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
 
   const [isWalletConnect] = useLocalState("user/walletConnect", false)
 
-  const {zapRefresh, setZapRefresh} = useContext(UserContext)
+  const [zapRefresh, setZapRefresh] = useState(false)
 
   const handleZapAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     setZapAmount(event.target.value)
