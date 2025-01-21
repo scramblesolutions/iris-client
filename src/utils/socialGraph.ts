@@ -151,7 +151,7 @@ export function getFollowLists(myPubKey: string, missingOnly = true, upToDistanc
   const fetchBatch = (authors: string[]) => {
     const sub = ndk().subscribe(
       {
-        kinds: [3],
+        kinds: [3, 10000],
         authors: authors,
       },
       {closeOnEose: true}

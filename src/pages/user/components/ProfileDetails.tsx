@@ -67,6 +67,7 @@ function ProfileDetails({
   }, [pubKey, navigate])
 
   const mutes = useMutes()
+  useMutes(hexPub) // update their mute list
   const isMuted = useMemo(() => mutes.includes(hexPub), [mutes, hexPub])
 
   useEffect(() => {
