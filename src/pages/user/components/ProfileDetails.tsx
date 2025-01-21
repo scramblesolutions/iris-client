@@ -6,6 +6,7 @@ import {nip19} from "nostr-tools"
 import {ndk} from "irisdb-nostr"
 
 import HyperText from "@/shared/components/HyperText.tsx"
+import MutedBy from "@/shared/components/user/MutedBy"
 import Icon from "@/shared/components/Icons/Icon"
 import {unmuteUser} from "@/shared/services/Mute"
 import useMutes from "@/shared/hooks/useMutes"
@@ -105,6 +106,7 @@ function ProfileDetails({
           </button>
         </div>
       )}
+      <MutedBy pubkey={hexPub} />
       {displayProfile?.nip05 && (
         <div className={nip05valid === null ? "invisible" : "visible"}>
           {renderProfileField(
