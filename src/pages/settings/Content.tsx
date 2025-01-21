@@ -13,6 +13,8 @@ function Content() {
     "settings/youtubePrivacyMode",
     CONFIG.defaultSettings.youtubePrivacyMode
   )
+  const [hidePostsByMutedMoreThanFollowed, setHidePostsByMutedMoreThanFollowed] =
+    useLocalState<boolean>("settings/hidePostsByMutedMoreThanFollowed", true)
   const mutes = useMutes()
   const [showMutedUsers, setShowMutedUsers] = useState<boolean>(false)
 
@@ -40,6 +42,16 @@ function Content() {
           checked={youtubePrivacyMode}
           onChange={() => handleToggleChange(setYoutubePrivacyMode, youtubePrivacyMode)}
           label="Replace Youtube links with an invidious instance for better privacy"
+        />
+        <SettingToggle
+          checked={hidePostsByMutedMoreThanFollowed}
+          onChange={() =>
+            handleToggleChange(
+              setHidePostsByMutedMoreThanFollowed,
+              hidePostsByMutedMoreThanFollowed
+            )
+          }
+          label="Hide posts by users who are muted more than followed"
         />
       </div>
       <div className="mt-6">

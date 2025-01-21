@@ -103,6 +103,11 @@ function Feed({
   const [showModal, setShowModal] = useState(false)
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null)
 
+  const [hidePostsByMutedMoreThanFollowed] = useLocalState(
+    "settings/hidePostsByMutedMoreThanFollowed",
+    true
+  )
+
   const showNewEvents = () => {
     newEvents.forEach((event) => {
       if (!eventsRef.current.has(event.id)) {
@@ -192,7 +197,7 @@ function Feed({
       if (displayFilterFn && !displayFilterFn(event)) return false
       if (mutes.includes(event.pubkey)) return false
       if (
-        // hide if not following and user has more mutes than followers
+        hidePostsByMutedMoreThanFollowed &&
         socialGraph().getFollowDistance(event.pubkey) > 1 &&
         socialGraph().getUserMutedBy(event.pubkey).size >
           socialGraph().getFollowersByUser(event.pubkey).size
@@ -215,7 +220,7 @@ function Feed({
       }
       return true
     },
-    [displayFilterFn, myPubKey, hideEventsByUnknownUsers, filters.authors, mutes]
+    [displayFilterFn, myPubKey, hideEventsByUnknownUsers, filters.authors, mutes, hidePostsByMutedMoreThanFollowed]
   )
 
   const filteredEvents = useMemo(() => {
