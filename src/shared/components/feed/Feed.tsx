@@ -19,9 +19,9 @@ import UnknownUserEvents from "./UnknownUserEvents.tsx"
 import {DisplayAsSelector} from "./DisplayAsSelector"
 import NewEventsButton from "./NewEventsButton.tsx"
 import PreloadImages from "../media/PreloadImages"
+import useMutes from "@/shared/hooks/useMutes.ts"
 import MediaModal from "../media/MediaModal"
 import ImageGridItem from "./ImageGridItem"
-import useMutes from "@/shared/hooks/useMutes.ts"
 
 interface FeedProps {
   filters: NDKFilter
@@ -191,6 +191,21 @@ function Feed({
       if (!event.created_at) return false
       if (displayFilterFn && !displayFilterFn(event)) return false
       if (mutes.includes(event.pubkey)) return false
+      if (
+        // hide if not following and user has more mutes than followers
+        socialGraph().getFollowDistance(event.pubkey) > 1 &&
+        socialGraph().getUserMutedBy(event.pubkey).size >
+          socialGraph().getFollowersByUser(event.pubkey).size
+      ) {
+        console.log(
+          "hidden by mutes",
+          event.pubkey,
+          event.id,
+          socialGraph().getUserMutedBy(event.pubkey).size,
+          socialGraph().getFollowersByUser(event.pubkey).size
+        )
+        return false
+      }
       if (
         hideEventsByUnknownUsers &&
         socialGraph().getFollowDistance(event.pubkey) >= 5 &&

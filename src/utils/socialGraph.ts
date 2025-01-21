@@ -28,20 +28,16 @@ async function initializeInstance(publicKey?: string) {
         publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
         data as SerializedSocialGraph
       )
-      console.log("Loaded social graph of size", instance.size())
-      console.log("socialgraph2", data)
     } catch (e) {
       console.error("error deserializing", e)
       await localForage.removeItem("socialGraph")
       const {default: preCrawledGraph} = await import(
         "nostr-social-graph/data/socialGraph.json"
       )
-      console.log("socialgraph1", preCrawledGraph)
       instance = new SocialGraph(
         publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
         preCrawledGraph as unknown as SerializedSocialGraph
       )
-      console.log("socialgraph12", instance.size())
     }
   } else {
     console.log("no social graph found")
@@ -53,8 +49,6 @@ async function initializeInstance(publicKey?: string) {
       publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
       preCrawledGraph as unknown as SerializedSocialGraph
     )
-    console.log("socialgraph1", preCrawledGraph)
-    console.log("socialgraph12", instance.size())
   }
 }
 
@@ -62,7 +56,6 @@ const MAX_SOCIAL_GRAPH_SERIALIZE_SIZE = 1000000
 const throttledSave = throttle(async () => {
   try {
     const serialized = instance.serialize(MAX_SOCIAL_GRAPH_SERIALIZE_SIZE)
-    console.log("socialgraph3", serialized)
     await localForage.setItem("socialGraph", serialized)
     console.log("Saved social graph of size", instance.size())
   } catch (e) {
@@ -72,7 +65,6 @@ const throttledSave = throttle(async () => {
 }, 10000)
 
 export const handleSocialGraphEvent = (evs: NostrEvent | Array<NostrEvent>) => {
-  console.log("before handleEvent", instance)
   instance.handleEvent(evs)
   throttledSave()
 }
