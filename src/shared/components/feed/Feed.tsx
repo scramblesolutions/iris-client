@@ -195,8 +195,10 @@ function Feed({
     (event: NDKEvent) => {
       if (!event.created_at) return false
       if (displayFilterFn && !displayFilterFn(event)) return false
-      if (mutes.includes(event.pubkey)) return false
+      const inAuthors = localFilter.authors?.includes(event.pubkey)
+      if (!inAuthors && mutes.includes(event.pubkey)) return false
       if (
+        !inAuthors &&
         hidePostsByMutedMoreThanFollowed &&
         socialGraph().getFollowDistance(event.pubkey) > 1 &&
         socialGraph().getUserMutedBy(event.pubkey).size >
