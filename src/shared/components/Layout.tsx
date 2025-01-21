@@ -48,7 +48,8 @@ const Layout = () => {
 
   useEffect(() => {
     const isMessagesRoute = location.pathname.startsWith("/messages/")
-    if (CONFIG.features.analytics && enableAnalytics && !isMessagesRoute) {
+    const isSearchRoute = location.pathname.startsWith("/search/")
+    if (CONFIG.features.analytics && enableAnalytics && !isMessagesRoute && !isSearchRoute) {
       trackEvent("pageview")
     }
   }, [location])

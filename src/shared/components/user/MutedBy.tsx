@@ -22,9 +22,6 @@ export default function MutedBy({pubkey}: {pubkey: string}) {
 
   const [showMuterList, setShowMuterList] = useState<boolean>(false)
 
-  console.log("isOverMuted", isOverMuted)
-  console.log("totalMutedBy", totalMutedBy)
-
   const renderMutedByLinks = () => {
     return mutedByArray.map((a, index) => (
       <Fragment key={a}>
