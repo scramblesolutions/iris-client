@@ -41,6 +41,7 @@ async function initializeInstance(publicKey?: string) {
         publicKey ?? DEFAULT_SOCIAL_GRAPH_ROOT,
         preCrawledGraph as unknown as SerializedSocialGraph
       )
+      console.log("socialgraph12", instance.size())
     }
   } else {
     console.log("no social graph found")
@@ -53,6 +54,7 @@ async function initializeInstance(publicKey?: string) {
       preCrawledGraph as unknown as SerializedSocialGraph
     )
     console.log("socialgraph1", preCrawledGraph)
+    console.log("socialgraph12", instance.size())
   }
 }
 
@@ -70,6 +72,7 @@ const throttledSave = throttle(async () => {
 }, 10000)
 
 export const handleSocialGraphEvent = (evs: NostrEvent | Array<NostrEvent>) => {
+  console.log("before handleEvent", instance)
   instance.handleEvent(evs)
   throttledSave()
 }
@@ -207,7 +210,6 @@ const throttledRecalculate = throttle(
 
 export const socialGraphLoaded = new Promise((resolve) => {
   localState.get("user/publicKey").on(async (publicKey?: string) => {
-    console.log("publicKey", publicKey)
     await initializeInstance(publicKey)
     resolve(true)
     if (publicKey) {

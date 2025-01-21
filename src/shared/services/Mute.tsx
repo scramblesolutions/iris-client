@@ -14,6 +14,8 @@ export const muteUser = async (pubkey: string): Promise<string[]> => {
   muteEvent.kind = 10000
   muteEvent.tags = newTags
 
+  console.log("created mute event", muteEvent)
+
   socialGraph().handleEvent(muteEvent as NostrEvent)
 
   try {

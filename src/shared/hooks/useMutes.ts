@@ -15,7 +15,7 @@ const useMutes = (pubKey?: string) => {
 
   useEffect(() => {
     try {
-      if (pubKey) {
+      if (pubKeyHex) {
         const filter = {kinds: [10000], authors: [pubKeyHex]}
 
         const sub = ndk().subscribe(filter)
@@ -26,6 +26,9 @@ const useMutes = (pubKey?: string) => {
           event.ndk = ndk()
           socialGraph().handleEvent(event as NostrEvent)
           if (event && event.created_at && event.created_at > latestTimestamp) {
+            console.log(
+              `Mute event received: ${event.kind} ${event.pubkey} ${event.created_at}`
+            )
             latestTimestamp = event.created_at
             handleSocialGraphEvent(event as NostrEvent)
             const pubkeys = event
@@ -46,7 +49,7 @@ const useMutes = (pubKey?: string) => {
     } catch (error) {
       console.warn(error)
     }
-  }, [pubKey])
+  }, [pubKeyHex])
 
   return mutes
 }
