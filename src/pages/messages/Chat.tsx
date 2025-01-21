@@ -1,5 +1,6 @@
-import MiddleHeader from "@/shared/components/header/MiddleHeader"
 import {KeyType, Sender, serializeChannelState} from "nostr-double-ratchet"
+import {subscribeToAuthorDMNotifications} from "@/utils/notifications"
+import MiddleHeader from "@/shared/components/header/MiddleHeader"
 import {useEffect, useMemo, useState, useRef} from "react"
 import {UserRow} from "@/shared/components/user/UserRow"
 import {SortedMap} from "@/utils/SortedMap/SortedMap"
@@ -11,7 +12,6 @@ import MessageForm from "./MessageForm"
 import {PublicKey} from "irisdb-nostr"
 import {getChannel} from "./Channels"
 import {localState} from "irisdb"
-import { subscribeToAuthorDMNotifications } from "@/utils/notifications"
 
 const comparator = (a: [string, MessageType], b: [string, MessageType]) =>
   a[1].time - b[1].time

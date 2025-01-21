@@ -220,7 +220,14 @@ function Feed({
       }
       return true
     },
-    [displayFilterFn, myPubKey, hideEventsByUnknownUsers, filters.authors, mutes, hidePostsByMutedMoreThanFollowed]
+    [
+      displayFilterFn,
+      myPubKey,
+      hideEventsByUnknownUsers,
+      filters.authors,
+      mutes,
+      hidePostsByMutedMoreThanFollowed,
+    ]
   )
 
   const filteredEvents = useMemo(() => {

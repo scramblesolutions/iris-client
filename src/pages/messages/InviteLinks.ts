@@ -7,8 +7,8 @@ import {
   serializeChannelState,
 } from "nostr-double-ratchet"
 import {showNotification, subscribeToAuthorDMNotifications} from "@/utils/notifications"
-import {hexToBytes} from "@noble/hashes/utils"
 import {JsonValue, localState, Unsubscribe} from "irisdb"
+import {hexToBytes} from "@noble/hashes/utils"
 import {VerifiedEvent} from "nostr-tools"
 import {ndk} from "irisdb-nostr"
 

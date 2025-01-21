@@ -113,7 +113,6 @@ function FeedItemDropdown({event, onClose}: FeedItemDropdownProps) {
               <MuteUser
                 muteState={muted}
                 user={event.pubkey}
-                event={event}
                 setMuting={setMuting}
                 setMutedState={setMuted}
               />

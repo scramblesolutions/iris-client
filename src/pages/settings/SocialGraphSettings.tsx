@@ -9,7 +9,7 @@ import {useState, useEffect} from "react"
 
 function SocialGraphSettings() {
   const [socialGraphSize, setSocialGraphSize] = useState(socialGraph().size())
-  console.log('socialGraphSize', socialGraphSize)
+  console.log("socialGraphSize", socialGraphSize)
 
   useEffect(() => {
     const interval = setInterval(() => {
