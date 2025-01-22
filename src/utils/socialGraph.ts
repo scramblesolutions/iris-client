@@ -1,13 +1,13 @@
 import {SocialGraph, NostrEvent, SerializedSocialGraph} from "nostr-social-graph"
 import {NDKEvent, NDKSubscription, NDKUserProfile} from "@nostr-dev-kit/ndk"
 import profileJson from "nostr-social-graph/data/profileData.json"
+import {VerifiedEvent} from "nostr-tools"
 import {profileCache} from "./memcache"
 import localForage from "localforage"
 import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
 import {throttle} from "lodash"
 import Fuse from "fuse.js"
-import { VerifiedEvent } from "nostr-tools"
 
 const DEFAULT_SOCIAL_GRAPH_ROOT =
   "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0"
@@ -295,11 +295,27 @@ export const downloadLargeGraph = () => {
 
 export const loadAndMerge = () => loadFromFile(true)
 
-export const shouldSocialHide = (pubKey: string) => {
-  return (
-    instance.getFollowDistance(pubKey) > 1 &&
-    instance.mutedByFriendsCount(pubKey) > instance.followedByFriendsCount(pubKey)
-  )
+export const shouldSocialHide = (pubKey: string): boolean => {
+  const userStats = instance.stats(pubKey)
+
+  // Sort numeric distances ascending
+  const distances = Object.keys(userStats)
+    .map(Number)
+    .sort((a, b) => a - b)
+
+  // Look at the smallest distance that has any followers/muters
+  for (const distance of distances) {
+    const {followers, muters} = userStats[distance]
+    if (followers + muters === 0) {
+      continue // No one at this distance has an opinion; skip
+    }
+
+    // If, at the closest distance with an opinion, muters >= followers => hide
+    return muters >= followers
+  }
+
+  // If no one anywhere follows or mutes, default to hide
+  return true
 }
 
 export default () => instance
