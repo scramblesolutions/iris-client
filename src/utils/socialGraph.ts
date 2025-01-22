@@ -7,6 +7,7 @@ import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
 import {throttle} from "lodash"
 import Fuse from "fuse.js"
+import { VerifiedEvent } from "nostr-tools"
 
 const DEFAULT_SOCIAL_GRAPH_ROOT =
   "4523be58d395b1b196a9b8c82b038b6895cb02b683d0c253a955068dba1facd0"
@@ -156,7 +157,7 @@ export function getFollowLists(myPubKey: string, missingOnly = true, upToDistanc
       },
       {closeOnEose: true}
     )
-    sub.on("event", (e) => handleSocialGraphEvent(e))
+    sub.on("event", (e) => handleSocialGraphEvent(e as unknown as VerifiedEvent))
   }
 
   const processBatch = () => {

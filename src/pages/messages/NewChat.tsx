@@ -7,7 +7,7 @@ import {hexToBytes} from "@noble/hashes/utils"
 import {useNavigate} from "react-router-dom"
 import {getInviteLinks} from "./InviteLinks"
 import {useLocalState} from "irisdb-hooks"
-import {nip19} from "nostr-tools"
+import {nip19, VerifiedEvent} from "nostr-tools"
 import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
 
@@ -52,11 +52,7 @@ const NewChat = () => {
       const encrypt = myPrivKey
         ? hexToBytes(myPrivKey)
         : async (plaintext: string, pubkey: string) => {
-            // @ts-expect-error: nip44 exists at runtime but is not in the type definition
-
             if (window.nostr?.nip44) {
-              // @ts-expect-error: nip44 exists at runtime but is not in the type definition
-
               return window.nostr.nip44.encrypt(plaintext, pubkey)
             }
             throw new Error("No nostr extension or private key")
@@ -64,7 +60,7 @@ const NewChat = () => {
       const {channel, event} = await inviteLink.acceptInvite(
         (filter, onEvent) => {
           const sub = ndk().subscribe(filter)
-          sub.on("event", onEvent)
+          sub.on("event", (e) => onEvent(e as unknown as VerifiedEvent))
           return () => sub.stop()
         },
         myPubKey,

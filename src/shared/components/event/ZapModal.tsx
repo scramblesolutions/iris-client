@@ -6,7 +6,7 @@ import {
   useState,
   FormEvent,
 } from "react"
-import {NDKEvent, zapInvoiceFromEvent} from "@nostr-dev-kit/ndk"
+import {LnPayCb, NDKEvent, zapInvoiceFromEvent} from "@nostr-dev-kit/ndk"
 import {Check, ContentCopy} from "@mui/icons-material"
 import * as bolt11 from "bolt11"
 import QRCode from "qrcode"
@@ -16,6 +16,7 @@ import zapAnimation from "@/assets/zap-animation.gif"
 import Modal from "@/shared/components/ui/Modal.tsx"
 import {useLocalState} from "irisdb-hooks"
 import {ndk} from "irisdb-nostr"
+import {NDKZapper} from "@nostr-dev-kit/ndk"
 
 interface ZapModalProps {
   onClose: () => void
@@ -63,26 +64,41 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
     }
     try {
       const amount = Number(zapAmount) * 1000
-      const bolt11PaymentRequest = await event.zap(amount)
 
-      if (bolt11PaymentRequest) {
+      const lnPay: LnPayCb = async ({ pr }) => {
         if (isWalletConnect) {
           const provider = await requestProvider()
-          provider.sendPayment(bolt11PaymentRequest)
+          await provider.sendPayment(pr)
           setZapped(true)
           setZapRefresh(!zapRefresh)
+          return undefined
         } else {
           // no Nostr wallet connect set
-          setBolt11Invoice(bolt11PaymentRequest)
+          setBolt11Invoice(pr)
           const img = document.getElementById("qr-image") as HTMLImageElement
 
-          QRCode.toDataURL(bolt11PaymentRequest, function (error, url) {
+          QRCode.toDataURL(pr, function (error, url) {
             if (error) console.error("Error generating QR code:", error)
             else img.src = url
           })
           setShowQRCode(true)
+          return undefined
         }
       }
+
+      const zapper = new NDKZapper(
+        event,
+        amount,
+        'msat',
+        {
+          comment: '',
+          ndk: ndk(),
+          lnPay,
+          tags: [['e', event.id]]
+        }
+      )
+
+      zapper.zap()
     } catch (error) {
       console.warn("Zap failed: ", error)
       if (error instanceof Error && error.message.includes("No zap endpoint found")) {

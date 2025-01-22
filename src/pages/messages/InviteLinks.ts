@@ -38,7 +38,7 @@ export function getInviteLinks(
 const nostrSubscribe = (filter: NostrFilter, onEvent: (e: VerifiedEvent) => void) => {
   const sub = ndk().subscribe(filter)
   sub.on("event", (event) => {
-    onEvent(event)
+    onEvent(event as unknown as VerifiedEvent)
   })
   return () => sub.stop()
 }
@@ -53,9 +53,7 @@ function listen() {
         const decrypt = user.privateKey
           ? hexToBytes(user.privateKey)
           : async (cipherText: string, pubkey: string) => {
-              // @ts-expect-error: nip44 exists at runtime but is not in the type definition
               if (window.nostr?.nip44) {
-                // @ts-expect-error: nip44 exists at runtime but is not in the type definition
                 const result = window.nostr.nip44.decrypt(cipherText, pubkey)
                 if (!result || typeof result !== "string") {
                   throw new Error("Failed to decrypt")
