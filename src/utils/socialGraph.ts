@@ -294,4 +294,11 @@ export const downloadLargeGraph = () => {
 
 export const loadAndMerge = () => loadFromFile(true)
 
+export const shouldSocialHide = (pubKey: string) => {
+  return (
+    instance.getFollowDistance(pubKey) > 1 &&
+    instance.mutedByFriendsCount(pubKey) > instance.followedByFriendsCount(pubKey)
+  )
+}
+
 export default () => instance

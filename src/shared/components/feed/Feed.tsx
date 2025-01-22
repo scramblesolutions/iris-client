@@ -2,7 +2,7 @@ import {useEffect, useMemo, useRef, useState, useCallback, ReactNode} from "reac
 import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
 
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
-import socialGraph, {shouldHideEvent} from "@/utils/socialGraph"
+import socialGraph, {shouldHideEvent, shouldSocialHide} from "@/utils/socialGraph"
 import useHistoryState from "@/shared/hooks/useHistoryState"
 import {SortedMap} from "@/utils/SortedMap/SortedMap"
 import FeedItem from "../event/FeedItem/FeedItem"
@@ -200,9 +200,7 @@ function Feed({
       if (
         !inAuthors &&
         hidePostsByMutedMoreThanFollowed &&
-        socialGraph().getFollowDistance(event.pubkey) > 1 &&
-        socialGraph().getUserMutedBy(event.pubkey).size >
-          socialGraph().getFollowersByUser(event.pubkey).size
+        shouldSocialHide(event.pubkey)
       ) {
         console.log(
           "hidden by mutes",

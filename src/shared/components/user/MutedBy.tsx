@@ -17,8 +17,9 @@ export default function MutedBy({pubkey}: {pubkey: string}) {
     }
   }, [pubkey])
 
-  const followersCount = socialGraph().getFollowersByUser(pubkey).size
-  const isOverMuted = totalMutedBy > followersCount
+  const isOverMuted =
+    socialGraph().followedByFriendsCount(pubkey) <
+    socialGraph().mutedByFriendsCount(pubkey)
 
   const [showMuterList, setShowMuterList] = useState<boolean>(false)
 
