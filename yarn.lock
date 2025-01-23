@@ -6229,10 +6229,10 @@ nostr-double-ratchet@^0.0.1:
   dependencies:
     nostr-tools "^2.7.2"
 
-nostr-social-graph@1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/nostr-social-graph/-/nostr-social-graph-1.0.15.tgz#b8ff55c37793399e6fc68200bed589e7ff3797ed"
-  integrity sha512-EyUcKxIFeruz2NNoyVX07OnfWXy/WBP2YazvCbc4PIlwQzNkEF7/4GWe/d2orLX7Hf8uSYLPQONXSr9yn10Hug==
+nostr-social-graph@1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/nostr-social-graph/-/nostr-social-graph-1.0.16.tgz#c398cb7183af3641855aa93238d0c83debf04669"
+  integrity sha512-KD7bnsMMpfvT4E1n3At23Ul3kELz8HJmcM5GGYjIYctNTj03QJOkb++GHC6/6dQaZf7ESTxleDI2klXLHS0MeQ==
 
 nostr-tools@^1.17.0:
   version "1.17.0"
