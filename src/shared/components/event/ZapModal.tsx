@@ -14,9 +14,9 @@ import QRCode from "qrcode"
 import {requestProvider} from "@getalby/bitcoin-connect-react"
 import zapAnimation from "@/assets/zap-animation.gif"
 import Modal from "@/shared/components/ui/Modal.tsx"
+import {NDKZapper} from "@nostr-dev-kit/ndk"
 import {useLocalState} from "irisdb-hooks"
 import {ndk} from "irisdb-nostr"
-import {NDKZapper} from "@nostr-dev-kit/ndk"
 
 interface ZapModalProps {
   onClose: () => void
@@ -65,7 +65,7 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
     try {
       const amount = Number(zapAmount) * 1000
 
-      const lnPay: LnPayCb = async ({ pr }) => {
+      const lnPay: LnPayCb = async ({pr}) => {
         if (isWalletConnect) {
           const provider = await requestProvider()
           await provider.sendPayment(pr)
@@ -86,17 +86,12 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
         }
       }
 
-      const zapper = new NDKZapper(
-        event,
-        amount,
-        'msat',
-        {
-          comment: '',
-          ndk: ndk(),
-          lnPay,
-          tags: [['e', event.id]]
-        }
-      )
+      const zapper = new NDKZapper(event, amount, "msat", {
+        comment: "",
+        ndk: ndk(),
+        lnPay,
+        tags: [["e", event.id]],
+      })
 
       zapper.zap()
     } catch (error) {

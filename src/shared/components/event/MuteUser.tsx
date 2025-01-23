@@ -44,7 +44,9 @@ function MuteUser({user, setMuting, muteState}: MuteUserProps) {
       const followedUsers = socialGraph().getFollowedByUser(socialGraph().getRoot())
       followedUsers.delete(user)
       event.tags = Array.from(followedUsers).map((pubKey) => ["p", pubKey]) as NDKTag[]
-      await event.publish().catch((e) => console.warn("Error publishing unfollow event:", e))
+      await event
+        .publish()
+        .catch((e) => console.warn("Error publishing unfollow event:", e))
     }
 
     muteUser(user)

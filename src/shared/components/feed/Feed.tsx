@@ -1,8 +1,8 @@
 import {useEffect, useMemo, useRef, useState, useCallback, ReactNode} from "react"
 import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
 
-import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
 import socialGraph, {shouldHideEvent, shouldSocialHide} from "@/utils/socialGraph"
+import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
 import useHistoryState from "@/shared/hooks/useHistoryState"
 import {SortedMap} from "@/utils/SortedMap/SortedMap"
 import FeedItem from "../event/FeedItem/FeedItem"

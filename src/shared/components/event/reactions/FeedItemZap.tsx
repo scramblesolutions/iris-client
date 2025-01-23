@@ -1,12 +1,12 @@
+import {LnPayCb, NDKEvent, NDKZapper} from "@nostr-dev-kit/ndk"
 import {requestProvider} from "@getalby/bitcoin-connect"
 import {shouldHideEvent} from "@/utils/socialGraph.ts"
 import useProfile from "@/shared/hooks/useProfile.ts"
-import {useEffect, useState} from "react"
 import {getZappingUser} from "@/utils/nostr.ts"
 import {LRUCache} from "typescript-lru-cache"
-import {LnPayCb, NDKEvent, NDKZapper} from "@nostr-dev-kit/ndk"
 import {useLocalState} from "irisdb-hooks"
 import {statCalc} from "@/utils/utils.ts"
+import {useEffect, useState} from "react"
 import Icon from "../../Icons/Icon.tsx"
 import ZapModal from "../ZapModal.tsx"
 import debounce from "lodash/debounce"
@@ -67,7 +67,7 @@ function FeedItemZap({event}: FeedItemZapProps) {
     try {
       const amount = Number(defaultZapAmount) * 1000
 
-      const lnPay: LnPayCb = async ({ pr }) => {
+      const lnPay: LnPayCb = async ({pr}) => {
         if (isWalletConnect) {
           const provider = await requestProvider()
           const confirmation = await provider.sendPayment(pr)
@@ -76,17 +76,12 @@ function FeedItemZap({event}: FeedItemZapProps) {
         return undefined
       }
 
-      const zapper = new NDKZapper(
-        event,
-        amount,
-        'msat',
-        {
-          comment: '',
-          ndk: ndk(),
-          lnPay,
-          tags: [['e', event.id]]
-        }
-      )
+      const zapper = new NDKZapper(event, amount, "msat", {
+        comment: "",
+        ndk: ndk(),
+        lnPay,
+        tags: [["e", event.id]],
+      })
 
       await zapper.zap()
     } catch (error) {

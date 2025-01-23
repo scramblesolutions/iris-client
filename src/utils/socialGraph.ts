@@ -1,12 +1,13 @@
 import {SocialGraph, NostrEvent, SerializedSocialGraph} from "nostr-social-graph"
 import {NDKEvent, NDKSubscription, NDKUserProfile} from "@nostr-dev-kit/ndk"
 import profileJson from "nostr-social-graph/data/profileData.json"
+import {LRUCache} from "typescript-lru-cache"
 import {VerifiedEvent} from "nostr-tools"
+import {debounce, throttle} from "lodash"
 import {profileCache} from "./memcache"
 import localForage from "localforage"
 import {localState} from "irisdb"
 import {ndk} from "irisdb-nostr"
-import {throttle} from "lodash"
 import Fuse from "fuse.js"
 
 const DEFAULT_SOCIAL_GRAPH_ROOT =
@@ -64,6 +65,12 @@ const throttledSave = throttle(async () => {
     console.log("social graph size", instance.size())
   }
 }, 10000)
+
+const debouncedRemoveNonFollowed = debounce(() => {
+  const removedCount = instance.removeMutedNotFollowedUsers()
+  console.log("Removing", removedCount, "muted users not followed by anyone")
+  throttledSave()
+}, 11000)
 
 export const handleSocialGraphEvent = (evs: NostrEvent | Array<NostrEvent>) => {
   instance.handleEvent(evs)
@@ -157,7 +164,10 @@ export function getFollowLists(myPubKey: string, missingOnly = true, upToDistanc
       },
       {closeOnEose: true}
     )
-    sub.on("event", (e) => handleSocialGraphEvent(e as unknown as VerifiedEvent))
+    sub.on("event", (e) => {
+      handleSocialGraphEvent(e as unknown as VerifiedEvent)
+      debouncedRemoveNonFollowed()
+    })
   }
 
   const processBatch = () => {
@@ -296,6 +306,21 @@ export const downloadLargeGraph = () => {
 export const loadAndMerge = () => loadFromFile(true)
 
 export const shouldSocialHide = (pubKey: string): boolean => {
+  const cache = new LRUCache<string, boolean>({maxSize: 100})
+
+  // Check if the result is already in the cache
+  if (cache.has(pubKey)) {
+    return cache.get(pubKey)!
+  }
+
+  const hasMuters = instance.getUserMutedBy(pubKey).size > 0
+
+  // for faster checks, if no one mutes, return false
+  if (!hasMuters) {
+    cache.set(pubKey, false)
+    return false
+  }
+
   const userStats = instance.stats(pubKey)
 
   // Sort numeric distances ascending
@@ -311,10 +336,13 @@ export const shouldSocialHide = (pubKey: string): boolean => {
     }
 
     // If, at the closest distance with an opinion, muters >= followers => hide
-    return muters >= followers
+    const shouldHide = muters >= followers
+    cache.set(pubKey, shouldHide)
+    return shouldHide
   }
 
   // If no one anywhere follows or mutes, default to hide
+  cache.set(pubKey, true)
   return true
 }
 
