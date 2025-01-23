@@ -5031,10 +5031,10 @@ irisdb-hooks@1.0.11:
   resolved "https://registry.yarnpkg.com/irisdb-hooks/-/irisdb-hooks-1.0.11.tgz#4ab1c2bc5cb79b5c25e267866864ae72c4c7d9c6"
   integrity sha512-0W3cAuvsKXTW9og0n2h04mw0El1XtWrSGqd74ezMRoR2A3CLMF7u31KHuYwk/3ovldVza4mLkvky1eICLNlg3g==
 
-irisdb-nostr@1.0.20:
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/irisdb-nostr/-/irisdb-nostr-1.0.20.tgz#3962dab8d62741dce0c7664f07a84603c6637fee"
-  integrity sha512-f8sRNf04JwJ9YUCPoAx9GBIqmIumJ/F7VrpY+9umx1bpbPdg2f6J9lwgTik7N9QdxZSUNbEMu2DwhAcO6xrX5g==
+irisdb-nostr@1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/irisdb-nostr/-/irisdb-nostr-1.0.21.tgz#7fac276b35835824dd6628e08b9344fbd17aaeff"
+  integrity sha512-w61E0IQcpNR7Y8CT0aTx9Rq9ooZ7+FsmcLzzQTWUXvS63l7pHDBBNp8Nh4CK3wJbKgYW1FP0tzjH00FlFfOKuQ==
   dependencies:
     "@noble/hashes" "^1.5.0"
     "@nostr-dev-kit/ndk" "2.11.0"
