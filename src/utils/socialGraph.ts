@@ -305,7 +305,7 @@ export const downloadLargeGraph = () => {
 
 export const loadAndMerge = () => loadFromFile(true)
 
-export const shouldSocialHide = (pubKey: string): boolean => {
+export const shouldSocialHide = (pubKey: string, threshold = 1): boolean => {
   const cache = new LRUCache<string, boolean>({maxSize: 100})
 
   // Check if the result is already in the cache
@@ -336,7 +336,7 @@ export const shouldSocialHide = (pubKey: string): boolean => {
     }
 
     // If, at the closest distance with an opinion, muters >= followers => hide
-    const shouldHide = muters >= followers
+    const shouldHide = muters * threshold >= followers
     cache.set(pubKey, shouldHide)
     return shouldHide
   }

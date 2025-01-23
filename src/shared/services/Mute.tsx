@@ -18,13 +18,12 @@ export const muteUser = async (pubkey: string): Promise<string[]> => {
 
   socialGraph().handleEvent(muteEvent as NostrEvent)
 
-  try {
-    await muteEvent.publish()
-    return newList
-  } catch (error) {
+  muteEvent.publish().catch((error) => {
     console.warn("Unable to mute user", error)
     return Array.from(mutedList)
-  }
+  })
+
+  return newList
 }
 
 export const unmuteUser = async (pubkey: string): Promise<string[]> => {
@@ -39,13 +38,12 @@ export const unmuteUser = async (pubkey: string): Promise<string[]> => {
 
   socialGraph().handleEvent(unmuteEvent as NostrEvent)
 
-  try {
-    await unmuteEvent.publish()
-    return newList
-  } catch (error) {
+  unmuteEvent.publish().catch((error) => {
     console.warn("Unable to unmute user", error)
     return Array.from(mutedList)
-  }
+  })
+
+  return newList
 }
 
 export const submitReport = async (
@@ -65,7 +63,10 @@ export const submitReport = async (
       ]
     : [["p", pubkey, reason]]
   try {
-    await reportEvent.publish()
+    reportEvent.publish().catch((error) => {
+      console.warn("Unable to send report", error)
+      return Promise.reject(error)
+    })
   } catch (error) {
     console.warn("Unable to send report", error)
     return Promise.reject(error)

@@ -58,7 +58,7 @@ function FeedItemRepost({event}: FeedItemRepostProps) {
         repostEvent.content = serializeEvent(event)
         repostEvent.tags = [["e", event.id, "", "mention", event.pubkey]]
 
-        await repostEvent.publish()
+        repostEvent.publish()
         setRepostsByAuthor((prev) => {
           const newSet = new Set(prev)
           newSet.add(myPubKey)

@@ -6,7 +6,7 @@ import {
   useState,
   FormEvent,
 } from "react"
-import {LnPayCb, NDKEvent, zapInvoiceFromEvent} from "@nostr-dev-kit/ndk"
+import {LnPayCb, NDKEvent, zapInvoiceFromEvent, NDKZapper} from "@nostr-dev-kit/ndk"
 import {Check, ContentCopy} from "@mui/icons-material"
 import * as bolt11 from "bolt11"
 import QRCode from "qrcode"
@@ -14,7 +14,6 @@ import QRCode from "qrcode"
 import {requestProvider} from "@getalby/bitcoin-connect-react"
 import zapAnimation from "@/assets/zap-animation.gif"
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {NDKZapper} from "@nostr-dev-kit/ndk"
 import {useLocalState} from "irisdb-hooks"
 import {ndk} from "irisdb-nostr"
 
@@ -111,7 +110,7 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
         ["e", rezappedEvent.id, "", "rezap", rezappedEvent.pubkey],
       ]
       rezapEvent.content = `nostr:${receipt.encode()}\nnostr:${rezappedEvent.encode()}`
-      await rezapEvent
+      rezapEvent
         .publish()
         .catch((error) => console.warn("Unable to publish rezap event", error))
     }
