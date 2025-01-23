@@ -17,7 +17,7 @@ export default function MutedBy({pubkey}: {pubkey: string}) {
     }
   }, [pubkey])
 
-  const isOverMuted = totalMutedBy > 0 && shouldSocialHide(pubkey)
+  const isOverMuted = totalMutedBy > 0 && shouldSocialHide(pubkey, 2)
 
   const [showMuterList, setShowMuterList] = useState<boolean>(false)
 
