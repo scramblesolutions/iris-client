@@ -41,14 +41,23 @@ const tabs: Tab[] = [
     name: "Posts",
     path: "",
     displayFilterFn: (e: NDKEvent) => !getEventReplyingTo(e),
-    element: NotesTab,
+    element: (props) => <NotesTab {...props} kinds={[1, 6]} />,
   },
-  {name: "Replies", path: "replies", element: NotesTab, showRepliedTo: true},
+  {
+    name: "Replies",
+    path: "replies",
+    element: (props) => <NotesTab {...props} kinds={[1, 6]} showRepliedTo={true} />,
+  },
   {
     name: "Media",
     path: "media",
     displayFilterFn: (e: NDKEvent) => hasMedia(e),
-    element: NotesTab,
+    element: (props) => <NotesTab {...props} kinds={[1, 6]} />,
+  },
+  {
+    name: "Likes",
+    path: "likes",
+    element: (props) => <NotesTab {...props} kinds={[7]} />,
   },
 ]
 

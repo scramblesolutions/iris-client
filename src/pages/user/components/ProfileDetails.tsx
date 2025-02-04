@@ -78,7 +78,13 @@ function ProfileDetails({
         .then((isValid) => {
           setNIP05valid(isValid ?? false)
           if (isValid && displayProfile.nip05?.endsWith("@iris.to")) {
-            navigate(`/${displayProfile.nip05.replace("@iris.to", "")}`, {replace: true})
+            const currentPath = window.location.pathname.split("/").slice(2).join("/")
+            const basePath = displayProfile.nip05.replace("@iris.to", "")
+            const newPath = currentPath ? `/${basePath}/${currentPath}` : `/${basePath}`
+
+            if (window.location.pathname !== newPath) {
+              navigate(newPath, {replace: true})
+            }
           }
         })
         .catch((error) => console.warn(error))

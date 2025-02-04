@@ -7,6 +7,7 @@ interface NotesTabProps {
   filters?: NDKFilter
   displayFilterFn?: (event: NDKEvent) => boolean
   showRepliedTo?: boolean
+  kinds: number[]
 }
 
 function NotesTab({
@@ -14,15 +15,16 @@ function NotesTab({
   filters,
   displayFilterFn,
   showRepliedTo = false,
+  kinds,
 }: NotesTabProps) {
   // memoize so it doesn't change and cause reinit of feed
   const myFilters: NDKFilter = useMemo(
     () =>
       filters || {
-        kinds: [1, 6],
+        kinds: kinds,
         authors: [pubKey || ""],
       },
-    [pubKey]
+    [pubKey, kinds]
   )
 
   return (
