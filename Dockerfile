@@ -1,5 +1,5 @@
 # Use the updated VS Code dev container image for JavaScript/Node.js
-FROM mcr.microsoft.com/devcontainers/javascript-node:0-19
+FROM mcr.microsoft.com/devcontainers/javascript-node:0-18
 
 # Set the working directory
 WORKDIR /app
