@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/irislib/iris-client.git"
+    "url": "https://github.com/scramblesolutions/iris-client/iris-client.git"
   },
   "description": "Nostr client",
   "author": "Martti Malmi",
