@@ -10,4 +10,4 @@ services:
       - /app/node_modules
     environment:
       NODE_ENV: development
-    command: ["yarn", "start", "--", "--host"]
+    command: ["yarn", "start", "--", "--host 185.189.58.52 --ignore-engines"]
