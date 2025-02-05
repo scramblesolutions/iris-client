@@ -12,7 +12,7 @@ COPY yarn.lock ./
 RUN npm install -g yarn
 
 # Install dependencies using Yarn
-RUN yarn install
+RUN yarn install --ignore-engines
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 5173
 
 # Start the application using Yarn
-CMD ["yarn", "run", "preview", "--", "--host"]
+CMD ["yarn", "run", "preview", "--", "--host 185.189.58.52]
