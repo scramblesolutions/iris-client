@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 5173
 
 # Start the application using Yarn
-CMD ["yarn", "run", "preview", "--", "--host 185.189.58.52]
+CMD ["yarn", "run", "preview", "--", "--host 185.189.58.52 --ignore-engines]
