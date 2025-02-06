@@ -1,10 +1,10 @@
-import {useEffect, useRef, useState} from "react"
-import {useLocation} from "react-router-dom"
-import {RiMenuLine} from "@remixicon/react"
+import { useEffect, useRef, useState } from "react"
+import { useLocation } from "react-router-dom"
+import { RiMenuLine } from "@remixicon/react"
 
 import NotificationButton from "@/shared/components/header/NotificationButton.tsx"
-import {MOBILE_BREAKPOINT} from "@/shared/components/user/const.ts"
-import {useLocalState} from "irisdb-hooks"
+import { MOBILE_BREAKPOINT } from "@/shared/components/user/const.ts"
+import { useLocalState } from "irisdb-hooks"
 
 export default function Header() {
   const [myPubKey] = useLocalState("user/publicKey", "", String)
@@ -90,7 +90,7 @@ export default function Header() {
               .current!.style.transform.replace("translateY(", "")
               .replace("px)", "")
           ) -
-            (currentScrollY - lastScrollY.current)
+          (currentScrollY - lastScrollY.current)
         )
       } else {
         // Scrolling up
@@ -101,7 +101,7 @@ export default function Header() {
               .current!.style.transform.replace("translateY(", "")
               .replace("px)", "")
           ) +
-            (lastScrollY.current - currentScrollY)
+          (lastScrollY.current - currentScrollY)
         )
       }
       lastScrollY.current = currentScrollY
@@ -117,7 +117,7 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        style={{transform: `translateY(0px)`}}
+        style={{ transform: `translateY(0px)` }}
         className="md:hidden shadow-theme-xl mb-8 flex fixed top-0 left-0 right-0 bg-base-200 text-base-content p-2 z-30 select-none"
       >
         <div
