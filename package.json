@@ -6,7 +6,7 @@
   "packageManager": "yarn@1.22.22",
   "engines": {
     "node": "^18.18.0 || >=20.0.0"
-  }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/scramblesolutions/iris-client/iris-client.git"
