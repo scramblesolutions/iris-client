@@ -1,18 +1,18 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 import FeedItemComment from "./FeedItemComment.tsx"
 import FeedItemRepost from "./FeedItemRepost.tsx"
+import { FeedItemLike } from "./FeedItemLike.tsx"
 import FeedItemShare from "./FeedItemShare.tsx"
-import {FeedItemLike} from "./FeedItemLike.tsx"
+import { useLocalState } from "irisdb-hooks"
 import FeedItemZap from "./FeedItemZap.tsx"
-import {useLocalState} from "irisdb-hooks"
 import classNames from "classnames"
 
 type FeedItemActionsProps = {
   event: NDKEvent
 }
 
-function FeedItemActions({event}: FeedItemActionsProps) {
+function FeedItemActions({ event }: FeedItemActionsProps) {
   const [notesTheme] = useLocalState("user/notesTheme", CONFIG.defaultNotesTheme)
 
   return (

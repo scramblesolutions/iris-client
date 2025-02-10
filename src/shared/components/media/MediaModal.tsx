@@ -1,6 +1,6 @@
-import {RiArrowLeftSLine, RiArrowRightSLine} from "@remixicon/react"
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react"
 import FeedItem from "../event/FeedItem/FeedItem"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 import ProxyImg from "../ProxyImg"
 import Icon from "../Icons/Icon"
 import Modal from "../ui/Modal"

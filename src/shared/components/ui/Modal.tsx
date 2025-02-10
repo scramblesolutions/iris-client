@@ -1,4 +1,4 @@
-import {ReactNode, useEffect, useRef, useState} from "react"
+import { ReactNode, useEffect, useRef, useState } from "react"
 import Icon from "../Icons/Icon"
 
 type ModalProps = {
@@ -7,7 +7,7 @@ type ModalProps = {
   hasBackground?: boolean
 }
 
-const Modal = ({onClose, children, hasBackground = true}: ModalProps) => {
+const Modal = ({ onClose, children, hasBackground = true }: ModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [isMouseDownOnBackdrop, setIsMouseDownOnBackdrop] = useState(false)

@@ -1,14 +1,14 @@
-import {GitPullRequestIcon} from "@primer/octicons-react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
-import {Link} from "react-router-dom"
+import { GitPullRequestIcon } from "@primer/octicons-react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import RepoCard from "./RepoCard.tsx"
 
 type PRFeedItemProps = {
   event: NDKEvent
 }
 
-function PRFeedItem({event}: PRFeedItemProps) {
+function PRFeedItem({ event }: PRFeedItemProps) {
   const [repo, setRepo] = useState<string>()
   const [pullRequestId, setPullRequestId] = useState<string>()
   const [title, setTitle] = useState<string>()

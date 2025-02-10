@@ -1,18 +1,18 @@
-import {Fragment, useMemo} from "react"
+import { Fragment, useMemo } from "react"
 
-import {AvatarGroup} from "./AvatarGroup"
-import {nip19} from "nostr-tools"
-import {Name} from "./Name"
+import { AvatarGroup } from "./AvatarGroup"
+import { nip19 } from "nostr-tools"
+import { Name } from "./Name"
 
 import socialGraph from "@/utils/socialGraph"
-import {Link} from "react-router-dom"
-import {Badge} from "./Badge"
+import { Link } from "react-router-dom"
+import { Badge } from "./Badge"
 
 const MAX_FOLLOWED_BY_FRIENDS = 3
 
-export default function FollowedBy({pubkey}: {pubkey: string}) {
+export default function FollowedBy({ pubkey }: { pubkey: string }) {
   const followDistance = socialGraph().getFollowDistance(pubkey)
-  const {followedByFriendsArray, totalFollowedByFriends} = useMemo(() => {
+  const { followedByFriendsArray, totalFollowedByFriends } = useMemo(() => {
     const followedByFriends = socialGraph().followedByFriends(pubkey)
     return {
       followedByFriendsArray: Array.from(followedByFriends).slice(

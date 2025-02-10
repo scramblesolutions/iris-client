@@ -1,7 +1,7 @@
 import SimpleFeedItemDropdown from "@/shared/components/event/SimpleFeedItemDropdown.tsx"
-import {MouseEvent as ReactMouseEvent} from "react"
+import { MouseEvent as ReactMouseEvent } from "react"
+import { nip19 } from "nostr-tools"
 import classNames from "classnames"
-import {nip19} from "nostr-tools"
 
 type FeedItemPlaceholderProps = {
   standalone?: boolean

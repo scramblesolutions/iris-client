@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react"
+import { useEffect, useRef, useState } from "react"
 import throttle from "lodash/throttle"
 
 export default function useHistoryState<T>(initialValue: T, key: string) {
@@ -11,7 +11,7 @@ export default function useHistoryState<T>(initialValue: T, key: string) {
 
   const throttledSetHistoryState = useRef(
     throttle((value) => {
-      const newHistoryState = {...history.state, [key]: value}
+      const newHistoryState = { ...history.state, [key]: value }
       history.replaceState(newHistoryState, "")
       latestValue.current = value
     }, 1000)
@@ -27,7 +27,7 @@ export default function useHistoryState<T>(initialValue: T, key: string) {
     return () => {
       throttledSetHistoryState.current.cancel() // Cancel any throttled call
       if (state !== latestValue.current) {
-        const newHistoryState = {...history.state, [key]: state}
+        const newHistoryState = { ...history.state, [key]: state }
         history.replaceState(newHistoryState, "") // Save the final state
       }
     }

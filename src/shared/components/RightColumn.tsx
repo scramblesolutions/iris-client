@@ -1,5 +1,5 @@
 import SearchBox from "@/shared/components/ui/SearchBox.tsx"
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import ErrorBoundary from "./ui/ErrorBoundary"
 
 interface RightColumnProps {
@@ -18,7 +18,7 @@ function useWindowWidth() {
   return windowWidth
 }
 
-function RightColumn({children}: RightColumnProps) {
+function RightColumn({ children }: RightColumnProps) {
   const windowWidth = useWindowWidth()
 
   if (windowWidth < 1024) {

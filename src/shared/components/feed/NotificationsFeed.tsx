@@ -15,15 +15,15 @@ import {
 } from "@/utils/notifications"
 import NotificationsFeedItem from "@/pages/notifications/NotificationsFeedItem"
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
+import { NDKEvent, NDKSubscription } from "@nostr-dev-kit/ndk"
 import useHistoryState from "@/shared/hooks/useHistoryState"
-import {NDKEvent, NDKSubscription} from "@nostr-dev-kit/ndk"
 import runningOstrich from "@/assets/running-ostrich.gif"
-import {useEffect, useCallback, useState} from "react"
-import {SortedMap} from "@/utils/SortedMap/SortedMap"
+import { useEffect, useCallback, useState } from "react"
+import { SortedMap } from "@/utils/SortedMap/SortedMap"
 import socialGraph from "@/utils/socialGraph"
-import {useLocalState} from "irisdb-hooks"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { useLocalState } from "irisdb-hooks"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 const INITIAL_DISPLAY_COUNT = 10
 const DISPLAY_INCREMENT = 10
@@ -85,7 +85,7 @@ localState.get("user/publicKey").on((myPubKey) => {
       }
       const existing = notification.users.get(user)
       if (!existing || existing.time < event.created_at) {
-        notification.users.set(user, {time: event.created_at})
+        notification.users.set(user, { time: event.created_at })
       }
       if (event.created_at > notification.time) {
         notification.time = event.created_at

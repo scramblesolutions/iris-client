@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any  */
-import {Component, FormEvent} from "react"
+import { Component, FormEvent } from "react"
 
 import ReservedAccount from "./ReservedAccount"
-import {profileCache} from "@/utils/memcache"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { profileCache } from "@/utils/memcache"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 import ActiveAccount from "./ActiveAccount"
 import AccountName from "./AccountName"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 declare global {
   interface Window {
@@ -38,7 +38,7 @@ class IrisAccount extends Component {
       view = (
         <ActiveAccount
           name={this.state.existing.name}
-          setAsPrimary={() => this.setState({irisToActive: true})}
+          setAsPrimary={() => this.setState({ irisToActive: true })}
         />
       )
     } else if (this.state.existing) {
@@ -155,7 +155,7 @@ class IrisAccount extends Component {
     if (res.status < 500) {
       const json = await res.json()
       if (json.available) {
-        this.setState({newUserNameValid: true})
+        this.setState({ newUserNameValid: true })
       } else {
         this.setState({
           newUserNameValid: false,
@@ -175,7 +175,7 @@ class IrisAccount extends Component {
     if (!this.state.newUserNameValid) {
       return
     }
-    this.setState({showChallenge: true}, () => {
+    this.setState({ showChallenge: true }, () => {
       // Dynamically injecting Cloudflare script
       if (
         !document.querySelector(
@@ -203,7 +203,7 @@ class IrisAccount extends Component {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({event: await event.toNostrEvent(), cfToken}),
+      body: JSON.stringify({ event: await event.toNostrEvent(), cfToken }),
     })
     if (res.status === 200) {
       this.setState({
@@ -218,10 +218,10 @@ class IrisAccount extends Component {
       res
         .json()
         .then((json) => {
-          this.setState({error: json.message || "error"})
+          this.setState({ error: json.message || "error" })
         })
         .catch(() => {
-          this.setState({error: "error"})
+          this.setState({ error: "error" })
         })
     }
   }
@@ -242,16 +242,16 @@ class IrisAccount extends Component {
     if (res.status === 200) {
       this.setState({
         error: null,
-        existing: {confirmed: true, name: this.state.existing.name},
+        existing: { confirmed: true, name: this.state.existing.name },
       })
     } else {
       res
         .json()
         .then((json) => {
-          this.setState({error: json.message || "error"})
+          this.setState({ error: json.message || "error" })
         })
         .catch(() => {
-          this.setState({error: "error"})
+          this.setState({ error: "error" })
         })
     }
   }
@@ -276,15 +276,15 @@ class IrisAccount extends Component {
       body: JSON.stringify(event.toNostrEvent()),
     })
     if (res.status === 200) {
-      this.setState({confirmSuccess: false, error: null, existing: null})
+      this.setState({ confirmSuccess: false, error: null, existing: null })
     } else {
       res
         .json()
         .then((json) => {
-          this.setState({error: json.message || "error"})
+          this.setState({ error: json.message || "error" })
         })
         .catch(() => {
-          this.setState({error: "error"})
+          this.setState({ error: "error" })
         })
     }
   }
@@ -295,7 +295,7 @@ class IrisAccount extends Component {
         const profile = profileCache.get(myPub) || {}
         const irisToActive =
           profile && profile.nip05 && profile.nip05.endsWith("@iris.to")
-        this.setState({profile, irisToActive})
+        this.setState({ profile, irisToActive })
         if (profile && !irisToActive) {
           this.checkExistingAccount(myPub)
         }
@@ -309,7 +309,7 @@ class IrisAccount extends Component {
     const res = await fetch(`https://api.iris.to/user/find?public_key=${pub}`)
     if (res.status === 200) {
       const json = await res.json()
-      this.setState({existing: json})
+      this.setState({ existing: json })
     }
   }
 }

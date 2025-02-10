@@ -1,12 +1,12 @@
-import {shouldHideEvent} from "@/utils/socialGraph"
-import {LRUCache} from "typescript-lru-cache"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {statCalc} from "@/utils/utils.ts"
-import {useEffect, useState} from "react"
+import { shouldHideEvent } from "@/utils/socialGraph"
+import { LRUCache } from "typescript-lru-cache"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { statCalc } from "@/utils/utils.ts"
+import { useEffect, useState } from "react"
 import debounce from "lodash/debounce"
 import Icon from "../../Icons/Icon"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 const likeCache = new LRUCache<string, Set<string>>({
   maxSize: 100,
@@ -15,7 +15,7 @@ const likeCache = new LRUCache<string, Set<string>>({
 let myPubKey = ""
 localState.get("user/publicKey").on((k) => (myPubKey = k as string))
 
-export const FeedItemLike = ({event}: {event: NDKEvent}) => {
+export const FeedItemLike = ({ event }: { event: NDKEvent }) => {
   const cachedLikes = likeCache.get(event.id)
 
   const [likesByAuthor, setLikesByAuthor] = useState<Set<string>>(

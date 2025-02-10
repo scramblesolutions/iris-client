@@ -1,9 +1,9 @@
-import {useLocalState} from "irisdb-hooks"
-import {useState, useMemo} from "react"
+import { useLocalState } from "irisdb-hooks"
+import { useState, useMemo } from "react"
 
 import useFollows from "@/shared/hooks/useFollows.ts"
+import { statCalc } from "@/utils/utils.ts"
 import FollowsList from "./FollowList.tsx"
-import {statCalc} from "@/utils/utils.ts"
 
 import Icon from "@/shared/components/Icons/Icon.tsx"
 import Modal from "@/shared/components/ui/Modal"
@@ -14,7 +14,7 @@ interface FollowsCountProps {
   pubKey: string
 }
 
-function FollowsCount({pubKey}: FollowsCountProps) {
+function FollowsCount({ pubKey }: FollowsCountProps) {
   const f = useFollows(pubKey) // to query from relays and trigger update
   const follows = useMemo(
     () => Array.from(socialGraph().getFollowedByUser(pubKey)),

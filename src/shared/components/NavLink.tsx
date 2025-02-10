@@ -1,9 +1,9 @@
-import {NavLink as RouterNavLink, NavLinkProps, useLocation} from "react-router-dom"
-import {localState} from "irisdb"
-import {MouseEvent} from "react"
+import { NavLink as RouterNavLink, NavLinkProps, useLocation } from "react-router-dom"
+import { localState } from "irisdb"
+import { MouseEvent } from "react"
 
 export default function NavLink(props: NavLinkProps) {
-  const {to, onClick, ...rest} = props
+  const { to, onClick, ...rest } = props
   const location = useLocation()
 
   const isActive = location.pathname === to.toString()
@@ -17,7 +17,7 @@ export default function NavLink(props: NavLinkProps) {
       if (window.scrollY === 0) {
         localState.get("refreshRouteSignal").put(Date.now())
       } else {
-        window.scrollTo({top: 0, behavior: "instant"})
+        window.scrollTo({ top: 0, behavior: "instant" })
       }
     }
   }

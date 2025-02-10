@@ -6,16 +6,16 @@ import {
   useState,
   FormEvent,
 } from "react"
-import {LnPayCb, NDKEvent, zapInvoiceFromEvent, NDKZapper} from "@nostr-dev-kit/ndk"
-import {Check, ContentCopy} from "@mui/icons-material"
+import { LnPayCb, NDKEvent, zapInvoiceFromEvent, NDKZapper } from "@nostr-dev-kit/ndk"
+import { Check, ContentCopy } from "@mui/icons-material"
 import * as bolt11 from "bolt11"
 import QRCode from "qrcode"
 
-import {requestProvider} from "@getalby/bitcoin-connect-react"
+import { requestProvider } from "@getalby/bitcoin-connect-react"
 import zapAnimation from "@/assets/zap-animation.gif"
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {useLocalState} from "irisdb-hooks"
-import {ndk} from "irisdb-nostr"
+import { useLocalState } from "irisdb-hooks"
+import { ndk } from "irisdb-nostr"
 
 interface ZapModalProps {
   onClose: () => void
@@ -25,7 +25,7 @@ interface ZapModalProps {
   rezappedEvent?: NDKEvent
 }
 
-function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalProps) {
+function ZapModal({ onClose, event, zapped, setZapped, rezappedEvent }: ZapModalProps) {
   const [defaultZapAmount] = useLocalState("user/defaultZapAmount", 21)
   const [copiedPaymentRequest, setCopiedPaymentRequest] = useState(false)
   const [noAddress, setNoAddress] = useState(false)
@@ -64,7 +64,7 @@ function ZapModal({onClose, event, zapped, setZapped, rezappedEvent}: ZapModalPr
     try {
       const amount = Number(zapAmount) * 1000
 
-      const lnPay: LnPayCb = async ({pr}) => {
+      const lnPay: LnPayCb = async ({ pr }) => {
         if (isWalletConnect) {
           const provider = await requestProvider()
           await provider.sendPayment(pr)

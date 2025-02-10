@@ -1,11 +1,11 @@
-import {useEffect, useMemo, useState} from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const useCachedFetch = <ReceiveType, ReturnType>(
   url: string,
   storageKey: string,
   dataProcessor?: (data: ReceiveType) => ReturnType
 ) => {
-  const cachedData = useMemo<{data: ReturnType; timestamp: number}>(() => {
+  const cachedData = useMemo<{ data: ReturnType; timestamp: number }>(() => {
     const cached = localStorage.getItem(storageKey)
     return cached ? JSON.parse(cached) : null
   }, [storageKey])
@@ -32,7 +32,7 @@ const useCachedFetch = <ReceiveType, ReturnType>(
         setData(processedData)
         localStorage.setItem(
           storageKey,
-          JSON.stringify({data: processedData, timestamp: new Date().getTime()})
+          JSON.stringify({ data: processedData, timestamp: new Date().getTime() })
         )
       } catch (e) {
         setError(e as Error)
@@ -49,7 +49,7 @@ const useCachedFetch = <ReceiveType, ReturnType>(
     }
   }, [url, storageKey])
 
-  return {data, isLoading, error}
+  return { data, isLoading, error }
 }
 
 export default useCachedFetch

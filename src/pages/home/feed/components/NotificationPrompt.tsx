@@ -1,6 +1,6 @@
-import {subscribeToNotifications} from "@/utils/notifications"
-import {useLocalState} from "irisdb-hooks"
-import {useEffect, useState} from "react"
+import { subscribeToNotifications } from "@/utils/notifications"
+import { useLocalState } from "irisdb-hooks"
+import { useEffect, useState } from "react"
 
 const NotificationPrompt = () => {
   const [showPrompt, setShowPrompt] = useState(false)

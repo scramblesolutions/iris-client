@@ -1,10 +1,10 @@
-import {getEventReplyingTo, isQuote, isIssue, isPR} from "@/utils/nostr"
+import { getEventReplyingTo, isQuote, isIssue, isPR } from "@/utils/nostr"
 import imageEmbed from "@/shared/components/embed/images/Image"
 import Video from "@/shared/components/embed/video/Video"
-import {hasMedia} from "@/shared/components/embed"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { hasMedia } from "@/shared/components/embed"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
-export const kindsByFilter: {[key: string]: number[]} = {
+export const kindsByFilter: { [key: string]: number[] } = {
   notes: [1],
   replies: [1],
   reposts: [6, 9372],
@@ -21,7 +21,7 @@ export const kindsByFilter: {[key: string]: number[]} = {
   stars: [30078],
 }
 
-export const fnByFilter: {[key: string]: (e: NDKEvent) => boolean} = {
+export const fnByFilter: { [key: string]: (e: NDKEvent) => boolean } = {
   notes: (e) => e.kind === 1,
   replies: (e) => !!getEventReplyingTo(e),
   videos: (e) => !!e.content.match(Video.regex),

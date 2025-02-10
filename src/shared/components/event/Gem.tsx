@@ -1,13 +1,13 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
 import HyperText from "../HyperText"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 interface GemProps {
   event: NDKEvent
 }
 
-function Gem({event}: GemProps) {
+function Gem({ event }: GemProps) {
   const [content, setContent] = useState("")
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import UnseenNotificationsBadge from "./UnseenNotificationsBadge"
 import Show from "@/shared/components/Show.tsx"
-import {useLocalState} from "irisdb-hooks"
-import {NavLink} from "react-router-dom"
+import { useLocalState } from "irisdb-hooks"
+import { NavLink } from "react-router-dom"
 import Icon from "../Icons/Icon"
 
 export default function NotificationButton() {
@@ -12,11 +12,11 @@ export default function NotificationButton() {
       <Show when={!!myPubKey}>
         <NavLink
           to={`/notifications`}
-          className={({isActive}) =>
+          className={({ isActive }) =>
             `btn btn-ghost btn-circle -ml-2 ${isActive ? "active" : ""}`
           }
         >
-          {({isActive}) => (
+          {({ isActive }) => (
             <span className="indicator">
               <UnseenNotificationsBadge />
               <Icon name={isActive ? "bell-solid" : "bell-outline"} className="w-5 h-5" />

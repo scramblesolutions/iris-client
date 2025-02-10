@@ -1,14 +1,14 @@
-import {useEffect, useRef, useState} from "react"
-import {useNavigate} from "react-router-dom"
+import { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 import classNames from "classnames"
-import {nip19} from "nostr-tools"
 
-import socialGraph, {searchIndex, SearchResult} from "@/utils/socialGraph"
-import {UserRow} from "@/shared/components/user/UserRow"
+import socialGraph, { searchIndex, SearchResult } from "@/utils/socialGraph"
+import { UserRow } from "@/shared/components/user/UserRow"
 import useMutes from "@/shared/hooks/useMutes"
-import {Check} from "@mui/icons-material"
+import { Check } from "@mui/icons-material"
+import { ndk } from "irisdb-nostr"
 import Icon from "../Icons/Icon"
-import {ndk} from "irisdb-nostr"
 
 const NOSTR_REGEX = /(npub|note|nevent)1[a-zA-Z0-9]{58,300}/gi
 const HEX_REGEX = /[0-9a-fA-F]{64}/gi
@@ -88,7 +88,7 @@ function SearchBox({
           })
       }
 
-      const results = searchIndex.search(value.trim(), {limit: MAX_RESULTS * 2})
+      const results = searchIndex.search(value.trim(), { limit: MAX_RESULTS * 2 })
       const resultsWithAdjustedScores = results
         .filter((result) => !mutes.includes(result.item.pubKey))
         .map((result) => {
@@ -108,7 +108,7 @@ function SearchBox({
           )
           */
 
-          return {...result, adjustedScore}
+          return { ...result, adjustedScore }
         })
 
       resultsWithAdjustedScores.sort((a, b) => a.adjustedScore - b.adjustedScore)
@@ -120,7 +120,7 @@ function SearchBox({
       }
       setSearchResults([
         ...(searchNotes
-          ? [{pubKey: "search-notes", name: `search notes: ${v}`, query: v}]
+          ? [{ pubKey: "search-notes", name: `search notes: ${v}`, query: v }]
           : []),
         ...resultsWithAdjustedScores.map((result) => result.item),
       ])
@@ -207,7 +207,7 @@ function SearchBox({
               onClick={() => handleSearchResultClick(result.pubKey, result.query)}
             >
               {result.pubKey === "search-notes" && searchNotes ? (
-                <div className={classNames("inline", {hidden: !redirect})}>
+                <div className={classNames("inline", { hidden: !redirect })}>
                   Search notes: <span className="font-bold">{result.query}</span>
                 </div>
               ) : (

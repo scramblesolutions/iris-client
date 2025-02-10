@@ -1,5 +1,5 @@
-import {ReactNode, useMemo} from "react"
-import {JsonValue} from "irisdb"
+import { ReactNode, useMemo } from "react"
+import { JsonValue } from "irisdb"
 
 interface FeedToggleProps {
   title: string
@@ -9,7 +9,7 @@ interface FeedToggleProps {
   kinds?: (number | string)[]
 }
 
-function FeedToggle({title, iconComponent, filter, setFilter, kinds}: FeedToggleProps) {
+function FeedToggle({ title, iconComponent, filter, setFilter, kinds }: FeedToggleProps) {
   const isToggled = useMemo(() => filter.includes(title.toLowerCase()), [title, filter])
 
   const handleToggleChange = () => {

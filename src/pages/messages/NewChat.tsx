@@ -1,15 +1,15 @@
-import {useState, useRef, useEffect, ChangeEvent, FormEvent} from "react"
-import {InviteLink, serializeChannelState} from "nostr-double-ratchet"
-import {acceptInviteLink} from "@/shared/hooks/useInviteLinkFromUrl"
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react"
+import { InviteLink, serializeChannelState } from "nostr-double-ratchet"
+import { acceptInviteLink } from "@/shared/hooks/useInviteLinkFromUrl"
 import QRCodeButton from "@/shared/components/user/QRCodeButton"
-import {NDKEventFromRawEvent} from "@/utils/nostr"
-import {nip19, VerifiedEvent} from "nostr-tools"
-import {hexToBytes} from "@noble/hashes/utils"
-import {useNavigate} from "react-router-dom"
-import {getInviteLinks} from "./InviteLinks"
-import {useLocalState} from "irisdb-hooks"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { NDKEventFromRawEvent } from "@/utils/nostr"
+import { nip19, VerifiedEvent } from "nostr-tools"
+import { hexToBytes } from "@noble/hashes/utils"
+import { useNavigate } from "react-router-dom"
+import { getInviteLinks } from "./InviteLinks"
+import { useLocalState } from "irisdb-hooks"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 const NewChat = () => {
   const navigate = useNavigate()
@@ -57,7 +57,7 @@ const NewChat = () => {
             }
             throw new Error("No nostr extension or private key")
           }
-      const {channel, event} = await inviteLink.acceptInvite(
+      const { channel, event } = await inviteLink.acceptInvite(
         (filter, onEvent) => {
           const sub = ndk().subscribe(filter)
           sub.on("event", (e) => onEvent(e as unknown as VerifiedEvent))
@@ -104,7 +104,7 @@ const NewChat = () => {
               data=""
               showQRCode={false}
               onScanSuccess={(data) =>
-                handleInviteLinkInput({target: {value: data}} as any)
+                handleInviteLinkInput({ target: { value: data } } as any)
               }
               icon="qr"
             />

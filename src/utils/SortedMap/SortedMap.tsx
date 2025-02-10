@@ -125,7 +125,7 @@ export class SortedMap<K, V extends Record<string, any>> {
       direction?: "asc" | "desc"
     } = {}
   ): IterableIterator<[K, V]> {
-    const {gte, lte, direction = "asc"} = options
+    const { gte, lte, direction = "asc" } = options
 
     const startIndex = gte ? this.binarySearch(gte, this.map.get(gte) as V) : 0
     const endIndex = lte

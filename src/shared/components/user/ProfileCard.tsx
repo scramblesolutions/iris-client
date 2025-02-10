@@ -1,6 +1,6 @@
-import {FollowButton} from "@/shared/components/button/FollowButton"
-import {ProfileAbout} from "@/shared/components/user/ProfileAbout"
-import {UserRow} from "@/shared/components/user/UserRow"
+import { FollowButton } from "@/shared/components/button/FollowButton"
+import { ProfileAbout } from "@/shared/components/user/ProfileAbout"
+import { UserRow } from "@/shared/components/user/UserRow"
 import FollowedBy from "./FollowedBy"
 
 const ProfileCard = ({

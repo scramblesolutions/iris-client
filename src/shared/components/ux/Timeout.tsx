@@ -1,12 +1,12 @@
 // Timeout.tsx
-import {useEffect, useState} from "react"
+import { useEffect, useState } from "react"
 
 interface TimeoutProps {
   loading: boolean
   time?: number //in milliseconds. Default is 8000 (below)
 }
 
-function Timeout({loading, time = 8000}: TimeoutProps) {
+function Timeout({ loading, time = 8000 }: TimeoutProps) {
   const [loadingTimeout, setLoadingTimeout] = useState(false)
 
   useEffect(() => {

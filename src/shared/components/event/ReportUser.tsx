@@ -1,5 +1,5 @@
-import {Hexpubkey, NDKEvent} from "@nostr-dev-kit/ndk"
-import {useState} from "react"
+import { Hexpubkey, NDKEvent } from "@nostr-dev-kit/ndk"
+import { useState } from "react"
 
 import ReportReasonForm from "./ReportReasonForm.tsx"
 
@@ -8,7 +8,7 @@ interface MuteUserProps {
   event?: NDKEvent
 }
 
-function ReportUser({user, event}: MuteUserProps) {
+function ReportUser({ user, event }: MuteUserProps) {
   const [reported, setReported] = useState(false)
   return (
     <div className="MuteUser-root">

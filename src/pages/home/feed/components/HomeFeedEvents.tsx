@@ -1,20 +1,26 @@
-import {useCallback, useMemo, useEffect, useState} from "react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { useCallback, useMemo, useEffect, useState } from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
-import {getEventReplyingTo, defaultFeedFilter, isGem, isIssue, isPR} from "@/utils/nostr"
+import {
+  getEventReplyingTo,
+  defaultFeedFilter,
+  isGem,
+  isIssue,
+  isPR,
+} from "@/utils/nostr"
 import PublicKeyQRCodeButton from "@/shared/components/user/PublicKeyQRCodeButton"
 import MiddleHeader from "@/shared/components/header/MiddleHeader"
-import {fnByFilter, widgetFilterKinds} from "@/utils/filtering"
+import { fnByFilter, widgetFilterKinds } from "@/utils/filtering"
 import Trending from "@/shared/components/feed/Trending.tsx"
 import useHistoryState from "@/shared/hooks/useHistoryState"
-import {seenEventIds, feedCache} from "@/utils/memcache"
+import { seenEventIds, feedCache } from "@/utils/memcache"
 import NotificationPrompt from "./NotificationPrompt"
 import Feed from "@/shared/components/feed/Feed.tsx"
-import {hasMedia} from "@/shared/components/embed"
+import { hasMedia } from "@/shared/components/embed"
 import useFollows from "@/shared/hooks/useFollows"
 import socialGraph from "@/utils/socialGraph"
-import {useLocalState} from "irisdb-hooks"
-import {localState} from "irisdb"
+import { useLocalState } from "irisdb-hooks"
+import { localState } from "irisdb"
 
 const UNSEEN_CACHE_KEY = "unseenFeed"
 
@@ -60,7 +66,13 @@ const tabs = [
 let myPubKey = ""
 localState.get("user/publicKey").on((v) => (myPubKey = v || ""), false, undefined, String)
 
-const EmptyPlaceholder = ({follows, myPubKey}: {follows: string[]; myPubKey?: string}) =>
+const EmptyPlaceholder = ({
+  follows,
+  myPubKey,
+}: {
+  follows: string[]
+  myPubKey?: string
+}) =>
   myPubKey ? (
     <div className="flex flex-col gap-8 items-center justify-center text-base-content/50">
       <div className="px-4 py-8 border-b border-base-300 flex flex-col gap-8 items-center w-full">

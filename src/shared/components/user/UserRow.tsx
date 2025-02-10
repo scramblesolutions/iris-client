@@ -1,10 +1,10 @@
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
-import {useMemo} from "react"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
+import { useMemo } from "react"
 
-import {useHoverCard} from "@/shared/components/user/useHoverCard"
-import {Avatar} from "@/shared/components/user/Avatar"
-import {Name} from "@/shared/components/user/Name"
+import { useHoverCard } from "@/shared/components/user/useHoverCard"
+import { Avatar } from "@/shared/components/user/Avatar"
+import { Name } from "@/shared/components/user/Name"
 import ProfileCard from "./ProfileCard"
 
 const HEX_REGEX = /^[0-9a-fA-F]{64}$/
@@ -26,7 +26,7 @@ export function UserRow({
   showBadge?: boolean
   showHoverCard?: boolean
 }) {
-  const {hoverProps, showCard} = useHoverCard(showHoverCard)
+  const { hoverProps, showCard } = useHoverCard(showHoverCard)
 
   const content = (
     <div

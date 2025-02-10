@@ -1,9 +1,9 @@
-import {MouseEvent, ReactNode, useState, Fragment, memo} from "react"
+import { MouseEvent, ReactNode, useState, Fragment, memo } from "react"
 import reactStringReplace from "react-string-replace"
-import {localState, JsonObject} from "irisdb"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { localState, JsonObject } from "irisdb"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
-import {allEmbeds, smallEmbeds} from "./embed"
+import { allEmbeds, smallEmbeds } from "./embed"
 
 let settings: JsonObject = {}
 localState.get("settings").on((s) => {

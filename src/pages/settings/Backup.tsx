@@ -1,7 +1,7 @@
 import CopyButton from "@/shared/components/button/CopyButton.tsx"
-import {hexToBytes} from "@noble/hashes/utils"
-import {useLocalState} from "irisdb-hooks"
-import {nip19} from "nostr-tools"
+import { hexToBytes } from "@noble/hashes/utils"
+import { useLocalState } from "irisdb-hooks"
+import { nip19 } from "nostr-tools"
 
 function Backup() {
   const [myPrivateKey] = useLocalState("user/privateKey", "")

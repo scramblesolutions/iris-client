@@ -1,6 +1,6 @@
-import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
+import { NDKEvent, NDKFilter } from "@nostr-dev-kit/ndk"
 import socialGraph from "@/utils/socialGraph"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 export interface PushNotifications {
   endpoint: string
@@ -42,7 +42,7 @@ export default class SnortApi {
   }
 
   getPushNotificationInfo() {
-    return this.#getJson<{vapid_public_key: string}>("info")
+    return this.#getJson<{ vapid_public_key: string }>("info")
   }
 
   registerPushNotifications(sub: PushNotifications, filter: NDKFilter) {
@@ -61,7 +61,7 @@ export default class SnortApi {
     path: string,
     method?: "GET" | string,
     body?: object,
-    headers?: {[key: string]: string}
+    headers?: { [key: string]: string }
   ): Promise<T> {
     const event = new NDKEvent(ndk(), {
       kind: 27235, // http authentication
@@ -89,14 +89,14 @@ export default class SnortApi {
     path: string,
     method?: "GET" | string,
     body?: object,
-    headers?: {[key: string]: string}
+    headers?: { [key: string]: string }
   ): Promise<T> {
     const rsp = await fetch(`${this.#url}${path}`, {
       method: method,
       body: body ? JSON.stringify(body) : undefined,
       headers: {
         accept: "application/json",
-        ...(body ? {"content-type": "application/json"} : {}),
+        ...(body ? { "content-type": "application/json" } : {}),
         ...headers,
       },
     })
@@ -122,7 +122,7 @@ export default class SnortApi {
   }
 
   createSubscription(filter: Subscription["filter"]) {
-    return this.#getJsonAuthd<{id: string; status: string}>("subscriptions", "POST", {
+    return this.#getJsonAuthd<{ id: string; status: string }>("subscriptions", "POST", {
       webhooks: [],
       web_push_subscriptions: [],
       filter,
@@ -133,7 +133,7 @@ export default class SnortApi {
 export function trackEvent(
   event: string,
   props?: Record<string, string | boolean>,
-  e?: {destination?: {url: string}}
+  e?: { destination?: { url: string } }
 ) {
   if (!import.meta.env.DEV && CONFIG.features.analytics) {
     fetch("https://pa.v0l.io/api/event", {

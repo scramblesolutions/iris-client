@@ -15,8 +15,8 @@ import {
   StarBorder,
   VideoCameraBack,
 } from "@mui/icons-material"
-import {GitPullRequestIcon, RepoForkedIcon} from "@primer/octicons-react"
-import {ReactNode, useState} from "react"
+import { GitPullRequestIcon, RepoForkedIcon } from "@primer/octicons-react"
+import { ReactNode, useState } from "react"
 
 import highlightsIcon from "@/assets/highlights-icon.png"
 import longFormIcon from "@/assets/long-form-icon.png"
@@ -26,8 +26,8 @@ import noteIcon from "@/assets/note-icon.png"
 
 import FeedToggle from "../../../../shared/components/feed/FeedToggle.tsx"
 import Widget from "@/shared/components/ui/Widget.tsx"
-import {defaultFeedFilter} from "@/utils/nostr.ts"
-import {useLocalState} from "irisdb-hooks"
+import { defaultFeedFilter } from "@/utils/nostr.ts"
+import { useLocalState } from "irisdb-hooks"
 
 interface Toggle {
   title: string
@@ -35,33 +35,36 @@ interface Toggle {
 }
 
 const codeToggles: Toggle[] = [
-  {title: "Repos", iconComponent: <Save className="w-8 h-8" />},
-  {title: "Issues", iconComponent: <AdjustOutlined className="w-8 h-8" />},
-  {title: "Forks", iconComponent: <RepoForkedIcon size={24} className="w-8 h-8" />},
-  {title: "Stars", iconComponent: <StarBorder className="w-8 h-8" />},
-  {title: "PRs", iconComponent: <GitPullRequestIcon size={24} className="w-8 h-8" />},
+  { title: "Repos", iconComponent: <Save className="w-8 h-8" /> },
+  { title: "Issues", iconComponent: <AdjustOutlined className="w-8 h-8" /> },
+  { title: "Forks", iconComponent: <RepoForkedIcon size={24} className="w-8 h-8" /> },
+  { title: "Stars", iconComponent: <StarBorder className="w-8 h-8" /> },
+  { title: "PRs", iconComponent: <GitPullRequestIcon size={24} className="w-8 h-8" /> },
 ]
 
 const socialToggles: Toggle[] = [
-  {title: "Notes", iconComponent: <img src={noteIcon} className="w-8 h-8" />},
+  { title: "Notes", iconComponent: <img src={noteIcon} className="w-8 h-8" /> },
   {
     title: "Reposts",
     iconComponent: <ChangeCircle fontSize="large" className="w-8 h-8" />,
   },
-  {title: "Rezaps", iconComponent: <Bolt fontSize="large" className="w-8 h-8" />},
-  {title: "Quotes", iconComponent: <img src={quotesIcon} className="w-8 h-8" />},
-  {title: "Long-form", iconComponent: <img src={longFormIcon} className="w-8 h-8" />},
-  {title: "Highlights", iconComponent: <img src={highlightsIcon} className="w-8 h-8" />},
-  {title: "Gems", iconComponent: <Diamond className="w-8 h-8" />},
+  { title: "Rezaps", iconComponent: <Bolt fontSize="large" className="w-8 h-8" /> },
+  { title: "Quotes", iconComponent: <img src={quotesIcon} className="w-8 h-8" /> },
+  { title: "Long-form", iconComponent: <img src={longFormIcon} className="w-8 h-8" /> },
+  {
+    title: "Highlights",
+    iconComponent: <img src={highlightsIcon} className="w-8 h-8" />,
+  },
+  { title: "Gems", iconComponent: <Diamond className="w-8 h-8" /> },
 ]
 
 const mediaToggles: Toggle[] = [
-  {title: "Text-only", iconComponent: <img src={noteIcon} className="w-8 h-8" />},
-  {title: "Images", iconComponent: <Photo className="w-8 h-8" />},
-  {title: "Videos", iconComponent: <VideoCameraBack className="w-8 h-8" />},
-  {title: "GIFs", iconComponent: <Gif className="w-8 h-8" />},
-  {title: "Audio", iconComponent: <Headphones className="w-8 h-8" />},
-  {title: "Shorts", iconComponent: <img src={reelsIcon} className="w-8 h-8" />},
+  { title: "Text-only", iconComponent: <img src={noteIcon} className="w-8 h-8" /> },
+  { title: "Images", iconComponent: <Photo className="w-8 h-8" /> },
+  { title: "Videos", iconComponent: <VideoCameraBack className="w-8 h-8" /> },
+  { title: "GIFs", iconComponent: <Gif className="w-8 h-8" /> },
+  { title: "Audio", iconComponent: <Headphones className="w-8 h-8" /> },
+  { title: "Shorts", iconComponent: <img src={reelsIcon} className="w-8 h-8" /> },
 ]
 
 function FeedFilters() {

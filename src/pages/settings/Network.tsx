@@ -1,7 +1,7 @@
-import {FormEvent, useEffect, useMemo, useState} from "react"
-import {DEFAULT_RELAYS, ndk as getNdk} from "irisdb-nostr"
-import {RiDeleteBinLine} from "@remixicon/react"
-import {useLocalState} from "irisdb-hooks"
+import { FormEvent, useEffect, useMemo, useState } from "react"
+import { DEFAULT_RELAYS, ndk as getNdk } from "irisdb-nostr"
+import { RiDeleteBinLine } from "@remixicon/react"
+import { useLocalState } from "irisdb-hooks"
 
 import Show from "@/shared/components/Show.tsx"
 

@@ -1,9 +1,9 @@
 // mentions like #[3], can refer to event or user
 
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 
-import {Name} from "@/shared/components/user/Name.tsx"
+import { Name } from "@/shared/components/user/Name.tsx"
 
 import FeedItem from "@/shared/components/event/FeedItem/FeedItem.tsx"
 import Embed from "../index.ts"
@@ -12,7 +12,7 @@ const fail = (s: string) => `#[${s}]`
 
 const InlineMention: Embed = {
   regex: /#\[([0-9]+)]/g,
-  component: ({match, index, event}) => {
+  component: ({ match, index, event }) => {
     if (!event?.tags) {
       console.warn("no tags", event)
       return <>{fail(match)}</>

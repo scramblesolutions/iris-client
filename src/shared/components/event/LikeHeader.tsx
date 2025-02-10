@@ -1,13 +1,13 @@
-import {Name} from "@/shared/components/user/Name"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
+import { Name } from "@/shared/components/user/Name"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 
 interface LikeHeaderProps {
   event: NDKEvent
 }
 
-function LikeHeader({event}: LikeHeaderProps) {
+function LikeHeader({ event }: LikeHeaderProps) {
   const reactionText =
     event.content === "+" ? "liked" : `reacted with ${event.content.slice(0, 2)}`
 

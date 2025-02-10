@@ -1,10 +1,10 @@
-import socialGraph, {shouldHideEvent} from "@/utils/socialGraph.ts"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
-import {ndk} from "irisdb-nostr"
+import socialGraph, { shouldHideEvent } from "@/utils/socialGraph.ts"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
+import { ndk } from "irisdb-nostr"
 
-export default function Reposts({event}: {event: NDKEvent}) {
+export default function Reposts({ event }: { event: NDKEvent }) {
   const [reactions, setReactions] = useState<Map<string, NDKEvent>>(new Map())
 
   useEffect(() => {

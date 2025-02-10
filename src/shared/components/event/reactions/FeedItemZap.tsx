@@ -1,17 +1,17 @@
-import {LnPayCb, NDKEvent, NDKZapper} from "@nostr-dev-kit/ndk"
-import {requestProvider} from "@getalby/bitcoin-connect"
-import {shouldHideEvent} from "@/utils/socialGraph.ts"
+import { LnPayCb, NDKEvent, NDKZapper } from "@nostr-dev-kit/ndk"
+import { requestProvider } from "@getalby/bitcoin-connect"
+import { shouldHideEvent } from "@/utils/socialGraph.ts"
 import useProfile from "@/shared/hooks/useProfile.ts"
-import {getZappingUser} from "@/utils/nostr.ts"
-import {LRUCache} from "typescript-lru-cache"
-import {useLocalState} from "irisdb-hooks"
-import {statCalc} from "@/utils/utils.ts"
-import {useEffect, useState} from "react"
+import { getZappingUser } from "@/utils/nostr.ts"
+import { LRUCache } from "typescript-lru-cache"
+import { useLocalState } from "irisdb-hooks"
+import { statCalc } from "@/utils/utils.ts"
+import { useEffect, useState } from "react"
 import Icon from "../../Icons/Icon.tsx"
 import ZapModal from "../ZapModal.tsx"
 import debounce from "lodash/debounce"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 import * as bolt11 from "bolt11"
 
 const zapsByEventCache = new LRUCache<string, Map<string, NDKEvent[]>>({
@@ -26,7 +26,7 @@ interface FeedItemZapProps {
 let myPubKey = ""
 localState.get("user/publicKey").on((k) => (myPubKey = k as string))
 
-function FeedItemZap({event}: FeedItemZapProps) {
+function FeedItemZap({ event }: FeedItemZapProps) {
   const [isWalletConnect] = useLocalState("user/walletConnect", false)
   const [defaultZapAmount] = useLocalState("user/defaultZapAmount", undefined)
 
@@ -67,7 +67,7 @@ function FeedItemZap({event}: FeedItemZapProps) {
     try {
       const amount = Number(defaultZapAmount) * 1000
 
-      const lnPay: LnPayCb = async ({pr}) => {
+      const lnPay: LnPayCb = async ({ pr }) => {
         if (isWalletConnect) {
           const provider = await requestProvider()
           const confirmation = await provider.sendPayment(pr)

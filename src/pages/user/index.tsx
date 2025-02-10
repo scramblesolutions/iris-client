@@ -1,21 +1,21 @@
-import {NavLink, Route, Routes} from "react-router-dom"
+import { NavLink, Route, Routes } from "react-router-dom"
 import Widget from "@/shared/components/ui/Widget"
-import {useMemo, ReactNode} from "react"
+import { useMemo, ReactNode } from "react"
 import classNames from "classnames"
 
 import FeedFilters from "../home/feed/components/FeedFilters"
 import RightColumn from "@/shared/components/RightColumn"
 import Trending from "@/shared/components/feed/Trending"
+import { hasMedia } from "@/shared/components/embed"
 import useFollows from "@/shared/hooks/useFollows"
-import {hasMedia} from "@/shared/components/embed"
+import { getEventReplyingTo } from "@/utils/nostr"
 import OrganizationsTab from "./OrganizationsTab"
 import FollowList from "./components/FollowList"
 import socialGraph from "@/utils/socialGraph.ts"
-import {getEventReplyingTo} from "@/utils/nostr"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useLocalState } from "irisdb-hooks"
 import ProfileHeader from "./ProfileHeader"
-import {useLocalState} from "irisdb-hooks"
-import {PublicKey} from "irisdb-nostr"
+import { PublicKey } from "irisdb-nostr"
 import Gems from "./components/Gems"
 import NotesTab from "./NotesTab"
 import CodeTab from "./CodeTab"
@@ -63,12 +63,12 @@ const tabs: Tab[] = [
 
 if (CONFIG.features.git) {
   tabs.push(
-    {name: "Code", path: "code", element: CodeTab},
-    {name: "Organizations", path: "organizations", element: OrganizationsTab}
+    { name: "Code", path: "code", element: CodeTab },
+    { name: "Organizations", path: "organizations", element: OrganizationsTab }
   )
 }
 
-function UserPage({pubKey}: {pubKey: string}) {
+function UserPage({ pubKey }: { pubKey: string }) {
   const pubKeyHex = useMemo(
     () => (pubKey ? new PublicKey(pubKey).toString() : ""),
     [pubKey]
@@ -94,7 +94,7 @@ function UserPage({pubKey}: {pubKey: string}) {
                   to={tab.path}
                   end={tab.path === ""}
                   preventScrollReset={true}
-                  className={({isActive}) =>
+                  className={({ isActive }) =>
                     classNames("btn btn-sm", isActive ? "btn-primary" : "btn-neutral")
                   }
                 >

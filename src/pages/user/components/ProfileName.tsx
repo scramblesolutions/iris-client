@@ -1,15 +1,15 @@
-import {ErrorOutline, Verified} from "@mui/icons-material"
-import {useCallback, useEffect, useState} from "react"
-import {NDKUserProfile} from "@nostr-dev-kit/ndk"
-import {useNavigate} from "react-router-dom"
-import {ndk} from "irisdb-nostr"
+import { ErrorOutline, Verified } from "@mui/icons-material"
+import { useCallback, useEffect, useState } from "react"
+import { NDKUserProfile } from "@nostr-dev-kit/ndk"
+import { useNavigate } from "react-router-dom"
+import { ndk } from "irisdb-nostr"
 
 interface ProfileNameProps {
   profile: NDKUserProfile | null | undefined
   pubkey: string
 }
 
-function ProfileName({profile, pubkey}: ProfileNameProps) {
+function ProfileName({ profile, pubkey }: ProfileNameProps) {
   const navigate = useNavigate()
 
   const [nip05valid, setNIP05valid] = useState<boolean>(false)
@@ -19,7 +19,7 @@ function ProfileName({profile, pubkey}: ProfileNameProps) {
   const validateNip05 = () => {
     if (profile?.nip05) {
       ndk()
-        .getUser({hexpubkey: pubkey})
+        .getUser({ hexpubkey: pubkey })
         ?.validateNip05(profile?.nip05)
         .then((isValid) => setNIP05valid(isValid ? isValid : false))
         .catch((error) => console.warn(error))

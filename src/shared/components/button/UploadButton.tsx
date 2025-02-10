@@ -1,6 +1,6 @@
-import React, {useRef, useState} from "react"
+import React, { useRef, useState } from "react"
 
-import {uploadFile} from "@/shared/upload"
+import { uploadFile } from "@/shared/upload"
 
 type Props = {
   onUpload: (url: string) => void
@@ -68,14 +68,14 @@ const UploadButton = ({
         type="file"
         accept={accept}
         onChange={onChange}
-        style={{display: "none"}}
+        style={{ display: "none" }}
       />
       {uploading && (
         <div className="w-full mt-2">
           <div className="bg-neutral rounded-full h-2.5">
             <div
               className="bg-primary h-2.5 rounded-full"
-              style={{width: `${progress}%`}}
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
           <p className="text-sm text-center mt-1">{Math.round(progress)}%</p>

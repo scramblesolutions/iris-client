@@ -1,15 +1,15 @@
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll.tsx"
-import {NDKEventFromRawEvent, RawEvent} from "@/utils/nostr.ts"
+import { NDKEventFromRawEvent, RawEvent } from "@/utils/nostr.ts"
 import useCachedFetch from "@/shared/hooks/useCachedFetch.ts"
 import EventBorderless from "../event/EventBorderless"
-import {useCallback, useState, useMemo} from "react"
+import { useCallback, useState, useMemo } from "react"
 import FeedItem from "../event/FeedItem/FeedItem"
 import useMutes from "@/shared/hooks/useMutes"
 import socialGraph from "@/utils/socialGraph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Link} from "react-router-dom"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Link } from "react-router-dom"
 import classNames from "classnames"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 class NostrBandApi {
   readonly #url = "https://api.nostr.band"
@@ -41,13 +41,13 @@ class NostrBandApi {
 }
 
 type TrendingData = {
-  notes?: Array<{event: RawEvent}>
-  videos?: Array<{event: RawEvent}>
-  images?: Array<{event: RawEvent}>
-  hashtags?: Array<{hashtag: string; posts: number}>
+  notes?: Array<{ event: RawEvent }>
+  videos?: Array<{ event: RawEvent }>
+  images?: Array<{ event: RawEvent }>
+  hashtags?: Array<{ hashtag: string; posts: number }>
 }
 
-type TrendingItem = RawEvent | {hashtag: string; posts: number}
+type TrendingItem = RawEvent | { hashtag: string; posts: number }
 
 export default function Trending({
   small = true,
@@ -90,7 +90,7 @@ export default function Trending({
         }
         const events = data.notes || data.videos || data.images || []
         return events
-          .map((a: {event: RawEvent}) => {
+          .map((a: { event: RawEvent }) => {
             const ev = a.event
             const ndkEvent = NDKEventFromRawEvent(ev)
             if (!ndkEvent.verifySignature(true)) {
@@ -119,9 +119,9 @@ export default function Trending({
       <div
         className={classNames(
           "flex flex-col",
-          {"text-base-content/50": small},
-          {"gap-2": small && contentType === "hashtags"},
-          {"gap-8": small && contentType !== "hashtags"}
+          { "text-base-content/50": small },
+          { "gap-2": small && contentType === "hashtags" },
+          { "gap-8": small && contentType !== "hashtags" }
         )}
       >
         {error && !sortedData.length ? (

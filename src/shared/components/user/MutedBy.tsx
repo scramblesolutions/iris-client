@@ -1,15 +1,15 @@
-import socialGraph, {shouldSocialHide} from "@/utils/socialGraph"
+import socialGraph, { shouldSocialHide } from "@/utils/socialGraph"
 import FollowList from "@/pages/user/components/FollowList"
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {Fragment, useMemo, useState} from "react"
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
-import {Name} from "./Name"
+import { Fragment, useMemo, useState } from "react"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
+import { Name } from "./Name"
 
 const MAX_MUTED_BY_DISPLAY = 3
 
-export default function MutedBy({pubkey}: {pubkey: string}) {
-  const {mutedByArray, totalMutedBy} = useMemo(() => {
+export default function MutedBy({ pubkey }: { pubkey: string }) {
+  const { mutedByArray, totalMutedBy } = useMemo(() => {
     const mutedBy = socialGraph().getUserMutedBy(pubkey)
     return {
       mutedByArray: Array.from(mutedBy).slice(0, MAX_MUTED_BY_DISPLAY),

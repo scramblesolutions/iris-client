@@ -1,14 +1,14 @@
-import {useCallback, MouseEvent, useState} from "react"
-import {eventsByIdCache} from "@/utils/memcache"
+import { useCallback, MouseEvent, useState } from "react"
+import { eventsByIdCache } from "@/utils/memcache"
 import ErrorBoundary from "../ui/ErrorBoundary"
-import {useNavigate} from "react-router-dom"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { useNavigate } from "react-router-dom"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { UserRow } from "../user/UserRow"
 import RelativeTime from "./RelativeTime"
-import {UserRow} from "../user/UserRow"
-import {RawEvent} from "@/utils/nostr"
+import { RawEvent } from "@/utils/nostr"
 import HyperText from "../HyperText"
-import {nip19} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
+import { nip19 } from "nostr-tools"
+import { ndk } from "irisdb-nostr"
 
 interface EventBorderlessProps {
   event?: RawEvent | NDKEvent
@@ -47,7 +47,7 @@ function EventBorderless({
 
   if (!event) {
     ndk()
-      .fetchEvent({ids: [eventId!]})
+      .fetchEvent({ ids: [eventId!] })
       .then((e: NDKEvent | null) => {
         if (e) {
           setEvent(e)

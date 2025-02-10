@@ -1,4 +1,4 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 import HyperText from "@/shared/components/HyperText.tsx"
 import ErrorBoundary from "../ui/ErrorBoundary"
@@ -8,7 +8,7 @@ type TextNoteProps = {
   truncate?: number
 }
 
-function TextNote({event, truncate}: TextNoteProps) {
+function TextNote({ event, truncate }: TextNoteProps) {
   return (
     <ErrorBoundary>
       <HyperText event={event} truncate={truncate}>

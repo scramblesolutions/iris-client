@@ -6,16 +6,16 @@ import {
   Sender,
   serializeChannelState,
 } from "nostr-double-ratchet"
-import {showNotification, subscribeToAuthorDMNotifications} from "@/utils/notifications"
-import {JsonValue, localState, Unsubscribe} from "irisdb"
-import {hexToBytes} from "@noble/hashes/utils"
-import {VerifiedEvent} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
+import { showNotification, subscribeToAuthorDMNotifications } from "@/utils/notifications"
+import { JsonValue, localState, Unsubscribe } from "irisdb"
+import { hexToBytes } from "@noble/hashes/utils"
+import { VerifiedEvent } from "nostr-tools"
+import { ndk } from "irisdb-nostr"
 
 const inviteLinks = new Map<string, InviteLink>()
 const subscriptions = new Map<string, Unsubscribe>()
 
-let user: {publicKey?: string; privateKey?: string} | null = null
+let user: { publicKey?: string; privateKey?: string } | null = null
 
 export function getInviteLinks(
   callback: (id: string, inviteLink: InviteLink) => void
@@ -101,6 +101,6 @@ getInviteLinks((id, inviteLink) => {
 })
 
 localState.get("user").on((u) => {
-  user = u as {publicKey?: string; privateKey?: string}
+  user = u as { publicKey?: string; privateKey?: string }
   listen()
 })

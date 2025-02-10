@@ -19,7 +19,7 @@ export type PullRequest = {
   author: string
   closed_at?: number
   closed_by?: string
-  edit_history?: {[edited_timestamp: number]: string}
+  edit_history?: { [edited_timestamp: number]: string }
   merged_at?: number
   merged_by?: string
   base_ref: string
@@ -40,7 +40,7 @@ export type Issue = {
   parent_issue?: string
   closed_at?: number
   closed_by?: string
-  edit_history?: {[edited_timestamp: number]: string}
+  edit_history?: { [edited_timestamp: number]: string }
   comments?: RepoComments
 }
 
@@ -61,7 +61,7 @@ export type RepoComment = {
   body: string
   author: string
   timestamp: number
-  edit_history?: {[edited_timestamp: number]: string}
+  edit_history?: { [edited_timestamp: number]: string }
 }
 
 export type RepoComments = {

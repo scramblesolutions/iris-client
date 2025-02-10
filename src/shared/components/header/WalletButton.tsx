@@ -1,11 +1,11 @@
-import {useLocalState} from "irisdb-hooks"
+import { useLocalState } from "irisdb-hooks"
 
 import Wallet from "@/pages/home/feed/components/Wallet.tsx"
 import Icon from "@/shared/components/Icons/Icon"
 
 import Modal from "../ui/Modal"
 
-import {useState} from "react"
+import { useState } from "react"
 
 export default function WalletButton() {
   const [showWallet, setShowWallet] = useState(false)

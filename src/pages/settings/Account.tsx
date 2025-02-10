@@ -1,8 +1,8 @@
-import {useNavigate} from "react-router-dom"
-import {DEFAULT_RELAYS} from "irisdb-nostr"
-import {useLocalState} from "irisdb-hooks"
+import { useNavigate } from "react-router-dom"
+import { DEFAULT_RELAYS } from "irisdb-nostr"
+import { useLocalState } from "irisdb-hooks"
 import localforage from "localforage"
-import {MouseEvent} from "react"
+import { MouseEvent } from "react"
 
 function Account() {
   const [privateKey, setPrivateKey] = useLocalState("user/privateKey", "", String)

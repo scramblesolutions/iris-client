@@ -1,12 +1,12 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Fragment} from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Fragment } from "react"
 
 type QuotedNestrEventProps = {
   event: NDKEvent
 }
 
 // todo: render original event based on q tag (event.id)
-function QuotedNestrEvent({event}: QuotedNestrEventProps) {
+function QuotedNestrEvent({ event }: QuotedNestrEventProps) {
   const noteLines = event?.content.split("\n")
 
   return (

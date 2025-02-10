@@ -1,13 +1,13 @@
 import useProfile from "@/shared/hooks/useProfile.ts"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Helmet} from "react-helmet"
-import {useMemo} from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Helmet } from "react-helmet"
+import { useMemo } from "react"
 
 type FeedItemTitleProps = {
   event?: NDKEvent
 }
 
-const FeedItemTitle = ({event}: FeedItemTitleProps) => {
+const FeedItemTitle = ({ event }: FeedItemTitleProps) => {
   const authorProfile = useProfile(event?.pubkey)
 
   const authorTitle = useMemo(() => {

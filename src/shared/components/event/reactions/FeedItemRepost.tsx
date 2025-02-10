@@ -1,19 +1,19 @@
-import {useLocation} from "react-router-dom"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
+import { useLocation } from "react-router-dom"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
 import debounce from "lodash/debounce"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 import NoteCreator from "@/shared/components/create/NoteCreator.tsx"
 import Dropdown from "@/shared/components/ui/Dropdown"
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {serializeEvent} from "@/utils/nostr.ts"
-import {LRUCache} from "typescript-lru-cache"
-import {statCalc} from "@/utils/utils.ts"
+import { serializeEvent } from "@/utils/nostr.ts"
+import { LRUCache } from "typescript-lru-cache"
+import { statCalc } from "@/utils/utils.ts"
 import Icon from "../../Icons/Icon"
 
-import {shouldHideEvent} from "@/utils/socialGraph"
-import {localState} from "irisdb"
+import { shouldHideEvent } from "@/utils/socialGraph"
+import { localState } from "irisdb"
 
 interface FeedItemRepostProps {
   event: NDKEvent
@@ -26,7 +26,7 @@ const repostCache = new LRUCache<string, Set<string>>({
 let myPubKey = ""
 localState.get("user/publicKey").on((k) => (myPubKey = k as string))
 
-function FeedItemRepost({event}: FeedItemRepostProps) {
+function FeedItemRepost({ event }: FeedItemRepostProps) {
   const location = useLocation()
 
   const cachedReposts = repostCache.get(event.id)

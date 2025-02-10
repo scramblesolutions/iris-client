@@ -1,13 +1,13 @@
-import {LinkExternalIcon} from "@primer/octicons-react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
+import { LinkExternalIcon } from "@primer/octicons-react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
 import HyperText from "../HyperText"
 
 interface HighlightProps {
   event: NDKEvent
 }
 
-function Highlight({event}: HighlightProps) {
+function Highlight({ event }: HighlightProps) {
   const [link, setLink] = useState<string>("")
 
   useEffect(() => {

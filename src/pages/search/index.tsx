@@ -1,16 +1,16 @@
-import {useMemo, useState, useEffect, FormEvent, useCallback} from "react"
+import { useMemo, useState, useEffect, FormEvent, useCallback } from "react"
 import MiddleHeader from "@/shared/components/header/MiddleHeader"
 import RightColumn from "@/shared/components/RightColumn.tsx"
 import Trending from "@/shared/components/feed/Trending.tsx"
+import { useParams, useNavigate } from "react-router-dom"
 import SearchBox from "@/shared/components/ui/SearchBox"
-import {useParams, useNavigate} from "react-router-dom"
-import {NDKFilter, NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKFilter, NDKEvent } from "@nostr-dev-kit/ndk"
 import Feed from "@/shared/components/feed/Feed.tsx"
 import Widget from "@/shared/components/ui/Widget"
-import {Helmet} from "react-helmet"
+import { Helmet } from "react-helmet"
 
 function SearchPage() {
-  const {query} = useParams()
+  const { query } = useParams()
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState(query || "")
   const [activeTab, setActiveTab] = useState<"people" | "posts">(

@@ -1,12 +1,12 @@
-import {InviteLink, serializeChannelState} from "nostr-double-ratchet"
-import {useNavigate, useLocation} from "react-router-dom"
-import {NDKEventFromRawEvent} from "@/utils/nostr"
-import {hexToBytes} from "@noble/hashes/utils"
-import {useLocalState} from "irisdb-hooks"
-import {VerifiedEvent} from "nostr-tools"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
-import {useEffect} from "react"
+import { InviteLink, serializeChannelState } from "nostr-double-ratchet"
+import { useNavigate, useLocation } from "react-router-dom"
+import { NDKEventFromRawEvent } from "@/utils/nostr"
+import { hexToBytes } from "@noble/hashes/utils"
+import { useLocalState } from "irisdb-hooks"
+import { VerifiedEvent } from "nostr-tools"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
+import { useEffect } from "react"
 
 export const acceptInviteLink = async (
   url: string,
@@ -26,7 +26,7 @@ export const acceptInviteLink = async (
           throw new Error("No nostr extension or private key")
         }
 
-    const {channel, event} = await inviteLink.acceptInvite(
+    const { channel, event } = await inviteLink.acceptInvite(
       (filter, onEvent) => {
         const sub = ndk().subscribe(filter)
         sub.on("event", (e) => onEvent(e as unknown as VerifiedEvent))
@@ -49,10 +49,10 @@ export const acceptInviteLink = async (
       navigate(`/messages/${inviteLink.inviter}`)
     }
 
-    return {success: true, inviter: inviteLink.inviter}
+    return { success: true, inviter: inviteLink.inviter }
   } catch (error) {
     //console.error("Not a valid invite link URL:", error)
-    return {success: false, error}
+    return { success: false, error }
   }
 }
 

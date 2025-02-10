@@ -1,17 +1,17 @@
 import EventBorderless from "@/shared/components/event/EventBorderless"
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
-import {useCallback, useEffect, useMemo, useState} from "react"
-import {Diamond} from "@mui/icons-material"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {usePublicState} from "irisdb-hooks"
-import {nip19} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { Diamond } from "@mui/icons-material"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { usePublicState } from "irisdb-hooks"
+import { nip19 } from "nostr-tools"
+import { ndk } from "irisdb-nostr"
 
 interface GemsProps {
   pubKey: string
 }
 
-function Gems({pubKey}: GemsProps) {
+function Gems({ pubKey }: GemsProps) {
   const authors = useMemo(() => {
     try {
       return pubKey ? [nip19.decode(pubKey).data.toString()] : []
@@ -37,7 +37,7 @@ function Gems({pubKey}: GemsProps) {
 
   useEffect(() => {
     ndk()
-      .fetchEvents({ids: nonRemovedGemIds})
+      .fetchEvents({ ids: nonRemovedGemIds })
       .then((gems) => {
         if (gems) setEvents([...gems])
       })

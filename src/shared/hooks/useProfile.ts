@@ -1,8 +1,8 @@
-import {NDKEvent, NDKUserProfile} from "@nostr-dev-kit/ndk"
-import {handleProfile} from "@/utils/socialGraph.ts"
-import {useEffect, useMemo, useState} from "react"
-import {profileCache} from "@/utils/memcache"
-import {ndk, PublicKey} from "irisdb-nostr"
+import { NDKEvent, NDKUserProfile } from "@nostr-dev-kit/ndk"
+import { handleProfile } from "@/utils/socialGraph.ts"
+import { useEffect, useMemo, useState } from "react"
+import { profileCache } from "@/utils/memcache"
+import { ndk, PublicKey } from "irisdb-nostr"
 
 export default function useProfile(pubKey?: string, subscribe = true) {
   const pubKeyHex = useMemo(() => {
@@ -31,8 +31,8 @@ export default function useProfile(pubKey?: string, subscribe = true) {
       return
     }
     const sub = ndk().subscribe(
-      {kinds: [0], authors: [pubKeyHex]},
-      {closeOnEose: false},
+      { kinds: [0], authors: [pubKeyHex] },
+      { closeOnEose: false },
       undefined,
       true
     )

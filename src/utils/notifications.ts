@@ -1,9 +1,9 @@
-import {NDKTag, NDKEvent, NDKUser} from "@nostr-dev-kit/ndk"
-import {getZapAmount, getZappingUser} from "./nostr"
-import {SortedMap} from "./SortedMap/SortedMap"
+import { NDKTag, NDKEvent, NDKUser } from "@nostr-dev-kit/ndk"
+import { getZapAmount, getZappingUser } from "./nostr"
+import { SortedMap } from "./SortedMap/SortedMap"
+import { profileCache } from "@/utils/memcache"
 import socialGraph from "@/utils/socialGraph"
-import {profileCache} from "@/utils/memcache"
-import {base64} from "@scure/base"
+import { base64 } from "@scure/base"
 import SnortApi from "./SnortApi"
 
 interface ReactedTime {
@@ -78,7 +78,7 @@ export async function maybeShowPushNotification(event: NDKEvent) {
   if (!profile) {
     const fetchProfileWithTimeout = (user: string) => {
       return Promise.race([
-        new NDKUser({pubkey: user}).fetchProfile(),
+        new NDKUser({ pubkey: user }).fetchProfile(),
         new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), 1000)),
       ])
     }
@@ -96,7 +96,7 @@ export async function maybeShowPushNotification(event: NDKEvent) {
       icon: "/favicon.png",
       image: "/img/zap.png",
       sticky: false,
-      data: {url: "/notifications"},
+      data: { url: "/notifications" },
     })
   }
 }
@@ -159,7 +159,7 @@ export async function subscribeToNotifications() {
       const reg = await navigator.serviceWorker.ready
       if (reg) {
         const api = new SnortApi()
-        const {vapid_public_key: newVapidKey} = await api.getPushNotificationInfo()
+        const { vapid_public_key: newVapidKey } = await api.getPushNotificationInfo()
 
         // Check for existing subscription
         const existingSub = await reg.pushManager.getSubscription()

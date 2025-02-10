@@ -1,11 +1,11 @@
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface AccountNameProps {
   name?: string
   link?: boolean
 }
 
-export default function AccountName({name = "", link = true}: AccountNameProps) {
+export default function AccountName({ name = "", link = true }: AccountNameProps) {
   const navigate = useNavigate()
   return (
     <>

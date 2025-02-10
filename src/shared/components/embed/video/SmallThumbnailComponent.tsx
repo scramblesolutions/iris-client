@@ -1,15 +1,15 @@
-import {RiVideoLine} from "@remixicon/react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useState, MouseEvent} from "react"
+import { RiVideoLine } from "@remixicon/react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useState, MouseEvent } from "react"
 import classNames from "classnames"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
 interface SmallThumbnailComponentProps {
   match: string
   event: NDKEvent | undefined
 }
 
-function SmallThumbnailComponent({match, event}: SmallThumbnailComponentProps) {
+function SmallThumbnailComponent({ match, event }: SmallThumbnailComponentProps) {
   let blurNSFW = true
   localState.get("settings/blurNSFW").on((value) => {
     if (typeof value === "boolean") {
@@ -39,7 +39,7 @@ function SmallThumbnailComponent({match, event}: SmallThumbnailComponentProps) {
         <img
           onClick={onClick}
           onError={() => setError(true)}
-          className={classNames("rounded w-24 h-24", {"blur-xl": blur})}
+          className={classNames("rounded w-24 h-24", { "blur-xl": blur })}
           src={`https://imgproxy.iris.to/thumbnail/192/${match}`}
           alt="thumbnail"
         />

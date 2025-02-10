@@ -1,4 +1,4 @@
-export const BlueWallet = (props: {width?: number; height?: number}) => {
+export const BlueWallet = (props: { width?: number; height?: number }) => {
   return (
     <svg viewBox="0 0 58 58" version="1.1" xmlns="http://www.w3.org/2000/svg" {...props}>
       <title>logo-bluewallet</title>

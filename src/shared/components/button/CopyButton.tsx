@@ -1,4 +1,4 @@
-import {MouseEvent, MouseEventHandler, useEffect, useState} from "react"
+import { MouseEvent, MouseEventHandler, useEffect, useState } from "react"
 
 type OptionalGetter<T> = T | (() => T)
 
@@ -8,7 +8,7 @@ type Props = {
   className?: string
 }
 
-const Copy = ({copyStr, text, className}: Props) => {
+const Copy = ({ copyStr, text, className }: Props) => {
   const [copied, setCopied] = useState(false)
   const [originalWidth, setOriginalWidth] = useState<number | undefined>(undefined)
   const [timeout, setTimeoutState] = useState<ReturnType<typeof setTimeout> | undefined>(

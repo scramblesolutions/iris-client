@@ -1,8 +1,8 @@
 import Icon from "@/shared/components/Icons/Icon"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {nip19} from "nostr-tools"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { nip19 } from "nostr-tools"
 
-const FeedItemShare = ({event}: {event: NDKEvent}) => {
+const FeedItemShare = ({ event }: { event: NDKEvent }) => {
   if (!navigator.share) {
     return null
   }

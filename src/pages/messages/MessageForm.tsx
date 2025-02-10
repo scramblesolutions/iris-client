@@ -1,9 +1,9 @@
-import {FormEvent, useState, useEffect, useRef} from "react"
-import {NDKEventFromRawEvent} from "@/utils/nostr"
+import { FormEvent, useState, useEffect, useRef } from "react"
+import { NDKEventFromRawEvent } from "@/utils/nostr"
 import Icon from "@/shared/components/Icons/Icon"
-import {Channel} from "nostr-double-ratchet"
-import {MessageType} from "./Message"
-import {localState} from "irisdb"
+import { Channel } from "nostr-double-ratchet"
+import { MessageType } from "./Message"
+import { localState } from "irisdb"
 
 interface MessageFormProps {
   channel: Channel
@@ -11,7 +11,7 @@ interface MessageFormProps {
   onSubmit: () => void
 }
 
-const MessageForm = ({channel, id, onSubmit}: MessageFormProps) => {
+const MessageForm = ({ channel, id, onSubmit }: MessageFormProps) => {
   const [newMessage, setNewMessage] = useState("")
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)

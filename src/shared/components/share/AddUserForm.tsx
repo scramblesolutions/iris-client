@@ -1,12 +1,12 @@
-import {FormEvent, useEffect, useMemo, useState} from "react"
-import {PublicKey, publicState} from "irisdb-nostr"
-import {useLocalState} from "irisdb-hooks"
+import { FormEvent, useEffect, useMemo, useState } from "react"
+import { PublicKey, publicState } from "irisdb-nostr"
+import { useLocalState } from "irisdb-hooks"
 import classNames from "classnames"
 
-import {searchIndex, SearchResult} from "@/utils/socialGraph"
-import {UserRow} from "@/shared/components/user/UserRow"
+import { searchIndex, SearchResult } from "@/utils/socialGraph"
+import { UserRow } from "@/shared/components/user/UserRow"
 
-export const AddUserForm = ({file, authors}: {file: string; authors: string[]}) => {
+export const AddUserForm = ({ file, authors }: { file: string; authors: string[] }) => {
   const [myPubKey] = useLocalState("user/publicKey", "", String)
   const [userToAdd, setUserToAdd] = useState("")
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
@@ -104,7 +104,7 @@ export const AddUserForm = ({file, authors}: {file: string; authors: string[]}) 
         <UserRow pubKey={userToAdd} description="Write access" />
       )}
       <button
-        className={classNames("btn btn-primary", {hidden: !userToAddValid})}
+        className={classNames("btn btn-primary", { hidden: !userToAddValid })}
         type="submit"
       >
         Add write access

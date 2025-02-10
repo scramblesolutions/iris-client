@@ -1,10 +1,10 @@
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react"
-import {generateSecretKey, getPublicKey, nip19} from "nostr-tools"
-import {NDKEvent, NDKPrivateKeySigner} from "@nostr-dev-kit/ndk"
-import {bytesToHex} from "@noble/hashes/utils"
-import {useLocalState} from "irisdb-hooks"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react"
+import { generateSecretKey, getPublicKey, nip19 } from "nostr-tools"
+import { NDKEvent, NDKPrivateKeySigner } from "@nostr-dev-kit/ndk"
+import { bytesToHex } from "@noble/hashes/utils"
+import { useLocalState } from "irisdb-hooks"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 const NSEC_NPUB_REGEX = /(nsec1|npub1)[a-zA-Z0-9]{20,65}/gi
 
@@ -12,7 +12,7 @@ interface SignUpProps {
   onClose: () => void
 }
 
-export default function SignUp({onClose}: SignUpProps) {
+export default function SignUp({ onClose }: SignUpProps) {
   const [newUserName, setNewUserName] = useState("")
   const [, setShowLoginDialog] = useLocalState("home/showLoginDialog", false)
   const inputRef = useRef<HTMLInputElement>(null)

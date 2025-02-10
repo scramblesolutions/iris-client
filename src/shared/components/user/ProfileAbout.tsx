@@ -1,7 +1,13 @@
 import useProfile from "@/shared/hooks/useProfile.ts"
 import HyperText from "../HyperText"
 
-export function ProfileAbout({pubKey, className}: {pubKey: string; className?: string}) {
+export function ProfileAbout({
+  pubKey,
+  className,
+}: {
+  pubKey: string
+  className?: string
+}) {
   const profile = useProfile(pubKey)
 
   if (profile?.about) {

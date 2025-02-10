@@ -1,12 +1,12 @@
-import {defaultFeedFilter} from "@/utils/nostr.ts"
-import {useLocalState} from "irisdb-hooks"
-import {useMemo} from "react"
+import { defaultFeedFilter } from "@/utils/nostr.ts"
+import { useLocalState } from "irisdb-hooks"
+import { useMemo } from "react"
 
 interface YoutubeComponentProps {
   match: string
 }
 
-function YoutubeComponent({match}: YoutubeComponentProps) {
+function YoutubeComponent({ match }: YoutubeComponentProps) {
   const [feedFilter] = useLocalState("user/feedFilter", defaultFeedFilter)
   const [youtubePrivacyMode] = useLocalState(
     "settings/youtubePrivacyMode",

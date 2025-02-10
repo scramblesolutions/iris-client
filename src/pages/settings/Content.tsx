@@ -1,7 +1,7 @@
-import {UserRow} from "@/shared/components/user/UserRow"
+import { UserRow } from "@/shared/components/user/UserRow"
 import useMutes from "@/shared/hooks/useMutes"
-import {useLocalState} from "irisdb-hooks"
-import {useState} from "react"
+import { useLocalState } from "irisdb-hooks"
+import { useState } from "react"
 
 function Content() {
   const [blurNSFW, setBlurNSFW] = useLocalState<boolean>("settings/blurNSFW", true)
@@ -88,7 +88,7 @@ interface SettingToggleProps {
   label: string
 }
 
-function SettingToggle({checked, onChange, label}: SettingToggleProps) {
+function SettingToggle({ checked, onChange, label }: SettingToggleProps) {
   return (
     <div className="flex items-center gap-2">
       <input

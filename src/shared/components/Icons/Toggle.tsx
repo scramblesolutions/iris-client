@@ -1,6 +1,6 @@
 import "./Toggle.css"
 
-import {IconProps} from "./Icon"
+import { IconProps } from "./Icon"
 
 export function ToggleSwitch(props: Omit<IconProps, "name">) {
   const size = props.size || 20

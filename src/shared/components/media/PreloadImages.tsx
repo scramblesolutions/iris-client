@@ -6,7 +6,7 @@ interface PreloadImagesProps {
   size?: number | null
 }
 
-function PreloadImages({images, currentIndex, size}: PreloadImagesProps) {
+function PreloadImages({ images, currentIndex, size }: PreloadImagesProps) {
   if (images.length === 0) return null
 
   const nextIndex = (currentIndex + 1) % images.length

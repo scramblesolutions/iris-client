@@ -1,11 +1,11 @@
-import {ReactNode, useEffect} from "react"
+import { ReactNode, useEffect } from "react"
 
 type DropdownProps = {
   children: ReactNode
   onClose: () => void
 }
 
-function Dropdown({children, onClose}: DropdownProps) {
+function Dropdown({ children, onClose }: DropdownProps) {
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -22,11 +22,11 @@ function Dropdown({children, onClose}: DropdownProps) {
     }
 
     window.addEventListener("keydown", onEscape)
-    window.addEventListener("click", onClickOutside, {capture: true})
+    window.addEventListener("click", onClickOutside, { capture: true })
 
     return () => {
       window.removeEventListener("keydown", onEscape)
-      window.removeEventListener("click", onClickOutside, {capture: true})
+      window.removeEventListener("click", onClickOutside, { capture: true })
     }
   }, [onClose])
 

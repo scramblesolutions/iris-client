@@ -1,14 +1,14 @@
-import {useMemo, useState} from "react"
+import { useMemo, useState } from "react"
 
 import socialGraph from "@/utils/socialGraph.ts"
-import {statCalc} from "@/utils/utils.ts"
+import { statCalc } from "@/utils/utils.ts"
 
 import Modal from "@/shared/components/ui/Modal.tsx"
 
 import Icon from "@/shared/components/Icons/Icon.tsx"
 import FollowList from "./FollowList.tsx"
 
-const FollowerCount = ({pubKey}: {pubKey: string}) => {
+const FollowerCount = ({ pubKey }: { pubKey: string }) => {
   const followers = useMemo(
     () => Array.from(socialGraph().getFollowersByUser(pubKey)),
     [pubKey]

@@ -1,4 +1,4 @@
-export default function ECashIcon(props: {width?: number; height?: number}) {
+export default function ECashIcon(props: { width?: number; height?: number }) {
   return (
     <svg viewBox="0 0 30 39" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g id="Group 47711">

@@ -1,14 +1,14 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Adjust} from "@mui/icons-material"
-import {useEffect, useState} from "react"
-import {Link} from "react-router-dom"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Adjust } from "@mui/icons-material"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import RepoCard from "./RepoCard.tsx"
 
 type IssueFeedItemProps = {
   event: NDKEvent
 }
 
-function IssueFeedItem({event}: IssueFeedItemProps) {
+function IssueFeedItem({ event }: IssueFeedItemProps) {
   const [repo, setRepo] = useState<string>()
   const [issueId, setIssueId] = useState<string>()
   const [title, setTitle] = useState<string>()

@@ -1,11 +1,11 @@
 /// <reference lib="webworker" />
-import {PROFILE_AVATAR_WIDTH, EVENT_AVATAR_WIDTH} from "./shared/components/user/const"
-import {CacheFirst, StaleWhileRevalidate} from "workbox-strategies"
-import {CacheableResponsePlugin} from "workbox-cacheable-response"
-import {precacheAndRoute, PrecacheEntry} from "workbox-precaching"
-import {ExpirationPlugin} from "workbox-expiration"
-import {registerRoute} from "workbox-routing"
-import {clientsClaim} from "workbox-core"
+import { PROFILE_AVATAR_WIDTH, EVENT_AVATAR_WIDTH } from "./shared/components/user/const"
+import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies"
+import { CacheableResponsePlugin } from "workbox-cacheable-response"
+import { precacheAndRoute, PrecacheEntry } from "workbox-precaching"
+import { ExpirationPlugin } from "workbox-expiration"
+import { registerRoute } from "workbox-routing"
+import { clientsClaim } from "workbox-core"
 
 // eslint-disable-next-line no-undef
 declare const self: ServiceWorkerGlobalScope & {
@@ -17,7 +17,7 @@ clientsClaim()
 
 // cache everything in current domain /assets because precache doesn't seem to include everything
 registerRoute(
-  ({url}) => url.origin === self.location.origin && url.pathname.startsWith("/assets"),
+  ({ url }) => url.origin === self.location.origin && url.pathname.startsWith("/assets"),
   new StaleWhileRevalidate({
     cacheName: "assets-cache",
     plugins: [
@@ -32,16 +32,16 @@ registerRoute(
 )
 
 registerRoute(
-  ({url}) => url.pathname.endsWith("/.well-known/nostr.json"),
+  ({ url }) => url.pathname.endsWith("/.well-known/nostr.json"),
   new StaleWhileRevalidate({
     cacheName: "nostr-json-cache",
-    plugins: [new ExpirationPlugin({maxAgeSeconds: 4 * 60 * 60})],
+    plugins: [new ExpirationPlugin({ maxAgeSeconds: 4 * 60 * 60 })],
   })
 )
 
 // Avatars
 registerRoute(
-  ({request, url}) => {
+  ({ request, url }) => {
     return (
       request.destination === "image" &&
       url.href.startsWith("https://imgproxy.iris.to/") &&
@@ -72,7 +72,7 @@ registerRoute(
 // Cache images from any domain with size limit
 registerRoute(
   // match images except gif
-  ({request, url}) => request.destination === "image" && !url.pathname.endsWith(".gif"),
+  ({ request, url }) => request.destination === "image" && !url.pathname.endsWith(".gif"),
   new CacheFirst({
     cacheName: "image-cache",
     plugins: [
@@ -90,26 +90,26 @@ registerRoute(
 )
 
 registerRoute(
-  ({url}) =>
+  ({ url }) =>
     url.origin === "https://nostr.api.v0l.io" &&
     url.pathname.startsWith("/api/v1/preview"),
   new CacheFirst({
     cacheName: "preview-cache",
     plugins: [
-      new ExpirationPlugin({maxAgeSeconds: 24 * 60 * 60}),
-      new CacheableResponsePlugin({statuses: [0, 200]}),
+      new ExpirationPlugin({ maxAgeSeconds: 24 * 60 * 60 }),
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
     ],
   })
 )
 
 registerRoute(
-  ({url}) =>
+  ({ url }) =>
     url.origin === "https://api.snort.social" &&
     url.pathname.startsWith("/api/v1/translate"),
   new CacheFirst({
     cacheName: "translate-cache",
     plugins: [
-      new ExpirationPlugin({maxEntries: 1000}),
+      new ExpirationPlugin({ maxEntries: 1000 }),
       new CacheableResponsePlugin({
         statuses: [0, 200, 204],
       }),

@@ -1,8 +1,8 @@
-import {Dispatch, SetStateAction, useEffect, useState} from "react"
-import {NDKUserProfile} from "@nostr-dev-kit/ndk"
-import {useNavigate} from "react-router-dom"
-import {Avatar} from "@mui/material"
-import {ndk} from "irisdb-nostr"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { NDKUserProfile } from "@nostr-dev-kit/ndk"
+import { useNavigate } from "react-router-dom"
+import { Avatar } from "@mui/material"
+import { ndk } from "irisdb-nostr"
 
 import ProfileAvatar from "./ProfileAvatar.tsx"
 import ProfileName from "./ProfileName.tsx"
@@ -12,7 +12,7 @@ interface ProfileItemProps {
   setShowFollowList: Dispatch<SetStateAction<boolean>>
 }
 
-function ProfileItem({pubkey, setShowFollowList}: ProfileItemProps) {
+function ProfileItem({ pubkey, setShowFollowList }: ProfileItemProps) {
   const navigate = useNavigate()
 
   const [profile, setProfile] = useState<NDKUserProfile | null>(null)
@@ -26,7 +26,7 @@ function ProfileItem({pubkey, setShowFollowList}: ProfileItemProps) {
 
   const fetchProfile = () => {
     ndk()
-      .getUser({pubkey: pubkey})
+      .getUser({ pubkey: pubkey })
       .fetchProfile()
       .then((profile) => setProfile(profile))
       .catch((error) => console.warn(error))

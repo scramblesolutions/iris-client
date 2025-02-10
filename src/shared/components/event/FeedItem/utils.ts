@@ -1,7 +1,7 @@
-import {useNavigate} from "react-router-dom"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {nip19} from "nostr-tools"
-import {MouseEvent} from "react"
+import { useNavigate } from "react-router-dom"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { nip19 } from "nostr-tools"
+import { MouseEvent } from "react"
 
 export const TRUNCATE_LENGTH = 300
 

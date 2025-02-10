@@ -4,8 +4,8 @@ import RightColumn from "@/shared/components/RightColumn"
 import Trending from "@/shared/components/feed/Trending"
 import Widget from "@/shared/components/ui/Widget"
 
-import {subscribeToNotifications} from "@/utils/notifications"
-import {useEffect} from "react"
+import { subscribeToNotifications } from "@/utils/notifications"
+import { useEffect } from "react"
 let subscribed = false
 
 function Notifications() {

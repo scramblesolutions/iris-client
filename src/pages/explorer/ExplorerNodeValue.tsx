@@ -1,5 +1,5 @@
-import {useEffect, useRef, useState} from "react"
-import {JsonValue} from "irisdb"
+import { useEffect, useRef, useState } from "react"
+import { JsonValue } from "irisdb"
 
 const VALUE_TRUNCATE_LENGTH = 20
 
@@ -9,7 +9,7 @@ type ExplorerNodeValueProps = {
   setValue: (value: JsonValue) => void
 }
 
-function ExplorerNodeValue({displayName, value, setValue}: ExplorerNodeValueProps) {
+function ExplorerNodeValue({ displayName, value, setValue }: ExplorerNodeValueProps) {
   const [showMore, setShowMore] = useState(false)
   const [editableValue, setEditableValue] = useState<string>(JSON.stringify(value))
   const inputRef = useRef<HTMLSpanElement | null>(null)

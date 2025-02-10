@@ -1,13 +1,13 @@
-import {SocialGraph, NostrEvent, SerializedSocialGraph} from "nostr-social-graph"
-import {NDKEvent, NDKSubscription, NDKUserProfile} from "@nostr-dev-kit/ndk"
+import { SocialGraph, NostrEvent, SerializedSocialGraph } from "nostr-social-graph"
+import { NDKEvent, NDKSubscription, NDKUserProfile } from "@nostr-dev-kit/ndk"
 import profileJson from "nostr-social-graph/data/profileData.json"
-import {LRUCache} from "typescript-lru-cache"
-import {VerifiedEvent} from "nostr-tools"
-import {debounce, throttle} from "lodash"
-import {profileCache} from "./memcache"
+import { LRUCache } from "typescript-lru-cache"
+import { VerifiedEvent } from "nostr-tools"
+import { debounce, throttle } from "lodash"
+import { profileCache } from "./memcache"
 import localForage from "localforage"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 import Fuse from "fuse.js"
 
 const DEFAULT_SOCIAL_GRAPH_ROOT =
@@ -33,7 +33,7 @@ async function initializeInstance(publicKey?: string) {
     } catch (e) {
       console.error("error deserializing", e)
       await localForage.removeItem("socialGraph")
-      const {default: preCrawledGraph} = await import(
+      const { default: preCrawledGraph } = await import(
         "nostr-social-graph/data/socialGraph.json"
       )
       instance = new SocialGraph(
@@ -44,7 +44,7 @@ async function initializeInstance(publicKey?: string) {
   } else {
     console.log("no social graph found")
     await localForage.removeItem("socialGraph")
-    const {default: preCrawledGraph} = await import(
+    const { default: preCrawledGraph } = await import(
       "nostr-social-graph/data/socialGraph.json"
     )
     instance = new SocialGraph(
@@ -103,7 +103,7 @@ profileJson.forEach((v) => {
     if (pictureUrl && !pictureUrl.startsWith("http://")) {
       pictureUrl = `https://${pictureUrl}`
     }
-    profileCache.set(v[0], {username: v[1], picture: pictureUrl || undefined})
+    profileCache.set(v[0], { username: v[1], picture: pictureUrl || undefined })
   }
 })
 
@@ -124,7 +124,7 @@ export function handleProfile(pubKey: string, profile: NDKUserProfile) {
         // not sure if this remove is efficient?
         // should we have our internal map and reconstruct the searchIndex from it with debounce?
         searchIndex.remove((profile) => profile.pubKey === pubKey)
-        searchIndex.add({name, pubKey, nip05})
+        searchIndex.add({ name, pubKey, nip05 })
       }
     }
   })
@@ -162,7 +162,7 @@ export function getFollowLists(myPubKey: string, missingOnly = true, upToDistanc
         kinds: [3, 10000],
         authors: authors,
       },
-      {closeOnEose: true}
+      { closeOnEose: true }
     )
     sub.on("event", (e) => {
       handleSocialGraphEvent(e as unknown as VerifiedEvent)
@@ -208,7 +208,7 @@ const throttledRecalculate = throttle(
     instance.recalculateFollowDistances()
   },
   10000,
-  {leading: true}
+  { leading: true }
 )
 
 export const socialGraphLoaded = new Promise((resolve) => {
@@ -306,7 +306,7 @@ export const downloadLargeGraph = () => {
 export const loadAndMerge = () => loadFromFile(true)
 
 export const shouldSocialHide = (pubKey: string, threshold = 1): boolean => {
-  const cache = new LRUCache<string, boolean>({maxSize: 100})
+  const cache = new LRUCache<string, boolean>({ maxSize: 100 })
 
   // Check if the result is already in the cache
   if (cache.has(pubKey)) {
@@ -330,7 +330,7 @@ export const shouldSocialHide = (pubKey: string, threshold = 1): boolean => {
 
   // Look at the smallest distance that has any followers/muters
   for (const distance of distances) {
-    const {followers, muters} = userStats[distance]
+    const { followers, muters } = userStats[distance]
     if (followers + muters === 0) {
       continue // No one at this distance has an opinion; skip
     }

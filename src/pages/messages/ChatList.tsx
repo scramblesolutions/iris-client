@@ -1,9 +1,9 @@
-import {UserRow} from "@/shared/components/user/UserRow"
-import {useEffect, useState} from "react"
-import {NavLink} from "react-router-dom"
+import { UserRow } from "@/shared/components/user/UserRow"
+import { useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 import classNames from "classnames"
-import {nip19} from "nostr-tools"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
 interface ChatListProps {
   className?: string
@@ -13,12 +13,12 @@ type Channel = {
   messages: string[]
 }
 
-const ChatListItem = ({id}: {id: string}) => {
+const ChatListItem = ({ id }: { id: string }) => {
   return (
     <NavLink
       to={`/messages/${nip19.npubEncode(id)}`}
       key={id}
-      className={({isActive}) =>
+      className={({ isActive }) =>
         classNames("p-2 flex items-center border-b border-custom", {
           "bg-base-300": isActive,
           "hover:bg-base-300": !isActive,
@@ -34,13 +34,13 @@ const ChatListItem = ({id}: {id: string}) => {
   )
 }
 
-const ChatList = ({className}: ChatListProps) => {
+const ChatList = ({ className }: ChatListProps) => {
   const [channels, setChannels] = useState({} as Record<string, Channel>)
   useEffect(() => {
     const unsub = localState.get("channels").forEach((channel, path) => {
       const id = path.split("/").pop()
       if (typeof id === "string") {
-        setChannels((c) => Object.assign({}, c, {[id]: channel}))
+        setChannels((c) => Object.assign({}, c, { [id]: channel }))
       }
     })
     return unsub
@@ -52,7 +52,7 @@ const ChatList = ({className}: ChatListProps) => {
         <NavLink
           to="/messages/new"
           end
-          className={({isActive}) =>
+          className={({ isActive }) =>
             classNames("p-4 flex items-center border-b border-custom", {
               "bg-base-300": isActive,
               "hover:bg-base-300": !isActive,

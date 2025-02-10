@@ -5,7 +5,7 @@ interface WidgetProps {
   children: React.ReactNode
 }
 
-function Widget({title, children}: WidgetProps) {
+function Widget({ title, children }: WidgetProps) {
   return (
     <div className="bg-base-100 rounded-lg">
       <h2 className="font-bold text-xs text-base-content/50 uppercase tracking-wide px-4 py-3">

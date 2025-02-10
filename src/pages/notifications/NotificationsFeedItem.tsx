@@ -1,21 +1,21 @@
 import EventBorderless from "@/shared/components/event/EventBorderless.tsx"
 
 import RelativeTime from "@/shared/components/event/RelativeTime.tsx"
-import {Avatar} from "@/shared/components/user/Avatar.tsx"
+import { Avatar } from "@/shared/components/user/Avatar.tsx"
+import { MouseEvent, useEffect, useState } from "react"
 import HyperText from "@/shared/components/HyperText"
-import {MouseEvent, useEffect, useState} from "react"
-import {Notification} from "@/utils/notifications"
-import {Link, useNavigate} from "react-router-dom"
-import {getTag} from "@/utils/nostr"
+import { Notification } from "@/utils/notifications"
+import { Link, useNavigate } from "react-router-dom"
+import { getTag } from "@/utils/nostr"
+import { nip19 } from "nostr-tools"
 import classNames from "classnames"
-import {nip19} from "nostr-tools"
 
 interface NotificationsFeedItemProps {
   notification: Notification
   highlight: boolean
 }
 
-function NotificationsFeedItem({notification, highlight}: NotificationsFeedItemProps) {
+function NotificationsFeedItem({ notification, highlight }: NotificationsFeedItemProps) {
   const navigate = useNavigate()
 
   const [type, setType] = useState<string>()
@@ -49,7 +49,7 @@ function NotificationsFeedItem({notification, highlight}: NotificationsFeedItemP
     <div
       className={classNames(
         "flex flex-col p-4 md:px-8 border-b border-custom transition-colors duration-300 cursor-pointer hover:bg-[var(--note-hover-color)]",
-        {"bg-info/20": highlight}
+        { "bg-info/20": highlight }
       )}
       onClick={handleNavigateToReplyEvent}
     >
