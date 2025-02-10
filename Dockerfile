@@ -1,5 +1,5 @@
 # Build stage
-FROM mcr.microsoft.com/devcontainers/javascript-node:0-20 as builder
+FROM mcr.microsoft.com/devcontainers/javascript-node:0-20 AS builder
 WORKDIR /app
 COPY package*.json ./
 COPY yarn.lock ./
