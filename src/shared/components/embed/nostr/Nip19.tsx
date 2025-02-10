@@ -1,16 +1,16 @@
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 
-import {Name} from "@/shared/components/user/Name.tsx"
+import { Name } from "@/shared/components/user/Name.tsx"
 
 import FeedItem from "@/shared/components/event/FeedItem/FeedItem.tsx"
 import Embed from "../index.ts"
 
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useState, useEffect} from "react"
-import {ndk} from "irisdb-nostr"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useState, useEffect } from "react"
+import { ndk } from "irisdb-nostr"
 
-function Naddr({naddr, data}: {naddr: string; data: nip19.AddressPointer}) {
+function Naddr({ naddr, data }: { naddr: string; data: nip19.AddressPointer }) {
   const [event, setEvent] = useState<NDKEvent | null>(null)
   useEffect(() => {
     ndk()
@@ -38,9 +38,9 @@ function Naddr({naddr, data}: {naddr: string; data: nip19.AddressPointer}) {
 
 const NostrUser: Embed = {
   regex: /\bnostr:(n(?:event|profile|addr)1\w+)\b/g,
-  component: ({match}) => {
+  component: ({ match }) => {
     try {
-      const {type, data} = nip19.decode(match)
+      const { type, data } = nip19.decode(match)
       if (type === "nprofile") {
         return (
           <>

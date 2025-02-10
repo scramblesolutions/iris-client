@@ -1,11 +1,11 @@
-import {BrowserMultiFormatReader} from "@zxing/library"
-import {useEffect, useRef, useState} from "react"
+import { BrowserMultiFormatReader } from "@zxing/library"
+import { useEffect, useRef, useState } from "react"
 
 interface QRScannerProps {
   onScanSuccess: (result: string) => void
 }
 
-const QRScanner = ({onScanSuccess}: QRScannerProps) => {
+const QRScanner = ({ onScanSuccess }: QRScannerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [qrCodeResult, setQrCodeResult] = useState("")
 
@@ -23,28 +23,30 @@ const QRScanner = ({onScanSuccess}: QRScannerProps) => {
           ) || videoInputDevices[0]
         const deviceId = backCamera.deviceId
 
-        navigator.mediaDevices.getUserMedia({video: {deviceId}}).then((mediaStream) => {
-          stream = mediaStream
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream
-            codeReader.decodeFromVideoDevice(
-              deviceId,
-              videoRef.current,
-              (result, error) => {
-                if (result) {
-                  const text = result.getText()
-                  setQrCodeResult(text)
-                  if (onScanSuccess) {
-                    onScanSuccess(text)
+        navigator.mediaDevices
+          .getUserMedia({ video: { deviceId } })
+          .then((mediaStream) => {
+            stream = mediaStream
+            if (videoRef.current) {
+              videoRef.current.srcObject = stream
+              codeReader.decodeFromVideoDevice(
+                deviceId,
+                videoRef.current,
+                (result, error) => {
+                  if (result) {
+                    const text = result.getText()
+                    setQrCodeResult(text)
+                    if (onScanSuccess) {
+                      onScanSuccess(text)
+                    }
+                  }
+                  if (error) {
+                    console.log(error)
                   }
                 }
-                if (error) {
-                  console.log(error)
-                }
-              }
-            )
-          }
-        })
+              )
+            }
+          })
       })
       .catch((err) => {
         console.error(err)
@@ -61,7 +63,7 @@ const QRScanner = ({onScanSuccess}: QRScannerProps) => {
   return (
     <div>
       <h1 className="text-center text-2xl mb-4">Scan QR</h1>
-      <video ref={videoRef} style={{width: "100%"}} />
+      <video ref={videoRef} style={{ width: "100%" }} />
       {qrCodeResult && <p>QR Code Result: {qrCodeResult}</p>}
     </div>
   )

@@ -1,7 +1,7 @@
-import {RiAddLine} from "@remixicon/react" // Import Plus icon from Remix Icons
-import {useLocalState} from "irisdb-hooks"
+import { RiAddLine } from "@remixicon/react" // Import Plus icon from Remix Icons
+import { useLocalState } from "irisdb-hooks"
 import classNames from "classnames" // Import classnames library
-import {useCallback} from "react"
+import { useCallback } from "react"
 
 function PublishButton({
   className,

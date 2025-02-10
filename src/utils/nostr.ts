@@ -5,11 +5,11 @@ import {
   NDKTag,
   NDKUserProfile,
 } from "@nostr-dev-kit/ndk"
-import {eventRegex} from "@/shared/components/embed/nostr/NostrNote"
-import {Dispatch, useEffect, useMemo, useState} from "react"
-import {Notification} from "@/utils/notifications"
-import {nip19} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
+import { eventRegex } from "@/shared/components/embed/nostr/NostrNote"
+import { Dispatch, useEffect, useMemo, useState } from "react"
+import { Notification } from "@/utils/notifications"
+import { nip19 } from "nostr-tools"
+import { ndk } from "irisdb-nostr"
 import * as bolt11 from "bolt11"
 
 export const defaultFeedFilter = [

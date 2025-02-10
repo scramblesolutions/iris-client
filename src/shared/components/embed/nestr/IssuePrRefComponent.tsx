@@ -1,16 +1,16 @@
-import {GitPullRequestIcon, IssueOpenedIcon} from "@primer/octicons-react"
-import {getIssuesPRsDB} from "@/cache/issuePRRefdb"
-import {Link, useNavigate} from "react-router-dom"
-import {IssuePRCacheItem} from "@/types/Repo"
-import {UserRow} from "../../user/UserRow"
+import { GitPullRequestIcon, IssueOpenedIcon } from "@primer/octicons-react"
+import { getIssuesPRsDB } from "@/cache/issuePRRefdb"
+import { Link, useNavigate } from "react-router-dom"
+import { IssuePRCacheItem } from "@/types/Repo"
+import { UserRow } from "../../user/UserRow"
 import HoverCard from "../../ui/Hovercard"
-import {useState} from "react"
+import { useState } from "react"
 
 interface IssuePRRefComponentProps {
   match: string
 }
 
-function IssuePRRefComponent({match}: IssuePRRefComponentProps) {
+function IssuePRRefComponent({ match }: IssuePRRefComponentProps) {
   const navigate = useNavigate()
 
   const [hoverCardTitle, setHoverCardTitle] = useState("")

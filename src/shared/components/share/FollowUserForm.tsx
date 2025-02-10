@@ -1,9 +1,9 @@
-import {FormEvent, useMemo, useState} from "react"
-import {ndk, PublicKey} from "irisdb-nostr"
-import {useLocalState} from "irisdb-hooks"
+import { FormEvent, useMemo, useState } from "react"
+import { ndk, PublicKey } from "irisdb-nostr"
+import { useLocalState } from "irisdb-hooks"
 import classNames from "classnames"
 
-import {UserRow} from "@/shared/components/user/UserRow"
+import { UserRow } from "@/shared/components/user/UserRow"
 
 export const FollowUserForm = () => {
   const [myPubKey] = useLocalState("user/publicKey", "")
@@ -21,8 +21,8 @@ export const FollowUserForm = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (userToAddValid) {
-      const me = ndk().getUser({pubkey: String(myPubKey)})
-      const userToFollow = ndk().getUser({pubkey: new PublicKey(userToAdd).toString()})
+      const me = ndk().getUser({ pubkey: String(myPubKey) })
+      const userToFollow = ndk().getUser({ pubkey: new PublicKey(userToAdd).toString() })
       me.follow(userToFollow)
       setUserToAdd("")
     }
@@ -45,7 +45,7 @@ export const FollowUserForm = () => {
         <UserRow pubKey={userToAdd} description="User to follow" />
       )}
       <button
-        className={classNames("btn btn-primary", {hidden: !userToAddValid})}
+        className={classNames("btn btn-primary", { hidden: !userToAddValid })}
         type="submit"
       >
         Follow

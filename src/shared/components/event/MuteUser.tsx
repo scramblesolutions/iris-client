@@ -1,10 +1,10 @@
-import {Dispatch, SetStateAction, useEffect, useState} from "react"
-import {Hexpubkey, NDKEvent, NDKTag} from "@nostr-dev-kit/ndk"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Hexpubkey, NDKEvent, NDKTag } from "@nostr-dev-kit/ndk"
 
-import {muteUser, unmuteUser} from "@/shared/services/Mute.tsx"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
+import { muteUser, unmuteUser } from "@/shared/services/Mute.tsx"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
 import socialGraph from "@/utils/socialGraph.ts"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 interface MuteUserProps {
   setMuting: Dispatch<SetStateAction<boolean>>
@@ -14,7 +14,7 @@ interface MuteUserProps {
   setMutedState: Dispatch<SetStateAction<boolean>>
 }
 
-function MuteUser({user, setMuting, muteState}: MuteUserProps) {
+function MuteUser({ user, setMuting, muteState }: MuteUserProps) {
   const [muted, setMuted] = useState<boolean>(false)
 
   // Placeholder for missing function

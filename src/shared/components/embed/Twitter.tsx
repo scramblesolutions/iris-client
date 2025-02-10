@@ -3,7 +3,7 @@ import Embed from "./index.ts"
 const Twitter: Embed = {
   regex: /(https?:\/\/twitter.com\/\w+\/status\/\d+\S*)(?![\w/])/g,
   settingsKey: "enableTwitter",
-  component: ({match}) => {
+  component: ({ match }) => {
     return (
       <iframe
         style={{

@@ -7,10 +7,10 @@ import {
   useState,
   useCallback,
 } from "react"
-import {searchIndex, SearchResult} from "@/utils/socialGraph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {UserRow} from "../user/UserRow"
-import {nip19} from "nostr-tools"
+import { searchIndex, SearchResult } from "@/utils/socialGraph"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { UserRow } from "../user/UserRow"
+import { nip19 } from "nostr-tools"
 
 interface TextareaProps {
   value: string
@@ -66,7 +66,7 @@ const Textarea = ({
   useEffect(() => {
     if (mentionSearch) {
       const results = searchIndex
-        .search(mentionSearch, {limit: 10})
+        .search(mentionSearch, { limit: 10 })
         .map((result) => result.item)
       setSearchResults(results)
     } else {
@@ -163,8 +163,8 @@ const Textarea = ({
 
   const updateCursorPosition = () => {
     if (textareaRef.current) {
-      const {offsetLeft, offsetTop, scrollTop, selectionEnd} = textareaRef.current
-      const {lineHeight} = getComputedStyle(textareaRef.current)
+      const { offsetLeft, offsetTop, scrollTop, selectionEnd } = textareaRef.current
+      const { lineHeight } = getComputedStyle(textareaRef.current)
       const lines = textareaRef.current.value.substr(0, selectionEnd).split("\n")
       const lineNumber = lines.length - 1
 
@@ -191,7 +191,7 @@ const Textarea = ({
         mentionText +
         currentValue.slice(cursorPosition)
 
-      onChange({target: {value: newValue}} as ChangeEvent<HTMLTextAreaElement>)
+      onChange({ target: { value: newValue } } as ChangeEvent<HTMLTextAreaElement>)
       setMentionSearch(null)
 
       // Set cursor to after added mention
@@ -210,7 +210,7 @@ const Textarea = ({
     if (searchResultsRef.current && selectedIndex >= 0) {
       const activeItem = searchResultsRef.current.children[selectedIndex] as HTMLElement
       if (activeItem) {
-        activeItem.scrollIntoView({block: "nearest"})
+        activeItem.scrollIntoView({ block: "nearest" })
       }
     }
   }, [selectedIndex])
@@ -234,7 +234,7 @@ const Textarea = ({
         <div
           ref={searchResultsRef}
           className="absolute left-0 right-0 bg-base-200 rounded-lg z-10 overflow-hidden mt-2 max-h-60 overflow-y-auto"
-          style={{top: `${cursorPosition.top + 20}px`}}
+          style={{ top: `${cursorPosition.top + 20}px` }}
         >
           {searchResults.map((result, index) => (
             <div

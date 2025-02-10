@@ -1,13 +1,13 @@
-import {RiDeleteBinLine, RiEmojiStickerLine} from "@remixicon/react"
-import EmojiPicker, {Theme} from "emoji-picker-react"
-import {usePublicGroupState} from "irisdb-hooks"
-import {useEffect, useState} from "react"
-import {publicState} from "irisdb-nostr"
-import {Link} from "react-router-dom"
+import { RiDeleteBinLine, RiEmojiStickerLine } from "@remixicon/react"
+import EmojiPicker, { Theme } from "emoji-picker-react"
+import { usePublicGroupState } from "irisdb-hooks"
+import { useEffect, useState } from "react"
+import { publicState } from "irisdb-nostr"
+import { Link } from "react-router-dom"
 
 import RelativeTime from "@/shared/components/event/RelativeTime.tsx"
-import {ChatMessage} from "@/shared/components/chat/Chat.tsx"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
+import { ChatMessage } from "@/shared/components/chat/Chat.tsx"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
 
 export function MessageComponent({
   msg,

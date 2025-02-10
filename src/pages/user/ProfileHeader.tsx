@@ -1,25 +1,25 @@
-import {useMemo, useState, useEffect} from "react"
-import {useLocalState} from "irisdb-hooks"
-import {PublicKey} from "irisdb-nostr"
-import {Link} from "react-router-dom"
+import { useMemo, useState, useEffect } from "react"
+import { useLocalState } from "irisdb-hooks"
+import { PublicKey } from "irisdb-nostr"
+import { Link } from "react-router-dom"
 
 import PublicKeyQRCodeButton from "@/shared/components/user/PublicKeyQRCodeButton"
-import {FollowButton} from "@/shared/components/button/FollowButton.tsx"
+import { FollowButton } from "@/shared/components/button/FollowButton.tsx"
 import ProfileDetails from "@/pages/user/components/ProfileDetails.tsx"
 import FollowerCount from "@/pages/user/components/FollowerCount.tsx"
+import { PROFILE_AVATAR_WIDTH } from "@/shared/components/user/const"
 import FollowsCount from "@/pages/user/components/FollowsCount.tsx"
-import {PROFILE_AVATAR_WIDTH} from "@/shared/components/user/const"
 import MiddleHeader from "@/shared/components/header/MiddleHeader"
 import FollowedBy from "@/shared/components/user/FollowedBy"
-import {Avatar} from "@/shared/components/user/Avatar.tsx"
+import { Avatar } from "@/shared/components/user/Avatar.tsx"
+import { Name } from "@/shared/components/user/Name.tsx"
 import ProxyImg from "@/shared/components/ProxyImg.tsx"
-import {Name} from "@/shared/components/user/Name.tsx"
 import useProfile from "@/shared/hooks/useProfile.ts"
 import Modal from "@/shared/components/ui/Modal.tsx"
 import socialGraph from "@/utils/socialGraph.ts"
-import {Helmet} from "react-helmet"
+import { Helmet } from "react-helmet"
 
-const ProfileHeader = ({pubKey}: {pubKey: string}) => {
+const ProfileHeader = ({ pubKey }: { pubKey: string }) => {
   const profile = useProfile(pubKey, true)
   const pubKeyHex = useMemo(
     () => (pubKey ? new PublicKey(pubKey).toString() : ""),
@@ -99,7 +99,7 @@ const ProfileHeader = ({pubKey}: {pubKey: string}) => {
           <ProfileDetails
             pubKey={pubKey}
             displayProfile={profile || undefined}
-            externalIdentities={{github: ""}}
+            externalIdentities={{ github: "" }}
           />
         </div>
         <div className="flex flex-row gap-4 p-4 items-end flex-wrap">

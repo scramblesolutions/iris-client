@@ -1,4 +1,4 @@
-import {ReactNode, useCallback, useEffect, useMemo, useState} from "react"
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 export interface RelativeTimeProps {
   from: number
   fallback?: string
@@ -8,7 +8,7 @@ const secondsInAMinute = 60
 const secondsInAnHour = secondsInAMinute * 60
 const secondsInADay = secondsInAnHour * 24
 
-function RelativeTime({from, fallback}: RelativeTimeProps) {
+function RelativeTime({ from, fallback }: RelativeTimeProps) {
   const calcTime = useCallback((fromTime: number) => {
     const currentTime = new Date()
     const timeDifference = Math.floor((currentTime.getTime() - fromTime) / 1000)

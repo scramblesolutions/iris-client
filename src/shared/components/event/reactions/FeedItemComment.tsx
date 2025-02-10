@@ -1,16 +1,16 @@
-import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
-import {shouldHideEvent} from "@/utils/socialGraph"
-import {useEffect, useState} from "react"
+import { NDKEvent, NDKFilter } from "@nostr-dev-kit/ndk"
+import { shouldHideEvent } from "@/utils/socialGraph"
+import { useEffect, useState } from "react"
 import debounce from "lodash/debounce"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 import Modal from "@/shared/components/ui/Modal.tsx"
-import {statCalc} from "@/utils/utils.ts"
+import { statCalc } from "@/utils/utils.ts"
 import Icon from "../../Icons/Icon"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
 import NoteCreator from "@/shared/components/create/NoteCreator.tsx"
-import {LRUCache} from "typescript-lru-cache"
+import { LRUCache } from "typescript-lru-cache"
 
 interface FeedItemCommentProps {
   event: NDKEvent
@@ -19,9 +19,9 @@ interface FeedItemCommentProps {
 let myPubKey = ""
 localState.get("user/publicKey").on((k) => (myPubKey = k as string))
 
-const replyCountByEventCache = new LRUCache({maxSize: 100})
+const replyCountByEventCache = new LRUCache({ maxSize: 100 })
 
-function FeedItemComment({event}: FeedItemCommentProps) {
+function FeedItemComment({ event }: FeedItemCommentProps) {
   const [replyCount, setReplyCount] = useState(replyCountByEventCache.get(event.id) || 0)
 
   const [isPopupOpen, setPopupOpen] = useState(false)

@@ -1,9 +1,9 @@
-import {RiUserAddLine} from "@remixicon/react"
-import {useRef} from "react"
+import { RiUserAddLine } from "@remixicon/react"
+import { useRef } from "react"
 
-import {ShareMenuModal} from "@/shared/components/share/ShareMenuModal"
+import { ShareMenuModal } from "@/shared/components/share/ShareMenuModal"
 
-export default function ShareButton({file}: {file: string}) {
+export default function ShareButton({ file }: { file: string }) {
   const modalRef = useRef<HTMLDialogElement>(null)
 
   return (

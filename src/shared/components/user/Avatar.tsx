@@ -1,14 +1,14 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import MinidenticonImg from "@/shared/components/user/MinidenticonImg"
-import {useHoverCard} from "@/shared/components/user/useHoverCard"
+import { useHoverCard } from "@/shared/components/user/useHoverCard"
 import ProfileCard from "@/shared/components/user/ProfileCard"
 import ProxyImg from "@/shared/components/ProxyImg.tsx"
+import { Badge } from "@/shared/components/user/Badge"
 import useProfile from "@/shared/hooks/useProfile.ts"
-import {Badge} from "@/shared/components/user/Badge"
 import AnimalName from "@/utils/AnimalName.ts"
-import {AVATAR_DEFAULT_WIDTH} from "./const"
-import {PublicKey} from "irisdb-nostr"
+import { AVATAR_DEFAULT_WIDTH } from "./const"
+import { PublicKey } from "irisdb-nostr"
 
 export const Avatar = ({
   width = AVATAR_DEFAULT_WIDTH,
@@ -54,7 +54,7 @@ export const Avatar = ({
     setImage("")
   }
 
-  const {hoverProps, showCard} = useHoverCard(showHoverCard) as {
+  const { hoverProps, showCard } = useHoverCard(showHoverCard) as {
     hoverProps: {
       onMouseEnter: () => void
       onMouseLeave: () => void
@@ -67,7 +67,7 @@ export const Avatar = ({
     <div
       className={`aspect-square rounded-full bg-base-100 flex items-center justify-center select-none relative`}
       {...hoverProps}
-      style={{width, height: width}}
+      style={{ width, height: width }}
     >
       {showBadge && (
         <Badge

@@ -1,4 +1,4 @@
-export default function CashuIcon(props: {size?: number}) {
+export default function CashuIcon(props: { size?: number }) {
   return (
     <svg width={props.size ?? 135} height={props.size ?? 153} viewBox="0 0 135 153">
       <path

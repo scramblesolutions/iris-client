@@ -1,4 +1,4 @@
-import {useState, MouseEvent} from "react"
+import { useState, MouseEvent } from "react"
 import ProxyImg from "../../ProxyImg"
 import classNames from "classnames"
 
@@ -9,7 +9,7 @@ interface ImageComponentProps {
   blur?: boolean
 }
 
-const ImageComponent = ({match, index, onClickImage, blur}: ImageComponentProps) => {
+const ImageComponent = ({ match, index, onClickImage, blur }: ImageComponentProps) => {
   const [hasError, setHasError] = useState(false)
 
   const onClick = (event: MouseEvent) => {

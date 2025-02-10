@@ -1,9 +1,9 @@
-import {useLocalState, usePublicState} from "irisdb-hooks"
-import {useEffect, useMemo, useState} from "react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {nip19} from "nostr-tools"
+import { useLocalState, usePublicState } from "irisdb-hooks"
+import { useEffect, useMemo, useState } from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { nip19 } from "nostr-tools"
 
-import {unmuteUser} from "@/shared/services/Mute.tsx"
+import { unmuteUser } from "@/shared/services/Mute.tsx"
 
 import Reactions from "@/shared/components/event/reactions/Reactions.tsx"
 import Dropdown from "@/shared/components/ui/Dropdown.tsx"
@@ -17,7 +17,7 @@ type FeedItemDropdownProps = {
   onClose: () => void
 }
 
-function FeedItemDropdown({event, onClose}: FeedItemDropdownProps) {
+function FeedItemDropdown({ event, onClose }: FeedItemDropdownProps) {
   const [myPubKey] = useLocalState("user/publicKey", "")
 
   const [showReactions, setShowReactions] = useState(false)

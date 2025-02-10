@@ -1,4 +1,4 @@
-export default function AlbyIcon(props: {size?: number}) {
+export default function AlbyIcon(props: { size?: number }) {
   return (
     <svg
       width={props.size ?? 400}

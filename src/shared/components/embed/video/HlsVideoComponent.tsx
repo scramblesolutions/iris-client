@@ -1,16 +1,16 @@
-import {useEffect, useRef, useState} from "react"
+import { useEffect, useRef, useState } from "react"
 import classNames from "classnames"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 import Hls from "hls.js"
 
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 interface HlsVideoComponentProps {
   match: string
   event: NDKEvent | undefined
 }
 
-function HlsVideoComponent({match, event}: HlsVideoComponentProps) {
+function HlsVideoComponent({ match, event }: HlsVideoComponentProps) {
   let blurNSFW = true
   localState.get("settings/blurNSFW").on((value) => {
     if (typeof value === "boolean") {
@@ -69,7 +69,7 @@ function HlsVideoComponent({match, event}: HlsVideoComponentProps) {
       <video
         onClick={onClick}
         ref={videoRef}
-        className={classNames("rounded max-h-[70vh] h-96 w-auto", {"blur-xl": blur})}
+        className={classNames("rounded max-h-[70vh] h-96 w-auto", { "blur-xl": blur })}
         controls
         muted
         autoPlay

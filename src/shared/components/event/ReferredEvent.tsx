@@ -1,14 +1,14 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 import IssueFeedItem from "./IssueFeedItem.tsx"
-import {isIssue} from "@/utils/nostr.ts"
+import { isIssue } from "@/utils/nostr.ts"
 import TextNote from "./TextNote.tsx"
 
 interface ReferredEventProps {
   referredEvent: NDKEvent
 }
 
-function ReferredEvent({referredEvent}: ReferredEventProps) {
+function ReferredEvent({ referredEvent }: ReferredEventProps) {
   if (referredEvent && referredEvent.kind === 1) {
     return <TextNote event={referredEvent} truncate={300} />
   }

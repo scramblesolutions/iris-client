@@ -1,11 +1,11 @@
-import {hexToBytes, bytesToHex} from "@noble/hashes/utils"
-import {NDKPrivateKeySigner} from "@nostr-dev-kit/ndk"
-import {ChangeEvent, useEffect, useState} from "react"
-import {getPublicKey, nip19} from "nostr-tools"
-import {useLocalState} from "irisdb-hooks"
+import { hexToBytes, bytesToHex } from "@noble/hashes/utils"
+import { NDKPrivateKeySigner } from "@nostr-dev-kit/ndk"
+import { ChangeEvent, useEffect, useState } from "react"
+import { getPublicKey, nip19 } from "nostr-tools"
+import { useLocalState } from "irisdb-hooks"
 import classNames from "classnames"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
 const NSEC_NPUB_REGEX = /(nsec1|npub1)[a-zA-Z0-9]{20,65}/gi
 const HEX_REGEX = /[0-9a-fA-F]{64}/gi
@@ -14,7 +14,7 @@ interface SignInProps {
   onClose: () => void
 }
 
-export default function SignIn({onClose}: SignInProps) {
+export default function SignIn({ onClose }: SignInProps) {
   const [, setNip07Login] = useLocalState("user/nip07Login", false)
   const [, setShowLoginDialog] = useLocalState("home/showLoginDialog", false)
   const [inputPrivateKey, setInputPrivateKey] = useState("")

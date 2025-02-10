@@ -1,14 +1,14 @@
-import {ElementType, ReactNode, useEffect, useMemo, useState} from "react"
-import {ErrorOutline, GitHub, Verified} from "@mui/icons-material"
-import {NDKUserProfile} from "@nostr-dev-kit/ndk"
-import {useNavigate} from "react-router-dom"
-import {nip19} from "nostr-tools"
-import {ndk} from "irisdb-nostr"
+import { ElementType, ReactNode, useEffect, useMemo, useState } from "react"
+import { ErrorOutline, GitHub, Verified } from "@mui/icons-material"
+import { NDKUserProfile } from "@nostr-dev-kit/ndk"
+import { useNavigate } from "react-router-dom"
+import { nip19 } from "nostr-tools"
+import { ndk } from "irisdb-nostr"
 
 import HyperText from "@/shared/components/HyperText.tsx"
 import MutedBy from "@/shared/components/user/MutedBy"
+import { unmuteUser } from "@/shared/services/Mute"
 import Icon from "@/shared/components/Icons/Icon"
-import {unmuteUser} from "@/shared/services/Mute"
 import useMutes from "@/shared/hooks/useMutes"
 
 const Bolt = () => <Icon name="zap-solid" className="text-accent" />
@@ -73,7 +73,7 @@ function ProfileDetails({
   useEffect(() => {
     if (npub && displayProfile?.nip05) {
       ndk()
-        ?.getUser({npub})
+        ?.getUser({ npub })
         ?.validateNip05(displayProfile.nip05)
         .then((isValid) => {
           setNIP05valid(isValid ?? false)
@@ -83,7 +83,7 @@ function ProfileDetails({
             const newPath = currentPath ? `/${basePath}/${currentPath}` : `/${basePath}`
 
             if (window.location.pathname !== newPath) {
-              navigate(newPath, {replace: true})
+              navigate(newPath, { replace: true })
             }
           }
         })

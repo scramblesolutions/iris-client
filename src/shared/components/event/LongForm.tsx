@@ -1,14 +1,14 @@
 import longFormIcon from "@/assets/long-form-icon.png"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
-import {useEffect, useState} from "react"
 
 interface LongFormProps {
   event: NDKEvent
   standalone: boolean | undefined
 }
 
-function LongForm({event, standalone}: LongFormProps) {
+function LongForm({ event, standalone }: LongFormProps) {
   const [title, setTitle] = useState<string>("")
   const [topics, setTopics] = useState<string>()
   const [textBody, setTextBody] = useState<string>("")

@@ -1,17 +1,17 @@
 import SocialGraphSettings from "@/pages/settings/SocialGraphSettings"
-import {useLocation, Link, Routes, Route} from "react-router-dom"
-import {ProfileSettings} from "@/pages/settings/Profile.tsx"
+import { useLocation, Link, Routes, Route } from "react-router-dom"
+import { ProfileSettings } from "@/pages/settings/Profile.tsx"
 import NotificationSettings from "./NotificationSettings"
 import Appearance from "@/pages/settings/Appearance.tsx"
+import { Network } from "@/pages/settings/Network.tsx"
 import IrisSettings from "./IrisAccount/IrisSettings"
-import {Network} from "@/pages/settings/Network.tsx"
-import {RiArrowRightSLine} from "@remixicon/react"
+import { RiArrowRightSLine } from "@remixicon/react"
 import Icon from "@/shared/components/Icons/Icon"
 import Account from "@/pages/settings/Account"
 import WalletSettings from "./WalletSettings"
 import Backup from "@/pages/settings/Backup"
 import PrivacySettings from "./Privacy"
-import {Helmet} from "react-helmet"
+import { Helmet } from "react-helmet"
 import classNames from "classnames"
 import Content from "./Content"
 
@@ -121,7 +121,7 @@ function Settings() {
               <h3 className="font-bold text-xs text-base-content/50 uppercase tracking-wide mb-2">
                 {group.title}
               </h3>
-              {group.items.map(({icon, iconBg, message, path}, index) => (
+              {group.items.map(({ icon, iconBg, message, path }, index) => (
                 <Link
                   to={path}
                   key={path}

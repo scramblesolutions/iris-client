@@ -1,12 +1,12 @@
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {Bolt} from "@mui/icons-material"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { Bolt } from "@mui/icons-material"
 
 interface RezapHeaderProps {
   event: NDKEvent
 }
 
-function RezapHeader({event}: RezapHeaderProps) {
+function RezapHeader({ event }: RezapHeaderProps) {
   return (
     <span className="flex items-center font-bold">
       <UserRow pubKey={event.pubkey} avatarWidth={38} />

@@ -1,6 +1,6 @@
-import {NDKFilter, NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKFilter, NDKEvent } from "@nostr-dev-kit/ndk"
 import Feed from "@/shared/components/feed/Feed.tsx"
-import {useMemo} from "react"
+import { useMemo } from "react"
 
 interface NotesTabProps {
   pubKey: string

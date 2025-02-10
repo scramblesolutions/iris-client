@@ -1,7 +1,7 @@
-import {ChangeEvent, Dispatch, SetStateAction, useCallback, useState} from "react"
-import {Hexpubkey, NDKEvent} from "@nostr-dev-kit/ndk"
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from "react"
+import { Hexpubkey, NDKEvent } from "@nostr-dev-kit/ndk"
 
-import {submitReport} from "@/shared/services/Mute.tsx"
+import { submitReport } from "@/shared/services/Mute.tsx"
 
 interface ReportReasonFormProps {
   event?: NDKEvent
@@ -9,7 +9,7 @@ interface ReportReasonFormProps {
   setReported: Dispatch<SetStateAction<boolean>>
 }
 
-function ReportReasonForm({user, event, setReported}: ReportReasonFormProps) {
+function ReportReasonForm({ user, event, setReported }: ReportReasonFormProps) {
   const [reportContent, setReportContent] = useState("")
   const [reason, setReason] = useState<string>("")
   const [buttonDisabled, setButtonDisabled] = useState(true)

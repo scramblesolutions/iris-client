@@ -1,12 +1,12 @@
-import {ChangeEvent, FormEvent, useState} from "react"
-import {DIRECTORY_VALUE, Node} from "irisdb"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { DIRECTORY_VALUE, Node } from "irisdb"
 
 type EditRowProps = {
   level: number
   parent: Node
 }
 
-export const ExplorerNodeEditRow = ({level, parent}: EditRowProps) => {
+export const ExplorerNodeEditRow = ({ level, parent }: EditRowProps) => {
   const [showDirForm, setShowDirForm] = useState(false)
   const [showValueForm, setShowValueForm] = useState(false)
   const [dirName, setDirName] = useState("")
@@ -39,7 +39,7 @@ export const ExplorerNodeEditRow = ({level, parent}: EditRowProps) => {
   }
 
   return (
-    <div className="pb-1" style={{paddingLeft: `${level * 15 + 9}px`}}>
+    <div className="pb-1" style={{ paddingLeft: `${level * 15 + 9}px` }}>
       <div className="flex flex-row items-center gap-4">
         <a
           className={`cursor-pointer text-accent hover:underline text-sm ${showDirForm ? "underline" : ""}`}

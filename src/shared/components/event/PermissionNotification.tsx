@@ -1,11 +1,11 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 import RepoCard from "./RepoCard"
 
 interface PermissionNotificationProps {
   event: NDKEvent
 }
 
-function PermissionNotification({event}: PermissionNotificationProps) {
+function PermissionNotification({ event }: PermissionNotificationProps) {
   const repo = event.tagValue("r")
 
   return (

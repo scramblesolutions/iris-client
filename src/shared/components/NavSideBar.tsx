@@ -1,11 +1,11 @@
 import UnseenNotificationsBadge from "@/shared/components/header/UnseenNotificationsBadge.tsx"
+import { useRef, ReactNode, MouseEventHandler, useMemo } from "react"
 import PublishButton from "@/shared/components/ui/PublishButton.tsx"
-import {useRef, ReactNode, MouseEventHandler, useMemo} from "react"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
 import Icon from "@/shared/components/Icons/Icon"
-import {npubEncode} from "nostr-tools/nip19"
-import {useLocalState} from "irisdb-hooks"
-import {Login} from "@mui/icons-material"
+import { npubEncode } from "nostr-tools/nip19"
+import { useLocalState } from "irisdb-hooks"
+import { Login } from "@mui/icons-material"
 import classNames from "classnames"
 import NavLink from "./NavLink"
 
@@ -37,7 +37,7 @@ const NavItem = ({
       title={label}
       to={to}
       onClick={onClick}
-      className={({isActive}) =>
+      className={({ isActive }) =>
         classNames(className, {
           "bg-base-100": isActive,
           "rounded-full md:aspect-square xl:aspect-auto flex md:justify-center xl:justify-start items-center":
@@ -45,7 +45,7 @@ const NavItem = ({
         })
       }
     >
-      {({isActive}) => (
+      {({ isActive }) => (
         <>
           <Icon
             className="w-6 h-6"
@@ -74,14 +74,14 @@ const NotificationNavItem = ({
       title="Notifications"
       to={to}
       onClick={onClick}
-      className={({isActive}) =>
+      className={({ isActive }) =>
         classNames({
           "bg-base-100": isActive,
           "rounded-full md:aspect-square xl:aspect-auto flex items-center": true,
         })
       }
     >
-      {({isActive}) => (
+      {({ isActive }) => (
         <span className="indicator flex items-center gap-2">
           <UnseenNotificationsBadge />
           <Icon name={`bell-${isActive ? "solid" : "outline"}`} className="w-6 h-6" />
@@ -93,7 +93,7 @@ const NotificationNavItem = ({
 )
 
 const navItemsConfig = (myPubKey: string) => ({
-  home: {to: "/", icon: "home", label: "Home"},
+  home: { to: "/", icon: "home", label: "Home" },
   wallet: {
     to: "/wallet",
     activeIcon: "wallet",
@@ -127,9 +127,9 @@ const navItemsConfig = (myPubKey: string) => ({
     label: "Repositories",
     requireLogin: true,
   },
-  settings: {to: "/settings", icon: "settings", label: "Settings", requireLogin: true},
-  about: {to: "/about", icon: "info", label: "About"},
-  search: {to: "/search", icon: "search", label: "Search"},
+  settings: { to: "/settings", icon: "settings", label: "Settings", requireLogin: true },
+  about: { to: "/about", icon: "info", label: "About" },
+  search: { to: "/search", icon: "search", label: "Search" },
 })
 
 const NavSideBar = () => {

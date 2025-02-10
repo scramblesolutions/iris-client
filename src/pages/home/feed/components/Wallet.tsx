@@ -1,5 +1,5 @@
-import {ArrowDownward, ArrowUpward, Bolt} from "@mui/icons-material"
-import {useState} from "react"
+import { ArrowDownward, ArrowUpward, Bolt } from "@mui/icons-material"
+import { useState } from "react"
 
 import satoshiSymbolWhite from "@/assets/satoshi-white.png"
 import satoshiSymbol from "@/assets/satoshi.svg"

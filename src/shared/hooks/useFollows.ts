@@ -1,8 +1,8 @@
-import socialGraph, {handleSocialGraphEvent} from "@/utils/socialGraph.ts"
-import {useEffect, useState, useMemo} from "react"
-import {NostrEvent} from "nostr-social-graph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {ndk, PublicKey} from "irisdb-nostr"
+import socialGraph, { handleSocialGraphEvent } from "@/utils/socialGraph.ts"
+import { useEffect, useState, useMemo } from "react"
+import { NostrEvent } from "nostr-social-graph"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { ndk, PublicKey } from "irisdb-nostr"
 
 const useFollows = (pubKey: string, includeSelf = false) => {
   const pubKeyHex = useMemo(
@@ -16,7 +16,7 @@ const useFollows = (pubKey: string, includeSelf = false) => {
   useEffect(() => {
     try {
       if (pubKey) {
-        const filter = {kinds: [3], authors: [pubKeyHex]}
+        const filter = { kinds: [3], authors: [pubKeyHex] }
 
         const sub = ndk().subscribe(filter)
 

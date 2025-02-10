@@ -1,13 +1,13 @@
-import {PublicKey, publicState} from "irisdb-nostr"
-import {Link, useLocation} from "react-router-dom"
-import {RiDeleteBinLine} from "@remixicon/react"
-import {useLocalState} from "irisdb-hooks"
-import {nip19} from "nostr-tools"
-import {useMemo} from "react"
+import { PublicKey, publicState } from "irisdb-nostr"
+import { Link, useLocation } from "react-router-dom"
+import { RiDeleteBinLine } from "@remixicon/react"
+import { useLocalState } from "irisdb-hooks"
+import { nip19 } from "nostr-tools"
+import { useMemo } from "react"
 
-import {FollowUserForm} from "@/shared/components/share/FollowUserForm"
+import { FollowUserForm } from "@/shared/components/share/FollowUserForm"
 import CopyButton from "@/shared/components/button/CopyButton.tsx"
-import {UserRow} from "@/shared/components/user/UserRow"
+import { UserRow } from "@/shared/components/user/UserRow"
 import Show from "@/shared/components/Show"
 
 type WriteAccessUsersProps = {

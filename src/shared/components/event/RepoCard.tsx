@@ -1,6 +1,6 @@
 import StarOutline from "@mui/icons-material/StarOutline"
-import {Chip, Badge} from "@mui/material"
-import {Link} from "react-router-dom"
+import { Chip, Badge } from "@mui/material"
+import { Link } from "react-router-dom"
 
 interface RepoCardProps {
   repo: string
@@ -9,7 +9,7 @@ interface RepoCardProps {
 const dummyDescription =
   "Scionic Merkle Trees contain small branches like Classic Merkle Trees, folder storage support like Merkle DAGs, and numbered leaves so anyone can sync by requesting a range of missing leaf numbers that correspond to missing file chunks. "
 
-function RepoCard({repo, description}: RepoCardProps) {
+function RepoCard({ repo, description }: RepoCardProps) {
   return (
     <Link
       className="card bg-base-100 cursor-pointer flex-1"

@@ -90,7 +90,7 @@ export default function Header() {
               .current!.style.transform.replace("translateY(", "")
               .replace("px)", "")
           ) -
-          (currentScrollY - lastScrollY.current)
+            (currentScrollY - lastScrollY.current)
         )
       } else {
         // Scrolling up
@@ -101,7 +101,7 @@ export default function Header() {
               .current!.style.transform.replace("translateY(", "")
               .replace("px)", "")
           ) +
-          (lastScrollY.current - currentScrollY)
+            (lastScrollY.current - currentScrollY)
         )
       }
       lastScrollY.current = currentScrollY

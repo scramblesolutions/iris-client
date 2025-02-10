@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {describe, expect, it} from "vitest"
+import { describe, expect, it } from "vitest"
 
-import {SortedMap} from "./SortedMap"
+import { SortedMap } from "./SortedMap"
 
 function runTestsForMap(MapConstructor: any, mapName: string) {
   describe(mapName, () => {

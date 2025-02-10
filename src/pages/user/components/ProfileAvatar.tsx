@@ -1,6 +1,6 @@
-import {NDKUserProfile} from "@nostr-dev-kit/ndk"
-import {useNavigate} from "react-router-dom"
-import {Avatar} from "@mui/material"
+import { NDKUserProfile } from "@nostr-dev-kit/ndk"
+import { useNavigate } from "react-router-dom"
+import { Avatar } from "@mui/material"
 
 import defaultProfilePic from "@/assets/default_profile_pic.jpg"
 
@@ -9,7 +9,7 @@ interface ProfileAvatarProps {
   pubkey: string
 }
 
-function ProfileAvatar({profile, pubkey}: ProfileAvatarProps) {
+function ProfileAvatar({ profile, pubkey }: ProfileAvatarProps) {
   const navigate = useNavigate()
 
   const handleUserNameClick = () => {

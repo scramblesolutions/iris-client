@@ -1,6 +1,6 @@
-import {AvatarGroup} from "@/shared/components/user/AvatarGroup.tsx"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {RefObject} from "react"
+import { AvatarGroup } from "@/shared/components/user/AvatarGroup.tsx"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { RefObject } from "react"
 
 interface NewEventsButtonProps {
   newEventsFiltered: NDKEvent[]
@@ -23,7 +23,7 @@ const NewEventsButton = ({
         className="btn btn-info shadow-xl rounded-full"
         onClick={() => {
           showNewEvents()
-          firstFeedItemRef.current?.scrollIntoView({block: "start"})
+          firstFeedItemRef.current?.scrollIntoView({ block: "start" })
           window.scrollBy(0, -200) // scroll a bit above
         }}
       >

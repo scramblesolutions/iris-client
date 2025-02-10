@@ -1,4 +1,4 @@
-import {CSSProperties, useEffect, useState, MouseEvent} from "react"
+import { CSSProperties, useEffect, useState, MouseEvent } from "react"
 
 type Props = {
   src: string

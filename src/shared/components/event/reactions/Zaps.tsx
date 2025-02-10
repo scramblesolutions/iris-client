@@ -1,11 +1,11 @@
-import {getZapAmount, getZappingUser} from "@/utils/nostr.ts"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
-import {shouldHideEvent} from "@/utils/socialGraph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
-import {ndk} from "irisdb-nostr"
+import { getZapAmount, getZappingUser } from "@/utils/nostr.ts"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
+import { shouldHideEvent } from "@/utils/socialGraph"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
+import { ndk } from "irisdb-nostr"
 
-export default function Zaps({event}: {event: NDKEvent}) {
+export default function Zaps({ event }: { event: NDKEvent }) {
   const [zapAmountByUser, setZapAmountByUser] = useState(new Map<string, number>())
   const [commentByUser, setCommentByUser] = useState(new Map<string, string>())
 

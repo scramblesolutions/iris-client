@@ -1,9 +1,9 @@
-import {useAuthors, usePublicState} from "irisdb-hooks"
-import {Link, useParams} from "react-router-dom"
+import { useAuthors, usePublicState } from "irisdb-hooks"
+import { Link, useParams } from "react-router-dom"
 import classNames from "classnames"
 
 export function ChatList() {
-  const {id} = useParams()
+  const { id } = useParams()
   const authors = useAuthors("follows")
   const [chats] = usePublicState(authors, "apps/chat/chats", {})
 

@@ -5,7 +5,7 @@ interface HoverCardProps {
   onClick?: () => void
 }
 
-function HoverCard({children, content, onClick}: HoverCardProps) {
+function HoverCard({ children, content, onClick }: HoverCardProps) {
   return (
     <div className="relative inline-block group" onClick={onClick}>
       {children}

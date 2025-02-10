@@ -6,7 +6,7 @@ const ISSUE_PR_REF_REGEX =
 
 const IssuePRRef: Embed = {
   regex: new RegExp(ISSUE_PR_REF_REGEX),
-  component: ({match}) => <IssuePRRefComponent match={match} />,
+  component: ({ match }) => <IssuePRRefComponent match={match} />,
 }
 
 export default IssuePRRef

@@ -1,17 +1,17 @@
-import {useState, MouseEvent} from "react"
+import { useState, MouseEvent } from "react"
 import ProxyImg from "../../ProxyImg"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
 import classNames from "classnames"
 
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 interface SmallImageComponentProps {
   match: string
   event: NDKEvent | undefined
 }
 
-function SmallImageComponent({match, event}: SmallImageComponentProps) {
+function SmallImageComponent({ match, event }: SmallImageComponentProps) {
   let blurNSFW = true
   localState.get("settings/blurNSFW").on((value) => {
     if (typeof value === "boolean") {

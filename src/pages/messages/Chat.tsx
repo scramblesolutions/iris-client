@@ -1,17 +1,17 @@
-import {KeyType, Sender, serializeChannelState} from "nostr-double-ratchet"
-import {subscribeToAuthorDMNotifications} from "@/utils/notifications"
+import { KeyType, Sender, serializeChannelState } from "nostr-double-ratchet"
+import { subscribeToAuthorDMNotifications } from "@/utils/notifications"
 import MiddleHeader from "@/shared/components/header/MiddleHeader"
-import {useEffect, useMemo, useState, useRef} from "react"
-import {UserRow} from "@/shared/components/user/UserRow"
-import {SortedMap} from "@/utils/SortedMap/SortedMap"
-import {hexToBytes} from "@noble/hashes/utils"
-import Message, {MessageType} from "./Message"
-import {useParams} from "react-router-dom"
-import {useLocalState} from "irisdb-hooks"
+import { useEffect, useMemo, useState, useRef } from "react"
+import { UserRow } from "@/shared/components/user/UserRow"
+import { SortedMap } from "@/utils/SortedMap/SortedMap"
+import { hexToBytes } from "@noble/hashes/utils"
+import Message, { MessageType } from "./Message"
+import { useParams } from "react-router-dom"
+import { useLocalState } from "irisdb-hooks"
+import { PublicKey } from "irisdb-nostr"
 import MessageForm from "./MessageForm"
-import {PublicKey} from "irisdb-nostr"
-import {getChannel} from "./Channels"
-import {localState} from "irisdb"
+import { getChannel } from "./Channels"
+import { localState } from "irisdb"
 
 const comparator = (a: [string, MessageType], b: [string, MessageType]) =>
   a[1].time - b[1].time
@@ -61,7 +61,7 @@ const groupMessages = (
 }
 
 const Chat = () => {
-  const {id} = useParams()
+  const { id } = useParams()
   const hexId = useMemo(() => id && new PublicKey(id).toString(), [id])
   const [messages, setMessages] = useState(
     new SortedMap<string, MessageType>([], comparator)
@@ -162,7 +162,7 @@ const Chat = () => {
 
   const handleScroll = () => {
     if (chatContainerRef.current) {
-      const {scrollTop, scrollHeight, clientHeight} = chatContainerRef.current
+      const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current
       const isBottom = scrollTop + clientHeight >= scrollHeight - 10
       setIsAtBottom(isBottom)
       setShowScrollDown(!isBottom)

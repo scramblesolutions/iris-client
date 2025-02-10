@@ -5,12 +5,12 @@ import Trending from "@/shared/components/feed/Trending.tsx"
 import FollowList from "@/pages/user/components/FollowList"
 import Widget from "@/shared/components/ui/Widget"
 import socialGraph from "@/utils/socialGraph"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useLocalState} from "irisdb-hooks"
-import {getTags} from "@/utils/nostr"
-import {useState} from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useLocalState } from "irisdb-hooks"
+import { getTags } from "@/utils/nostr"
+import { useState } from "react"
 
-export default function ThreadPage({id}: {id: string}) {
+export default function ThreadPage({ id }: { id: string }) {
   const [relevantPeople, setRelevantPeople] = useState(new Map<string, boolean>())
   const [hideEventsByUnknownUsers] = useLocalState(
     "settings/hideEventsByUnknownUsers",

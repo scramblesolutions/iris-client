@@ -1,5 +1,5 @@
-import {Name} from "@/shared/components/user/Name.tsx"
-import {Link} from "react-router-dom"
+import { Name } from "@/shared/components/user/Name.tsx"
+import { Link } from "react-router-dom"
 import Embed from "../index.ts"
 
 const pubKeyRegex =
@@ -7,7 +7,7 @@ const pubKeyRegex =
 
 const NostrNpub: Embed = {
   regex: pubKeyRegex,
-  component: ({match}) => {
+  component: ({ match }) => {
     const pub = match.replace("@", "")
     return (
       <Link to={`/${pub}`} className="link link-info">

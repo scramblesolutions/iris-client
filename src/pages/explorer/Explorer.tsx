@@ -1,12 +1,12 @@
-import {useAuthors, useLocalState} from "irisdb-hooks"
-import {Link, useNavigate} from "react-router-dom"
-import {publicState} from "irisdb-nostr"
-import {useEffect, useMemo} from "react"
-import {nip19} from "nostr-tools"
-import {localState} from "irisdb"
+import { useAuthors, useLocalState } from "irisdb-hooks"
+import { Link, useNavigate } from "react-router-dom"
+import { publicState } from "irisdb-nostr"
+import { useEffect, useMemo } from "react"
+import { nip19 } from "nostr-tools"
+import { localState } from "irisdb"
 
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
 import useSearchParam from "@/shared/hooks/useSearchParam.ts"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
 
 import ExplorerNode from "./ExplorerNode"
 
@@ -15,7 +15,7 @@ type Props = {
   path?: string
 }
 
-const Explorer = ({p}: Props) => {
+const Explorer = ({ p }: Props) => {
   const [myPubKey] = useLocalState("user/publicKey", "")
   const user = useSearchParam("user", "")
   const navigate = useNavigate()
@@ -23,7 +23,7 @@ const Explorer = ({p}: Props) => {
 
   useEffect(() => {
     if (myPubKey && !user) {
-      navigate(`./?user=${nip19.npubEncode(myPubKey)}`, {replace: true})
+      navigate(`./?user=${nip19.npubEncode(myPubKey)}`, { replace: true })
     }
   }, [myPubKey, user])
 

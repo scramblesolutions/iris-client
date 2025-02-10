@@ -1,8 +1,8 @@
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
-import {useState, useRef, useCallback, useMemo} from "react"
+import { useState, useRef, useCallback, useMemo } from "react"
 import FeedItem from "../event/FeedItem/FeedItem"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {DISPLAY_INCREMENT} from "./utils"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { DISPLAY_INCREMENT } from "./utils"
 
 interface UnknownUserEventsProps {
   eventsByUnknownUsers: NDKEvent[]

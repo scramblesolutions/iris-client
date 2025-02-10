@@ -1,7 +1,7 @@
-import {useNavigate, useLocation} from "react-router-dom"
-import {RiArrowLeftLine} from "@remixicon/react"
-import {ReactNode, useCallback} from "react"
-import {Helmet} from "react-helmet"
+import { useNavigate, useLocation } from "react-router-dom"
+import { RiArrowLeftLine } from "@remixicon/react"
+import { ReactNode, useCallback } from "react"
+import { Helmet } from "react-helmet"
 import classNames from "classnames"
 
 interface MiddleHeaderProps {
@@ -9,16 +9,16 @@ interface MiddleHeaderProps {
   children?: ReactNode
 }
 
-const MiddleHeader = ({title, children}: MiddleHeaderProps) => {
+const MiddleHeader = ({ title, children }: MiddleHeaderProps) => {
   const navigate = useNavigate()
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
 
   const handleBackClick = useCallback(() => {
     navigate(-1)
   }, [navigate])
 
   const handleHeaderClick = useCallback(() => {
-    window.scrollTo({top: 0})
+    window.scrollTo({ top: 0 })
   }, [])
 
   return (
@@ -54,7 +54,7 @@ const MiddleHeader = ({title, children}: MiddleHeaderProps) => {
             hidden: pathname === "/",
           })}
         >
-          <RiArrowLeftLine size={24} style={{opacity: 0}} />
+          <RiArrowLeftLine size={24} style={{ opacity: 0 }} />
         </div>
       </div>
       {title && (

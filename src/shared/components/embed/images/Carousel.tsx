@@ -1,11 +1,11 @@
-import {RiArrowLeftSLine, RiArrowRightSLine} from "@remixicon/react"
+import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react"
+import { useEffect, useState, MouseEvent, useCallback } from "react"
 import PreloadImages from "@/shared/components/media/PreloadImages"
-import {useEffect, useState, MouseEvent, useCallback} from "react"
 import MediaModal from "@/shared/components/media/MediaModal"
+import { useSwipeable } from "react-swipeable"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 import ImageComponent from "./ImageComponent"
-import {useSwipeable} from "react-swipeable"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
 interface CarouselProps {
   images: string[]
@@ -20,7 +20,7 @@ localState.get("settings/blurNSFW").once((value) => {
   }
 })
 
-function Carousel({images, event}: CarouselProps) {
+function Carousel({ images, event }: CarouselProps) {
   const CarouselButton = ({
     direction,
     onClick,

@@ -1,6 +1,6 @@
 import "./Spinner.css"
 
-const Spinner = (props: {width?: number; height?: number; className?: string}) => (
+const Spinner = (props: { width?: number; height?: number; className?: string }) => (
   <svg
     width={props.width ?? 20}
     height={props.height ?? 20}

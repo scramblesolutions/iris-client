@@ -1,7 +1,7 @@
-import {showNotification, subscribeToNotifications} from "@/utils/notifications"
-import {useEffect, useState, ChangeEvent} from "react"
+import { showNotification, subscribeToNotifications } from "@/utils/notifications"
+import { useEffect, useState, ChangeEvent } from "react"
 import Icon from "@/shared/components/Icons/Icon"
-import {useLocalState} from "irisdb-hooks"
+import { useLocalState } from "irisdb-hooks"
 import SnortApi from "@/utils/SnortApi"
 
 interface StatusIndicatorProps {

@@ -1,14 +1,14 @@
-import {useEffect, useState, useCallback} from "react"
-import {Link} from "react-router-dom"
+import { useEffect, useState, useCallback } from "react"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 import classNames from "classnames"
-import {nip19} from "nostr-tools"
 
 import RelativeTime from "@/shared/components/event/RelativeTime.tsx"
 import FeedItemDropdown from "../reactions/FeedItemDropdown.tsx"
-import {UserRow} from "@/shared/components/user/UserRow.tsx"
+import { UserRow } from "@/shared/components/user/UserRow.tsx"
+import { EVENT_AVATAR_WIDTH } from "../../user/const.ts"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import {EVENT_AVATAR_WIDTH} from "../../user/const.ts"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 type FeedItemHeaderProps = {
   event: NDKEvent
@@ -16,7 +16,7 @@ type FeedItemHeaderProps = {
   tight?: boolean
 }
 
-function FeedItemHeader({event, referredEvent, tight}: FeedItemHeaderProps) {
+function FeedItemHeader({ event, referredEvent, tight }: FeedItemHeaderProps) {
   const isRezap = event?.tags
     .filter((tag) => tag[0] === "e")
     .toString()
@@ -73,7 +73,9 @@ function FeedItemHeader({event, referredEvent, tight}: FeedItemHeaderProps) {
   }, [dropdownRef, dropdownIconRef])
 
   return (
-    <header className={classNames("flex justify-between items-center", {"mb-2": !tight})}>
+    <header
+      className={classNames("flex justify-between items-center", { "mb-2": !tight })}
+    >
       {!isRezap && (
         <div className="cursor-pointer font-bold">
           <UserRow

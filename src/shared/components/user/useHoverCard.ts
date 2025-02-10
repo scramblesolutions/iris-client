@@ -1,5 +1,5 @@
-import {MOBILE_BREAKPOINT} from "@/shared/components/user/const.ts"
-import React, {useState, useRef, useEffect} from "react"
+import { MOBILE_BREAKPOINT } from "@/shared/components/user/const.ts"
+import React, { useState, useRef, useEffect } from "react"
 
 export function useHoverCard(showHoverCard: boolean) {
   const [isOpen, setIsOpen] = useState(false)
@@ -25,10 +25,10 @@ export function useHoverCard(showHoverCard: boolean) {
     }
 
     if (isMobile && isOpen) {
-      document.addEventListener("click", handleClickOutside, {capture: true})
+      document.addEventListener("click", handleClickOutside, { capture: true })
     }
     return () => {
-      document.removeEventListener("click", handleClickOutside, {capture: true})
+      document.removeEventListener("click", handleClickOutside, { capture: true })
     }
   }, [isOpen, isMobile])
 
@@ -72,5 +72,5 @@ export function useHoverCard(showHoverCard: boolean) {
     }
   }, [])
 
-  return {hoverProps, showCard: showHoverCard && isOpen, closeCard, isMobile}
+  return { hoverProps, showCard: showHoverCard && isOpen, closeCard, isMobile }
 }

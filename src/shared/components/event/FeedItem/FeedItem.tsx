@@ -1,6 +1,6 @@
-import {eventsByIdCache, addSeenEventId} from "@/utils/memcache.ts"
-import {useEffect, useMemo, useState, useRef} from "react"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { eventsByIdCache, addSeenEventId } from "@/utils/memcache.ts"
+import { useEffect, useMemo, useState, useRef } from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 import classNames from "classnames"
 
 import {
@@ -10,22 +10,22 @@ import {
   fetchEvent,
   getEventRoot,
 } from "@/utils/nostr.ts"
-import {getEventIdHex, handleEventContent} from "@/shared/components/event/utils.ts"
+import { getEventIdHex, handleEventContent } from "@/shared/components/event/utils.ts"
 import RepostHeader from "@/shared/components/event/RepostHeader.tsx"
 import FeedItemActions from "../reactions/FeedItemActions.tsx"
 import FeedItemPlaceholder from "./FeedItemPlaceholder.tsx"
 import ErrorBoundary from "../../ui/ErrorBoundary.tsx"
+import { onClick, TRUNCATE_LENGTH } from "./utils.ts"
 import Feed from "@/shared/components/feed/Feed.tsx"
+import { Link, useNavigate } from "react-router-dom"
 import FeedItemContent from "./FeedItemContent.tsx"
-import {onClick, TRUNCATE_LENGTH} from "./utils.ts"
-import {Link, useNavigate} from "react-router-dom"
 import FeedItemHeader from "./FeedItemHeader.tsx"
 import FeedItemTitle from "./FeedItemTitle.tsx"
 import RezapHeader from "../RezapHeader.tsx"
-import {useLocalState} from "irisdb-hooks"
+import { useLocalState } from "irisdb-hooks"
 import GemHeader from "../GemHeader.tsx"
 import LikeHeader from "../LikeHeader"
-import {nip19} from "nostr-tools"
+import { nip19 } from "nostr-tools"
 
 type FeedItemProps = {
   event?: NDKEvent
@@ -104,7 +104,7 @@ function FeedItem({
           }
         })
       },
-      {rootMargin: "-200px 0px 0px 0px"} // Trigger when 200 pixels from the top edge are visible
+      { rootMargin: "-200px 0px 0px 0px" } // Trigger when 200 pixels from the top edge are visible
     )
 
     if (feedItemRef.current) {
@@ -206,13 +206,13 @@ function FeedItem({
           </div>
         )}
         <div className="flex flex-row gap-4 flex-1">
-          <div className={classNames("flex-1 w-full", {"text-lg": standalone})}>
+          <div className={classNames("flex-1 w-full", { "text-lg": standalone })}>
             <FeedItemHeader
               event={event}
               referredEvent={referredEvent}
               tight={asReply || asRepliedTo}
             />
-            <div className={classNames({"pl-12": asReply || asRepliedTo})}>
+            <div className={classNames({ "pl-12": asReply || asRepliedTo })}>
               <FeedItemContent
                 event={event}
                 referredEvent={referredEvent}
@@ -222,7 +222,7 @@ function FeedItem({
             </div>
           </div>
         </div>
-        <div className={classNames({"pl-10": asReply || asRepliedTo})}>
+        <div className={classNames({ "pl-10": asReply || asRepliedTo })}>
           {showActions && <FeedItemActions event={referredEvent || event} />}
         </div>
       </div>
@@ -231,7 +231,7 @@ function FeedItem({
           <Feed
             showRepliedTo={false}
             asReply={true}
-            filters={{"#e": [eventIdHex], kinds: [1]}}
+            filters={{ "#e": [eventIdHex], kinds: [1] }}
             displayFilterFn={(e: NDKEvent) => getEventReplyingTo(e) === event.id}
             onEvent={onEvent}
             borderTopFirst={false}

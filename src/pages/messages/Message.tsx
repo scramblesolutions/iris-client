@@ -13,7 +13,7 @@ type MessageProps = {
   isLast: boolean
 }
 
-const Message = ({message, isFirst, isLast}: MessageProps) => {
+const Message = ({ message, isFirst, isLast }: MessageProps) => {
   const isUser = message.sender === "user"
 
   const formatTime = (timestamp: number) => {

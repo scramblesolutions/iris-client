@@ -2,12 +2,12 @@ import classNames from "classnames"
 import React from "react"
 
 import PublishButton from "@/shared/components/ui/PublishButton"
-import {Avatar} from "@/shared/components/user/Avatar" // Adjusted import path
+import { Avatar } from "@/shared/components/user/Avatar" // Adjusted import path
 import Icon from "@/shared/components/Icons/Icon" // Add this import
 import NavLink from "@/shared/components/NavLink" // Adjusted import path
-import {useLocalState} from "irisdb-hooks"
-import {Link} from "react-router-dom"
-import {nip19} from "nostr-tools"
+import { useLocalState } from "irisdb-hooks"
+import { Link } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 
 type MenuItem = {
   label?: string
@@ -24,7 +24,7 @@ const Footer = () => {
   const readonly = false
 
   const MENU_ITEMS: MenuItem[] = [
-    {link: "/", icon: "home"},
+    { link: "/", icon: "home" },
     CONFIG.features.cashu
       ? {
           link: "/wallet",
@@ -32,7 +32,7 @@ const Footer = () => {
           inactiveIcon: "wallet",
           loggedInOnly: true,
         }
-      : {link: "/settings", icon: "settings", loggedInOnly: true},
+      : { link: "/settings", icon: "settings", loggedInOnly: true },
     {
       el: (
         <div className="flex flex-grow items-center justify-center">
@@ -41,7 +41,7 @@ const Footer = () => {
       ),
       loggedInOnly: true,
     },
-    {link: "/search", icon: "search"},
+    { link: "/search", icon: "search" },
   ]
 
   return (
@@ -67,7 +67,7 @@ const Footer = () => {
   )
 }
 
-const FooterNavItem = ({item}: {item: MenuItem; readonly: boolean}) => {
+const FooterNavItem = ({ item }: { item: MenuItem; readonly: boolean }) => {
   if (item.el) {
     return item.el
   }
@@ -75,14 +75,14 @@ const FooterNavItem = ({item}: {item: MenuItem; readonly: boolean}) => {
   return (
     <NavLink
       to={item.link ?? "/"}
-      className={({isActive}) =>
+      className={({ isActive }) =>
         classNames(
-          {active: isActive},
+          { active: isActive },
           "flex flex-grow p-4 justify-center items-center cursor-pointer"
         )
       }
     >
-      {({isActive}) => renderIcon(item, isActive)}
+      {({ isActive }) => renderIcon(item, isActive)}
     </NavLink>
   )
 }

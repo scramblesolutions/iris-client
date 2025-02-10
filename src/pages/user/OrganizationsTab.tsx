@@ -1,4 +1,4 @@
-const OrganizationsTab = ({pubKey}: {pubKey: string}) => {
+const OrganizationsTab = ({ pubKey }: { pubKey: string }) => {
   return (
     <div>
       <h2>Organizations</h2>

@@ -1,14 +1,14 @@
-import {createBrowserRouter, createRoutesFromElements, Route} from "react-router-dom"
+import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom"
 
 import NostrLinkHandler from "@/pages/NostrLinkHandler.tsx"
 import Notifications from "./notifications/Notifications"
 import Explorer from "@/pages/explorer/Explorer"
 import Layout from "@/shared/components/Layout"
+import { Page404 } from "@/pages/Page404.tsx"
 import WalletPage from "./wallet/WalletPage"
-import {Page404} from "@/pages/Page404.tsx"
+import { AboutPage } from "@/pages/HelpPage"
 import SettingsPage from "@/pages/settings"
 import MessagesPage from "@/pages/messages"
-import {AboutPage} from "@/pages/HelpPage"
 import SearchPage from "@/pages/search"
 import HomePage from "@/pages/home"
 

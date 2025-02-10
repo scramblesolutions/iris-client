@@ -1,5 +1,5 @@
 import AccountName from "./AccountName"
-import {ndk} from "irisdb-nostr"
+import { ndk } from "irisdb-nostr"
 
 interface ActiveAccountProps {
   name?: string
@@ -13,13 +13,13 @@ export default function ActiveAccount({
   myPub = "",
 }: ActiveAccountProps) {
   async function saveProfile(nip05: string) {
-    const user = ndk().getUser({pubkey: myPub})
-    user.profile = user.profile || {nip05}
+    const user = ndk().getUser({ pubkey: myPub })
+    user.profile = user.profile || { nip05 }
     user.publish()
   }
 
   const onClick = async () => {
-    const profile = ndk().getUser({pubkey: myPub}).profile
+    const profile = ndk().getUser({ pubkey: myPub }).profile
     const newNip = name + "@iris.to"
     const timeout = setTimeout(() => {
       saveProfile(newNip)

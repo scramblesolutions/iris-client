@@ -1,11 +1,11 @@
-import {useParams, useNavigate, useLocation} from "react-router-dom"
-import {queryProfile} from "nostr-tools/nip05"
-import {useEffect, useState} from "react"
+import { useParams, useNavigate, useLocation } from "react-router-dom"
+import { queryProfile } from "nostr-tools/nip05"
+import { useEffect, useState } from "react"
 import ThreadPage from "@/pages/thread"
 import ProfilePage from "@/pages/user"
 
 export default function NostrLinkHandler() {
-  const {link} = useParams()
+  const { link } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -13,7 +13,7 @@ export default function NostrLinkHandler() {
 
   useEffect(() => {
     if (link !== cleanLink) {
-      navigate(`/${cleanLink}`, {replace: true})
+      navigate(`/${cleanLink}`, { replace: true })
     }
   }, [link, cleanLink, navigate])
 

@@ -1,22 +1,22 @@
-import {useEffect, useMemo, useRef, useState, useCallback, ReactNode} from "react"
-import {NDKEvent, NDKFilter} from "@nostr-dev-kit/ndk"
+import { useEffect, useMemo, useRef, useState, useCallback, ReactNode } from "react"
+import { NDKEvent, NDKFilter } from "@nostr-dev-kit/ndk"
 
-import socialGraph, {shouldHideEvent, shouldSocialHide} from "@/utils/socialGraph"
+import socialGraph, { shouldHideEvent, shouldSocialHide } from "@/utils/socialGraph"
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll"
 import useHistoryState from "@/shared/hooks/useHistoryState"
-import {SortedMap} from "@/utils/SortedMap/SortedMap"
+import { SortedMap } from "@/utils/SortedMap/SortedMap"
 import FeedItem from "../event/FeedItem/FeedItem"
-import {feedCache} from "@/utils/memcache"
-import {useLocalState} from "irisdb-hooks"
+import { feedCache } from "@/utils/memcache"
+import { useLocalState } from "irisdb-hooks"
 import debounce from "lodash/debounce"
-import {localState} from "irisdb"
-import {ndk} from "irisdb-nostr"
+import { localState } from "irisdb"
+import { ndk } from "irisdb-nostr"
 
-import {INITIAL_DISPLAY_COUNT, DISPLAY_INCREMENT, eventComparator} from "./utils"
+import { INITIAL_DISPLAY_COUNT, DISPLAY_INCREMENT, eventComparator } from "./utils"
 import imageEmbed from "@/shared/components/embed/images/Image"
 import Video from "@/shared/components/embed/video/Video"
 import UnknownUserEvents from "./UnknownUserEvents.tsx"
-import {DisplayAsSelector} from "./DisplayAsSelector"
+import { DisplayAsSelector } from "./DisplayAsSelector"
 import NewEventsButton from "./NewEventsButton.tsx"
 import PreloadImages from "../media/PreloadImages"
 import useMutes from "@/shared/hooks/useMutes.ts"
@@ -139,7 +139,7 @@ function Feed({
         setForceUpdate((prev) => prev + 1)
       },
       500,
-      {maxWait: 2000}
+      { maxWait: 2000 }
     )
 
     debouncedInitialLoadDone()
@@ -277,7 +277,7 @@ function Feed({
     // so we only pick each unique event+URL pair once.
     const deduplicated = new Map<
       string,
-      {type: "image" | "video"; url: string; event: NDKEvent}
+      { type: "image" | "video"; url: string; event: NDKEvent }
     >()
 
     mediaEvents.forEach((event) => {

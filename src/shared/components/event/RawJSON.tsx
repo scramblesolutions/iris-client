@@ -1,11 +1,11 @@
 import CopyButton from "@/shared/components/button/CopyButton.tsx"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 type RawJSONProps = {
   event: NDKEvent
 }
 
-function RawJSON({event}: RawJSONProps) {
+function RawJSON({ event }: RawJSONProps) {
   const rawEvent = {
     created_at: event.created_at,
     content: event.content,

@@ -1,13 +1,13 @@
-import {fetchZappedAmount} from "@/utils/nostr"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
+import { fetchZappedAmount } from "@/utils/nostr"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
 import HyperText from "../HyperText"
 
 interface ZapraiserProps {
   event: NDKEvent
 }
 
-function Zapraiser({event}: ZapraiserProps) {
+function Zapraiser({ event }: ZapraiserProps) {
   const [zapProgress, setZapProgress] = useState(0)
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Zapraiser({event}: ZapraiserProps) {
         <div className="w-full h-4 bg-gray-200 rounded">
           <div
             className="h-full bg-purple-500 rounded"
-            style={{width: `${zapProgress}%`}}
+            style={{ width: `${zapProgress}%` }}
           ></div>
         </div>
       </div>

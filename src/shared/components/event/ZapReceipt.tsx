@@ -1,13 +1,13 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {useEffect, useState} from "react"
-import {UserRow} from "../user/UserRow"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { useEffect, useState } from "react"
+import { UserRow } from "../user/UserRow"
 import * as bolt11 from "bolt11"
 
 interface ZapReceiptProps {
   event: NDKEvent
 }
 
-function ZapReceipt({event}: ZapReceiptProps) {
+function ZapReceipt({ event }: ZapReceiptProps) {
   const [zappedAmount, setZappedAmount] = useState<number>()
 
   useEffect(() => {

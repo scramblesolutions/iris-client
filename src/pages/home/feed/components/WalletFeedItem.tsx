@@ -1,7 +1,7 @@
-import {Bolt} from "@mui/icons-material"
+import { Bolt } from "@mui/icons-material"
 
-import {Avatar} from "@/shared/components/user/Avatar.tsx"
-import {Name} from "@/shared/components/user/Name.tsx"
+import { Avatar } from "@/shared/components/user/Avatar.tsx"
+import { Name } from "@/shared/components/user/Name.tsx"
 
 const WalletFeedItem = () => {
   return (

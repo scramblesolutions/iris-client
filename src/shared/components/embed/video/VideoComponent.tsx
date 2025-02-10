@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState} from "react"
+import { useEffect, useRef, useState } from "react"
 import classNames from "classnames"
-import {localState} from "irisdb"
+import { localState } from "irisdb"
 
-import {NDKEvent} from "@nostr-dev-kit/ndk"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
 
 interface VideoComponentProps {
   match: string
@@ -17,7 +17,7 @@ localState.get("settings/blurNSFW").once((value) => {
   }
 })
 
-function VideoComponent({match, event}: VideoComponentProps) {
+function VideoComponent({ match, event }: VideoComponentProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
   const [blur, setBlur] = useState(
@@ -62,7 +62,7 @@ function VideoComponent({match, event}: VideoComponentProps) {
       <video
         onClick={onClick}
         ref={videoRef}
-        className={classNames("rounded max-h-[70vh] h-96 w-auto", {"blur-xl": blur})}
+        className={classNames("rounded max-h-[70vh] h-96 w-auto", { "blur-xl": blur })}
         src={match}
         controls
         muted

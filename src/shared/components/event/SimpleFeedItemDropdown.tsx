@@ -4,7 +4,7 @@ type FeedItemDropdownProps = {
   eventId: string
 }
 
-function SimpleFeedItemDropdown({eventId}: FeedItemDropdownProps) {
+function SimpleFeedItemDropdown({ eventId }: FeedItemDropdownProps) {
   const handleCopyNoteID = () => {
     navigator.clipboard.writeText(eventId)
   }

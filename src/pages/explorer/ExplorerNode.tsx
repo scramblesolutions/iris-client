@@ -1,11 +1,11 @@
-import {DIRECTORY_VALUE, isDirectory, JsonValue, Node} from "irisdb"
-import {RiArrowRightSLine} from "@remixicon/react"
-import {useEffect, useState} from "react"
+import { DIRECTORY_VALUE, isDirectory, JsonValue, Node } from "irisdb"
+import { RiArrowRightSLine } from "@remixicon/react"
+import { useEffect, useState } from "react"
 
-import {SortedMap} from "@/utils/SortedMap/SortedMap"
+import { SortedMap } from "@/utils/SortedMap/SortedMap"
 import Show from "@/shared/components/Show"
 
-import {ExplorerNodeEditRow} from "./ExplorerNodeEditRow"
+import { ExplorerNodeEditRow } from "./ExplorerNodeEditRow"
 import ExplorerNodeValue from "./ExplorerNodeValue"
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
   parentCounter?: number
 }
 
-type Child = {node: Node; value: JsonValue}
+type Child = { node: Node; value: JsonValue }
 type ChildMap = SortedMap<string, Child>
 
 export default function ExplorerNode({
@@ -40,7 +40,7 @@ export default function ExplorerNode({
         const childName = key.split("/").pop()!
         setChildren((prev: ChildMap) => {
           const newChildren = new SortedMap(prev)
-          newChildren.set(childName, {node: node.get(childName), value})
+          newChildren.set(childName, { node: node.get(childName), value })
           return newChildren
         })
       }
@@ -58,7 +58,7 @@ export default function ExplorerNode({
       <div
         className={`flex items-center ${isDir ? "cursor-pointer" : ""}`}
         onClick={toggleOpen}
-        style={{paddingLeft}}
+        style={{ paddingLeft }}
       >
         <Show when={isDir}>
           <RiArrowRightSLine

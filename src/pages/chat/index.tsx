@@ -1,13 +1,13 @@
-import {Link, useNavigate, useParams} from "react-router-dom"
-import {ChangeEvent, FormEvent, useState} from "react"
-import {RiArrowLeftLine} from "@remixicon/react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { ChangeEvent, FormEvent, useState } from "react"
+import { RiArrowLeftLine } from "@remixicon/react"
 import classNames from "classnames"
 
 import Chat from "@/shared/components/chat/Chat.tsx"
-import {ChatList} from "@/pages/chat/ChatList.tsx"
+import { ChatList } from "@/pages/chat/ChatList.tsx"
 
 export default function ChatPage() {
-  const {id} = useParams()
+  const { id } = useParams()
   const navigate = useNavigate()
   const [newChatId, setNewChatId] = useState("")
 
@@ -41,7 +41,9 @@ export default function ChatPage() {
         <ChatList />
       </div>
       <div
-        className={classNames("flex flex-col flex-1 p-4 gap-4", {"hidden md:flex": !id})}
+        className={classNames("flex flex-col flex-1 p-4 gap-4", {
+          "hidden md:flex": !id,
+        })}
       >
         <div className="flex flex-row gap-2 items-center justify-between">
           <Link to="/chat" className="text-lg md:hidden">

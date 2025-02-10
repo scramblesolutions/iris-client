@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react"
 
 import InfiniteScroll from "@/shared/components/ui/InfiniteScroll.tsx" // Make sure to import InfiniteScroll
 import ProfileCard from "@/shared/components/user/ProfileCard"

@@ -1,5 +1,5 @@
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {ReactNode} from "react"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { ReactNode } from "react"
 
 import SpotifyPlaylist from "./spotify/SpotifyPlaylist.tsx"
 import SpotifyPodcast from "./spotify/SpotifyPodcast.tsx"

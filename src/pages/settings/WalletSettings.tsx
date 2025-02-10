@@ -1,6 +1,6 @@
-import {init, disconnect, requestProvider} from "@getalby/bitcoin-connect-react"
-import {useLocalState} from "irisdb-hooks"
-import {ChangeEvent} from "react"
+import { init, disconnect, requestProvider } from "@getalby/bitcoin-connect-react"
+import { useLocalState } from "irisdb-hooks"
+import { ChangeEvent } from "react"
 
 const WalletSettings = () => {
   const [isWalletConnect, setIsWalletConnect] = useLocalState("user/walletConnect", false)

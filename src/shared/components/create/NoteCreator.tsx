@@ -1,17 +1,17 @@
-import {ChangeEvent, DragEvent, useEffect, useState} from "react"
-import {NDKEvent, NDKTag} from "@nostr-dev-kit/ndk"
-import {uploadFile} from "@/shared/upload"
-import {useLocalState} from "irisdb-hooks"
-import {ndk} from "irisdb-nostr"
+import { ChangeEvent, DragEvent, useEffect, useState } from "react"
+import { NDKEvent, NDKTag } from "@nostr-dev-kit/ndk"
+import { uploadFile } from "@/shared/upload"
+import { useLocalState } from "irisdb-hooks"
+import { ndk } from "irisdb-nostr"
 
 import UploadButton from "@/shared/components/button/UploadButton.tsx"
 import FeedItem from "@/shared/components/event/FeedItem/FeedItem"
-import {Avatar} from "@/shared/components/user/Avatar.tsx"
+import { Avatar } from "@/shared/components/user/Avatar.tsx"
 import HyperText from "@/shared/components/HyperText.tsx"
 
-import {eventsByIdCache} from "@/utils/memcache"
-import {useNavigate} from "react-router-dom"
-import {nip19} from "nostr-tools"
+import { eventsByIdCache } from "@/utils/memcache"
+import { useNavigate } from "react-router-dom"
+import { nip19 } from "nostr-tools"
 import Textarea from "./Textarea"
 
 type handleCloseFunction = () => void
@@ -87,7 +87,7 @@ function addPTags(event: NDKEvent, repliedEvent?: NDKEvent, quotedEvent?: NDKEve
   return event
 }
 
-function NoteCreator({handleClose, quotedEvent, repliedEvent}: NoteCreatorProps) {
+function NoteCreator({ handleClose, quotedEvent, repliedEvent }: NoteCreatorProps) {
   const [myPubKey] = useLocalState("user/publicKey", localStorage.getItem("pubkey"))
   const navigate = useNavigate()
 
@@ -238,7 +238,7 @@ function NoteCreator({handleClose, quotedEvent, repliedEvent}: NoteCreatorProps)
             <div className="bg-neutral rounded-full h-2.5">
               <div
                 className="bg-primary h-2.5 rounded-full"
-                style={{width: `${uploadProgress}%`}}
+                style={{ width: `${uploadProgress}%` }}
               ></div>
             </div>
             <p className="text-sm text-center mt-1">{Math.round(uploadProgress)}%</p>

@@ -1,6 +1,6 @@
-import {getTag, NDKEventFromRawEvent, fetchEvent} from "@/utils/nostr.ts"
-import {NDKEvent} from "@nostr-dev-kit/ndk"
-import {nip19} from "nostr-tools"
+import { getTag, NDKEventFromRawEvent, fetchEvent } from "@/utils/nostr.ts"
+import { NDKEvent } from "@nostr-dev-kit/ndk"
+import { nip19 } from "nostr-tools"
 
 export const handleEventContent = async (
   event: NDKEvent,
@@ -20,7 +20,7 @@ export const handleEventContent = async (
       } else {
         const eTag = getTag("e", event.tags)
         if (eTag) {
-          const origEvent = await fetchEvent({ids: [eTag]})
+          const origEvent = await fetchEvent({ ids: [eTag] })
           if (origEvent) setReferredEvent(origEvent)
         }
       }
@@ -79,7 +79,7 @@ export const toRootNote = (
       (tag) => tag[0] === "e" && tag[3] === "root"
     )[0][1]
     if (rootNoteId) {
-      fetchEvent({ids: [rootNoteId]}).then((event: NDKEvent) => {
+      fetchEvent({ ids: [rootNoteId] }).then((event: NDKEvent) => {
         if (event) {
           navigate(`/${event.encode()}`)
         }

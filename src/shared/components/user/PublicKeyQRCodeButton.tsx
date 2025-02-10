@@ -1,13 +1,13 @@
 import QRCodeButton from "./QRCodeButton"
-import {nip19} from "nostr-tools"
-import {useMemo} from "react"
+import { nip19 } from "nostr-tools"
+import { useMemo } from "react"
 
 interface PublicKeyQRCodeButtonProps {
   publicKey: string
   onScanSuccess?: (data: string) => void
 }
 
-function PublicKeyQRCodeButton({publicKey, onScanSuccess}: PublicKeyQRCodeButtonProps) {
+function PublicKeyQRCodeButton({ publicKey, onScanSuccess }: PublicKeyQRCodeButtonProps) {
   const npub = useMemo(() => {
     if (publicKey.startsWith("npub")) {
       return publicKey

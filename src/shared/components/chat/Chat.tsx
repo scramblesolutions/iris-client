@@ -1,9 +1,9 @@
-import {FormEvent, useEffect, useMemo, useState} from "react"
-import {useAuthors, useLocalState} from "irisdb-hooks"
-import {publicState} from "irisdb-nostr"
-import {nip19} from "nostr-tools"
+import { FormEvent, useEffect, useMemo, useState } from "react"
+import { useAuthors, useLocalState } from "irisdb-hooks"
+import { publicState } from "irisdb-nostr"
+import { nip19 } from "nostr-tools"
 
-import {MessageComponent} from "@/shared/components/chat/MessageComponent.tsx"
+import { MessageComponent } from "@/shared/components/chat/MessageComponent.tsx"
 
 export type ChatMessage = {
   author: string
@@ -11,7 +11,7 @@ export type ChatMessage = {
   content: string
 }
 
-export default function Chat({path}: {path: string}) {
+export default function Chat({ path }: { path: string }) {
   const [myPubKey] = useLocalState("user/publicKey", "")
   const [messages, setMessages] = useState<Map<string, ChatMessage>>(new Map())
   const [newMessage, setNewMessage] = useState("")
@@ -36,7 +36,9 @@ export default function Chat({path}: {path: string}) {
         }
         const author = key.split("/")[0]
         const content = String(msg)
-        setMessages((prev) => new Map(prev.set(key, {author, time: updatedAt, content})))
+        setMessages(
+          (prev) => new Map(prev.set(key, { author, time: updatedAt, content }))
+        )
       })
   }, [myPubKey, authors, path])
 

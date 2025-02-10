@@ -1,9 +1,9 @@
-import {useLocalState, usePublicState} from "irisdb-hooks"
-import {useMemo} from "react"
+import { useLocalState, usePublicState } from "irisdb-hooks"
+import { useMemo } from "react"
 
 import RepoCard from "@/shared/components/event/RepoCard.tsx"
-import {useNavigate} from "react-router-dom"
-import {Book} from "@mui/icons-material"
+import { useNavigate } from "react-router-dom"
+import { Book } from "@mui/icons-material"
 
 interface CodeTabProps {
   pubKey: string
@@ -13,7 +13,7 @@ interface RepoDetails {
   description: string
 }
 
-function CodeTab({pubKey}: CodeTabProps) {
+function CodeTab({ pubKey }: CodeTabProps) {
   const navigate = useNavigate()
 
   const [myPubKey] = useLocalState("user/publicKey", "")
