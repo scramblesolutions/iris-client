@@ -1,0 +1,34 @@
+{
+  "appName": "iris",
+  "appNameCapitalized": "Iris",
+  "hostname": "iris.to",
+  "nip05Domain": "iris.to",
+  "icon": "/img/icon128.png",
+  "navLogo": "/img/icon128.png",
+  "defaultTheme": "iris",
+  "defaultNotesTheme": "iris",
+  "navItems": [
+    "home",
+    "search",
+    "messages",
+    "notifications",
+    "wallet",
+    "settings",
+    "about"
+  ],
+  "rightColumnFilters": false,
+  "publicDir": "public/iris",
+  "aboutText": "Iris - Connecting People",
+  "repository": "https://github.com/irislib/iris-client",
+  "features": {
+    "git": false,
+    "cashu": true,
+    "pushNotifications": true,
+    "analytics": true
+  },
+  "defaultSettings": {
+    "youtubePrivacyMode": false,
+    "notificationServer": "https://notifications.iris.to"
+  }, 
+  "NodeEnv": "production"
+}

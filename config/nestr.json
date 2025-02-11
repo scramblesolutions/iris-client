@@ -1,0 +1,33 @@
+{
+  "appName": "Nestr",
+  "appNameCapitalized": "Nestr",
+  "hostname": "nestr.iris.to",
+  "nip05Domain": "iris.to",
+  "icon": "/img/icon128.png",
+  "navLogo": "/nestr-logo-no-name.png",
+  "defaultTheme": "dark",
+  "defaultNotesTheme": "nestr",
+  "navItems": [
+    "home",
+    "search",
+    "notifications",
+    "organizations",
+    "repositories",
+    "settings",
+    "about"
+  ],
+  "rightColumnFilters": true,
+  "publicDir": "public/nestr",
+  "aboutText": "Nestr aims to facilitate truly sovereign and censorship-resistant code development with social network features provided by the Nostr protocol.",
+  "repository": "",
+  "features": {
+    "git": true,
+    "cashu": false,
+    "pushNotifications": false,
+    "analytics": false
+  },
+  "defaultSettings": {
+    "youtubePrivacyMode": false,
+    "notificationServer": "https://notifications.iris.to"
+  }
+}
