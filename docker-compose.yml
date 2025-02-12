@@ -7,18 +7,18 @@ services:
       NODE_ENV: production
     labels:
       - "traefik.enable=true"
-      # ACME challenge configuration
-      - "traefik.http.routers.acme-challenge.rule=Host(`spoke.scrambleduser.vip`) && PathPrefix(`/.well-known/acme-challenge/`)"
-      - "traefik.http.routers.acme-challenge.entrypoints=http"
-      - "traefik.http.routers.acme-challenge.service=acme-http@internal"
-      - "traefik.http.routers.acme-challenge.priority=9999"
-      - "traefik.http.routers.acme-challenge.tls=false"
-      # Main application configuration
-      - "traefik.http.routers.app-secure.rule=Host(`spoke.scrambleduser.vip`)"
-      - "traefik.http.routers.app-secure.entrypoints=https"
-      - "traefik.http.routers.app-secure.tls=true"
-      - "traefik.http.routers.app-secure.tls.certresolver=letsencrypt"
-      - "traefik.http.services.app-secure.loadbalancer.server.port=3000"
+      # HTTP route for ACME and regular traffic
+      - "traefik.http.routers.app-http.rule=Host(`spoke.scrambleduser.vip`)"
+      - "traefik.http.routers.app-http.entryPoints=http"
+      - "traefik.http.routers.app-http.service=app-service"
+      # HTTPS route
+      - "traefik.http.routers.app-https.rule=Host(`spoke.scrambleduser.vip`)"
+      - "traefik.http.routers.app-https.entryPoints=https"
+      - "traefik.http.routers.app-https.service=app-service"
+      - "traefik.http.routers.app-https.tls=true"
+      - "traefik.http.routers.app-https.tls.certresolver=letsencrypt"
+      # Service definition
+      - "traefik.http.services.app-service.loadbalancer.server.port=3000"
     networks:
       - default
 
