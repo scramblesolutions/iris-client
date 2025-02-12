@@ -5,20 +5,6 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-    labels:
-      - "traefik.enable=true"
-      # HTTP route for ACME and regular traffic
-      - "traefik.http.routers.app-http.rule=Host(`spoke.scrambleduser.vip`)"
-      - "traefik.http.routers.app-http.entryPoints=http"
-      - "traefik.http.routers.app-http.service=app-service"
-      # HTTPS route
-      - "traefik.http.routers.app-https.rule=Host(`spoke.scrambleduser.vip`)"
-      - "traefik.http.routers.app-https.entryPoints=https"
-      - "traefik.http.routers.app-https.service=app-service"
-      - "traefik.http.routers.app-https.tls=true"
-      - "traefik.http.routers.app-https.tls.certresolver=letsencrypt"
-      # Service definition
-      - "traefik.http.services.app-service.loadbalancer.server.port=3000"
     networks:
       - default
 
