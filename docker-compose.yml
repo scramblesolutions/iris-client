@@ -7,18 +7,6 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-    labels:
-      - "traefik.enable=true"
-      # ACME HTTP challenge configuration
-      - "traefik.http.routers.acme-http.rule=PathPrefix(`/.well-known/acme-challenge/`)"
-      - "traefik.http.routers.acme-http.entrypoints=http"
-      - "traefik.http.routers.acme-http.service=acme-http@internal"
-      - "traefik.http.routers.acme-http.priority=999"
-      - "traefik.http.routers.acme-http.middlewares=no-redirect@file"
-      # Disable HTTPS redirect for ACME challenge
-      - "traefik.http.middlewares.no-redirect.redirectscheme.permanent=false"
-      # Modify the main HTTP router to exclude ACME challenge path
-      - "traefik.http.routers.http-app.rule=Host(`spoke.scrambleduser.vip`) && !PathPrefix(`/.well-known/acme-challenge/`)"
     networks:
       - default
 
