@@ -7,3 +7,15 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.acme-http.rule=PathPrefix(`/.well-known/acme-challenge/`)"
+      - "traefik.http.routers.acme-http.entrypoints=http"
+      - "traefik.http.routers.acme-http.service=acme-http@internal"
+    networks:
+      - default
+
+networks:
+  default:
+    external: true
+    name: coolify-infra
