@@ -7,6 +7,20 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+    labels:
+      - "traefik.enable=true"
+      # High priority ACME challenge route
+      - "traefik.http.routers.acme-app.rule=PathPrefix(`/.well-known/acme-challenge/`)"
+      - "traefik.http.routers.acme-app.entrypoints=http"
+      - "traefik.http.routers.acme-app.priority=2000"
+      - "traefik.http.routers.acme-app.middlewares=acme-strip"
+      - "traefik.http.middlewares.acme-strip.stripprefix.prefixes=/.well-known/acme-challenge"
+      # Regular app configuration
+      - "traefik.http.routers.app.rule=Host(`spoke.scrambleduser.vip`)"
+      - "traefik.http.routers.app.entrypoints=https"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      - "traefik.http.services.app.loadbalancer.server.port=3000"
     networks:
       - default
 
