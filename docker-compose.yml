@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   app:
     build: .
@@ -7,9 +9,14 @@ services:
       NODE_ENV: production
     labels:
       - "traefik.enable=true"
+      # ACME HTTP challenge configuration with high priority to override redirects
       - "traefik.http.routers.acme-http.rule=PathPrefix(`/.well-known/acme-challenge/`)"
       - "traefik.http.routers.acme-http.entrypoints=http"
       - "traefik.http.routers.acme-http.service=acme-http@internal"
+      - "traefik.http.routers.acme-http.priority=999"
+      # Disable HTTPS redirect for ACME challenge path
+      - "traefik.http.middlewares.acme-middleware.stripprefix.prefixes=/.well-known/acme-challenge"
+      - "traefik.http.routers.acme-http.middlewares=acme-middleware"
     networks:
       - default
 
