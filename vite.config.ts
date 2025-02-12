@@ -32,6 +32,7 @@ export default defineConfig({
   },
   publicDir: config.get("publicDir"),
   server: {
+    cors:false,
     proxy: {
       "/cashu": {
         target: "http://127.0.0.1:8080", // Serve cashu.me here for development
