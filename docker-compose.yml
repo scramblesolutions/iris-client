@@ -7,6 +7,11 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      COOLIFY_BRANCH: master
+      COOLIFY_RESOURCE_UUID: sksg8wogcgsk4gwcsc4c8w8c
+      COOLIFY_CONTAINER_NAME: app-sksg8wogcgsk4gwcsc4c8w8c
+      COOLIFY_URL: https://spoke.scrambleduser.vip
+      COOLIFY_FQDN: spoke.scrambleduser.vip
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`spoke.scrambleduser.vip`)"
@@ -14,10 +19,20 @@ services:
       - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.tls.certresolver=letsencrypt"
       - "traefik.http.services.app.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.gzip.compress=true"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.app-http.entrypoints=http"
+      - "traefik.http.routers.app-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.app-https.entrypoints=https"
+      - "traefik.http.routers.app-https.tls=true"
+      - "traefik.http.routers.app-https.tls.certresolver=letsencrypt"
     networks:
       - default
+      - coolify
 
 networks:
   default:
     external: true
     name: sksg8wogcgsk4gwcsc4c8w8c
+  coolify:
+    external: true
